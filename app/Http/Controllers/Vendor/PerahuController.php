@@ -32,6 +32,7 @@ use App\Models\RoomReview;
 use App\Models\Visitor;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
+use App\Models\BasicSettings\Basic;
 
 class PerahuController extends Controller
 {
@@ -47,7 +48,7 @@ class PerahuController extends Controller
         $information['midtrans'] = $midtrans;
 
 
-        $language =  Language::query()->where('code', '=', $request->language)->firstOrFail();
+        $language = Language::query()->where('code', '=', (string)$request->language)->firstOrFail();
         $information['language'] = $language;
 
 
@@ -240,7 +241,7 @@ class PerahuController extends Controller
                 $q->where('language_id', $language_id);
             },
         ])
-            ->where('vendor_id', Auth::guard('vendor')->user()->id)
+            ->where('vendor_id', (int)Auth::guard('vendor')->user()->id)
             ->orderBy('id', 'desc')
             ->select('id')
             ->get();
@@ -402,48 +403,45 @@ class PerahuController extends Controller
         }
     }
 
-    public function manageAdditionalService($id)
+    public function manageAdditionalService(Request $request, $id)
     {
         $vendorId = Auth::guard('vendor')->user()->id;
-        Perahu::where([['id', $id], ['vendor_id', $vendorId]])->firstOrFail();
+        $room = Perahu::where([['id', $id], ['vendor_id', $vendorId]])->firstOrFail();
 
-        $information['perahu_id'] = $id;
-        $information['languages'] = Language::all();
-        $information['additional_services'] = AdditionalService::where('room_id', $id)->get();
+        $information['room'] = $room;
+        $information['room_id'] = $id;
+
+        $language = Language::query()->where('code', '=', (string)$request->language)->first() ?? Language::where('is_default', 1)->first();
+        $information['language'] = $language;
         $information['defaultLang'] = Language::where('is_default', 1)->first();
+
+        $information['services'] = AdditionalService::join('additional_service_contents', 'additional_services.id', '=', 'additional_service_contents.additional_service_id')
+            ->where('additional_service_contents.language_id', $language->id)
+            ->select('additional_services.id as id', 'additional_services.status', 'additional_service_contents.title', 'additional_services.serial_number')
+            ->get();
+        
+        $information['settings'] = Basic::select('base_currency_text')->first();
 
         return view('vendors.perahu.additional_services', $information);
     }
 
     public function updateAdditionalService(Request $request, $id)
     {
-        $languages = Language::all();
         $vendorId = Auth::guard('vendor')->user()->id;
-        Perahu::where([['id', $id], ['vendor_id', $vendorId]])->firstOrFail();
+        $room = Perahu::where([['id', $id], ['vendor_id', $vendorId]])->firstOrFail();
 
-        foreach ($languages as $language) {
-            if (!empty($request[$language->code . '_name'])) {
-                $name_datas = $request[$language->code . '_name'];
-                foreach ($name_datas as $key => $data) {
-                    $additional_service = AdditionalService::where([['room_id', $id], ['key', $key]])->first();
-                    if (is_null($additional_service)) {
-                        $additional_service = new AdditionalService();
-                        $additional_service->room_id = $id;
-                        $additional_service->key = $key;
-                        $additional_service->save();
-                    }
-                    $additional_service_content = AdditionalServiceContent::where([['additional_service_id', $additional_service->id], ['language_id', $language->id]])->first();
-                    if (is_null($additional_service_content)) {
-                        $additional_service_content = new AdditionalServiceContent();
-                        $additional_service_content->additional_service_id = $additional_service->id;
-                        $additional_service_content->language_id = $language->id;
-                    }
-                    $additional_service_content->name = $data;
-                    $additional_service_content->amount = $request[$language->code . '_amount'][$key];
-                    $additional_service_content->save();
-                }
+        $additional = [];
+        if ($request->checkbox) {
+            foreach ($request->checkbox as $value) {
+                $additional[$value] = $request->input('price_' . $value) ?? 0;
             }
+        } else {
+            $additional = null;
         }
+
+        $room->update([
+            'additional_service' => $additional ? json_encode($additional) : null
+        ]);
 
         Session::flash('success', __('Additional Service updated successfully') . '!');
         return Response::json(['status' => 'success'], 200);

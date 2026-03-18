@@ -79,6 +79,8 @@
 - [x] **Robust Package Checks**: Memperbaiki logika pengecekan paket (`current_package`) di `LokasiController` & `PerahuController` agar lebih stabil saat vendor tidak memiliki paket aktif atau paket dalam format Collection.
 - [x] **Global Route Pluralization Fix**: Memperbaiki puluhan rute redirect yang salah panggil (`.perahus` -> `.perahu`) di berbagai Payment Gateway Feature Controllers (PayPal, Stripe, Midtrans, dll) untuk menjamin alur transaksi lancar.
 - [x] **Counter Logic Refinement**: Memperbaiki `manageCounterInformation` pada `LokasiController` dengan penanganan error 404 yang lebih informatif dan penyertaan variabel `$defaultLang` yang wajib ada di view.
+- [x] **Additional Services Logic Fix**: Memperbaiki `manageAdditionalService` dan `updateAdditionalService` pada `PerahuController` yang sebelumnya salah menggunakan query `room_id` dan menyebabkan crash 500. Sekarang sistem menggunakan skema JSON pada kolom `additional_service` di tabel `rooms` sesuai standar Admin.
+- [x] **Global Services Schema Recovery**: Memperbaiki tabel `additional_services` dan `additional_service_contents` yang kehilangan banyak kolom inti.
 
 ### Strategic Plan (2026-03-18): Go-Live Stabilization (Zero Rewrite Rule)
 - [x] **Final Frontend Transaction Sandbox**: Validated end-to-end checkout flow.

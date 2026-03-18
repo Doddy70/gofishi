@@ -81,6 +81,8 @@
 - [x] **Counter Logic Refinement**: Memperbaiki `manageCounterInformation` pada `LokasiController` dengan penanganan error 404 yang lebih informatif dan penyertaan variabel `$defaultLang` yang wajib ada di view.
 - [x] **Additional Services Logic Fix**: Memperbaiki `manageAdditionalService` dan `updateAdditionalService` pada `PerahuController` yang sebelumnya salah menggunakan query `room_id` dan menyebabkan crash 500. Sekarang sistem menggunakan skema JSON pada kolom `additional_service` di tabel `rooms` sesuai standar Admin.
 - [x] **Global Services Schema Recovery**: Memperbaiki tabel `additional_services` dan `additional_service_contents` yang kehilangan banyak kolom inti.
+- [x] **Review System Stability**: Memperbaiki `BadMethodCallException` pada halaman ulasan vendor dengan menambahkan alias relasi `room()` dan `user()` pada model `RoomReview`. Menjamin kompatibilitas antara panel Admin (yang menggunakan `userInfo`/`hotelRoom`) dan panel Vendor.
+- [x] **Review Route Fix**: Memperbaiki rute `vendor.review.user.store` agar mengarah ke `ReviewController` yang benar (sebelumnya salah mengarah ke `PerahuBookingController`).
 
 ### Strategic Plan (2026-03-18): Go-Live Stabilization (Zero Rewrite Rule)
 - [x] **Final Frontend Transaction Sandbox**: Validated end-to-end checkout flow.

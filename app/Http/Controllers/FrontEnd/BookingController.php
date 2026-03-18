@@ -101,6 +101,28 @@ class BookingController extends Controller
         
         $information['offline_gateways'] = OfflineGateway::where('status', 1)->orderBy('serial_number', 'asc')->get();
 
+        // Additional Services for the boat
+        $room = $information['room'];
+        $additional_services = [];
+        $services_attr = $room->additional_service;
+        if (is_string($services_attr)) {
+            $services_attr = json_decode($services_attr, true);
+        }
+
+        if (!empty($services_attr) && is_array($services_attr)) {
+            $service_ids = array_keys($services_attr);
+            $additional_services = \App\Models\AdditionalService::join('additional_service_contents', 'additional_services.id', '=', 'additional_service_contents.additional_service_id')
+                ->whereIn('additional_services.id', $service_ids)
+                ->where('additional_service_contents.language_id', $language->id)
+                ->select('additional_services.id', 'additional_service_contents.title')
+                ->get()
+                ->map(function($service) use ($services_attr) {
+                    $service->price = $services_attr[$service->id] ?? 0;
+                    return $service;
+                });
+        }
+        $information['additional_services'] = $additional_services;
+
         return view('frontend.perahu.checkout', $information);
     }
 

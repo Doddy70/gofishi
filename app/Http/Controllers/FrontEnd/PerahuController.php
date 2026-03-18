@@ -96,6 +96,32 @@ class PerahuController extends Controller
         $information['avg_rating'] = round(RoomReview::where('room_id', $id)->avg('rating'), 2);
         $information['numOfReview'] = RoomReview::where('room_id', $id)->count();
 
+        // Get Booked Dates to disable in calendar
+        $information['bookedDates'] = Booking::where('room_id', $id)
+            ->where(function ($q) {
+                $q->where('payment_status', 1)
+                    ->orWhere(function ($sq) {
+                        $sq->where('payment_status', 0)->where('gateway_type', 'offline');
+                    })
+                    ->orWhere(function ($sq) {
+                        $sq->where('payment_status', 0)->where('gateway_type', 'online')->where('order_status', 'pending');
+                    });
+            })
+            ->select('check_in_date', 'check_out_date')
+            ->get()
+            ->flatMap(function($booking) {
+                $dates = [];
+                $start = Carbon::parse($booking->check_in_date);
+                $end = Carbon::parse($booking->check_out_date);
+                for ($date = $start; $date->lte($end); $date->addDay()) {
+                    $dates[] = $date->format('Y-m-d');
+                }
+                return $dates;
+            })
+            ->unique()
+            ->values()
+            ->toArray();
+
         // Dapatkan kamar lain di lokasi yang sama
         $information['relatedRooms'] = Perahu::where('hotel_id', $room->hotel_id)
             ->where('rooms.id', '!=', $id)

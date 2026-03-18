@@ -79,7 +79,7 @@ Route::prefix('/admin')->middleware(['auth:admin', 'Demo', 'adminLang'])->group(
     Route::get('/subscription-log', 'Admin\PaymentLogController@index')->middleware('permission:Payment Log')->name('admin.subscription-log');
     Route::post('/payment-log/update', 'Admin\PaymentLogController@update')->name('admin.payment-log.update');
 
-    Route::prefix('packages')->middleware('permission:Packages Management')->group(function () {
+    Route::prefix('packages')->middleware('permission:Package Management')->group(function () {
       // Package Settings routes
       Route::get('/settings', 'Admin\PackageController@settings')->name('admin.package.settings');
       Route::post('/settings', 'Admin\PackageController@updateSettings')->name('admin.package.settings.update');
@@ -570,7 +570,7 @@ Route::prefix('/admin')->middleware(['auth:admin', 'Demo', 'adminLang'])->group(
     );
     // announcement-popup route end
   
-    Route::prefix('/settings')->middleware('permission:Settings')->group(function () {
+    Route::prefix('/settings')->middleware('permission:Basic Settings')->group(function () {
       // Settings favicon route
       Route::get('pwa', 'Admin\BasicSettings\BasicController@pwa')->name('admin.pwa');
       Route::post('/pwa/post', 'Admin\BasicSettings\BasicController@updatepwa')->name('admin.pwa.update');
@@ -761,7 +761,7 @@ Route::prefix('/admin')->middleware(['auth:admin', 'Demo', 'adminLang'])->group(
 
 
       // Staffs Management route start
-      Route::prefix('/staffs-management')->middleware('permission:Staffs Management')->group(function () {
+      Route::prefix('/staffs-management')->middleware('permission:Admin Management')->group(function () {
       // role-permission route
       Route::get('/role-permissions', 'Admin\Administrator\RolePermissionController@index')->name('admin.admin_management.role_permissions');
 
@@ -792,7 +792,7 @@ Route::prefix('/admin')->middleware(['auth:admin', 'Demo', 'adminLang'])->group(
     // language management route end
   
     //website pages all-route
-    Route::prefix('pages')->middleware('permission:Pages')->group(function () {
+    Route::prefix('pages')->middleware('permission:Custom Pages')->group(function () {
       // home-page route
       Route::prefix('/home-page')->group(function () {
 

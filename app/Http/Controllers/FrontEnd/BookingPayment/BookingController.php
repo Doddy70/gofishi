@@ -41,9 +41,9 @@ class BookingController extends Controller
 {
     protected $notificationService;
 
-    public function __construct(NotificationService $notificationService)
+    public function __construct(NotificationService $notificationService = null)
     {
-        $this->notificationService = $notificationService;
+        $this->notificationService = $notificationService ?? app(NotificationService::class);
     }
 
     public function index(BookingProcessRequest $request)
@@ -145,14 +145,19 @@ class BookingController extends Controller
         $children = $request->session()->get('children');
 
         $room_id = $request->session()->get('room_id');
+        $package_id = $request->session()->get('package_id');
         $dayPackage = (int)$request->session()->get('day_package');
+        
         $room = Perahu::findOrFail($room_id);
+        $package = \App\Models\BoatPackage::find($package_id);
+        
         $vendor_id = $room->vendor_id;
         $hotel_id = $room->hotel_id;
         $preparation_time = $room->preparation_time;
 
-        $meetTime = $this->getRoomMeetTimeByPackage($room, $dayPackage);
-        $returnTime = $this->getRoomReturnTimeByPackage($room, $dayPackage);
+        // Use package data if available, fallback to legacy room columns
+        $meetTime = $package ? $package->meeting_time : $this->getRoomMeetTimeByPackage($room, $dayPackage);
+        $returnTime = $package ? $package->return_time : $this->getRoomReturnTimeByPackage($room, $dayPackage);
 
         $checkInDateTime = Carbon::parse($Date . ' ' . ($Time ?: $meetTime));
         $checkInDate = $checkInDateTime->toDateString();
@@ -185,6 +190,7 @@ class BookingController extends Controller
             'vendor_id' =>  $vendor_id,
             'hotel_id' =>  $hotel_id,
             'room_id' =>  $room_id,
+            'package_id' => $package_id,
             'preparation_time' =>  $preparation_time,
             'next_booking_time' =>  $nextBookingTime,
             'hour' =>  $dayPackage * 24,
@@ -220,21 +226,47 @@ class BookingController extends Controller
         $misc = new MiscellaneousController();
         $language = $misc->getLanguage();
         $roomId = $request->session()->get('room_id');
+        $packageId = $request->session()->get('package_id');
         $dayPackage = (int)$request->session()->get('day_package');
         
         $room = Perahu::find($roomId);
+        $package = \App\Models\BoatPackage::find($packageId);
+        
         $roomPrice = 0;
 
-        if ($room) {
+        if ($package) {
+            $roomPrice = $package->price;
+        } elseif ($room) {
+            // Fallback for legacy items without linked package
             if ($dayPackage == 1) $roomPrice = $room->price_day_1;
             elseif ($dayPackage == 2) $roomPrice = $room->price_day_2;
             elseif ($dayPackage == 3) $roomPrice = $room->price_day_3;
-            else $roomPrice = $room->price_day_1; // Fallback
+            else $roomPrice = $room->price_day_1;
         }
 
         if (empty($roomId)) {
             $roomPrice = floatval(0);
         }
+
+        // Handle Services from Request or Session
+        if ($request->has('services')) {
+            $selectedServices = $request->services; // array of IDs
+            $serviceCharge = 0;
+            $services_attr = $room->additional_service;
+            if (is_string($services_attr)) {
+                $services_attr = json_decode($services_attr, true);
+            }
+            if (!empty($services_attr) && is_array($services_attr)) {
+                foreach ($selectedServices as $sId) {
+                    if (isset($services_attr[$sId])) {
+                        $serviceCharge += $services_attr[$sId];
+                    }
+                }
+            }
+            $request->session()->put('serviceCharge', $serviceCharge);
+            $request->session()->put('takeService', implode(',', $selectedServices));
+        }
+
         $serviceCharge = floatval($request->session()->get('serviceCharge'));
         $total = $roomPrice + $serviceCharge;
         $service_details = [];
@@ -247,7 +279,11 @@ class BookingController extends Controller
             $additional_service = $request->session()->get('takeService');
 
             $room = Perahu::find($roomId);
-            $additionalServices = json_decode($room->additional_service, true);
+            $services_attr = $room->additional_service;
+            if (is_string($services_attr)) {
+                $services_attr = json_decode($services_attr, true);
+            }
+            $additionalServices = is_array($services_attr) ? $services_attr : [];
 
             $service_ids = explode(',', $additional_service);
 
@@ -330,16 +366,33 @@ class BookingController extends Controller
             $room = Perahu::where('id', $arrData['room_id'])->lockForUpdate()->firstOrFail();
             
             // Re-verify availability exactly at the moment of booking
+            // Robust clash detection: Any existing booking that overlaps with requested time
             $existingBookings = Booking::where('room_id', $room->id)
-                ->where('payment_status', '!=', 2)
+                ->where(function ($q) {
+                    $q->where('payment_status', 1) 
+                      ->orWhere(function ($sq) {
+                          $sq->where('payment_status', 0)->where('gateway_type', 'offline'); 
+                      })
+                      ->orWhere(function ($sq) {
+                          $sq->where('payment_status', 0)->where('gateway_type', 'online')->where('created_at', '>=', \Carbon\Carbon::now()->subMinutes(30));
+                      });
+                })
                 ->where(function ($q) use ($arrData) {
-                    $q->whereBetween('check_in_date_time', [$arrData['check_in_date_time'], $arrData['check_out_date_time']])
-                      ->orWhereBetween('check_out_date_time', [$arrData['check_in_date_time'], $arrData['check_out_date_time']])
-                      ->orWhere(fn($sq) => $sq->where('check_in_date_time', '<=', $arrData['check_in_date_time'])->where('check_out_date_time', '>=', $arrData['check_out_date_time']));
+                    // Standard Overlap Logic: (StartA < EndB) AND (EndA > StartB)
+                    $q->where('check_in_date_time', '<', $arrData['check_out_date_time'])
+                      ->where('check_out_date_time', '>', $arrData['check_in_date_time']);
                 })
                 ->count();
 
             if ($existingBookings >= $room->number_of_rooms_of_this_same_type) {
+                \Illuminate\Support\Facades\Log::warning("Booking Clash Detected", [
+                    'room_id' => $room->id,
+                    'requested_start' => $arrData['check_in_date_time'],
+                    'requested_end' => $arrData['check_out_date_time'],
+                    'existing_count' => $existingBookings,
+                    'limit' => $room->number_of_rooms_of_this_same_type,
+                    'email' => $arrData['booking_email']
+                ]);
                 throw new \Exception(__('Maaf, armada sudah penuh untuk jadwal ini. Silakan pilih waktu lain.'));
             }
 

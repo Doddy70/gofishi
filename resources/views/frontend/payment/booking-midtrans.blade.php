@@ -16,11 +16,18 @@
 <body>
   <button class="btn btn-primary" id="pay-button">Pay Now</button>
   <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-  @if ($data['midtrans_mode'] == 1)
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
+  @php 
+    $mMode = $data['midtrans_mode'] ?? ($data['is_production'] ?? 1); // 1 = sandbox usually in some systems, but let's check
+    // Actually our controller says isProd = (info['midtrans_mode'] == 0)
+    // So if midtrans_mode == 0, it is PROD. Else Sandbox.
+    $isSandbox = ($data['midtrans_mode'] != 0);
+  @endphp
+
+  @if ($isSandbox)
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ $data['client_key'] }}">
     </script>
   @else
-    <script src="https://app.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
+    <script src="https://app.midtrans.com/snap/snap.js" data-client-key="{{ $data['client_key'] }}"></script>
   @endif
   <script>
     var baseUrl = "{{ route('index') }}";

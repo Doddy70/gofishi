@@ -458,15 +458,18 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // Flatpickr initialization
+        const bookedDates = @json($bookedDates);
+        
         flatpickr("#checkin-btn", {
             dateFormat: "Y-m-d",
             minDate: "today",
+            disable: bookedDates,
             defaultDate: "{{ date('Y-m-d') }}",
             onChange: function(selectedDates, dateStr, instance) {
                 // Manually trigger Alpine update if needed
                 const el = document.querySelector('[x-data]');
-                if (el && el.__x && el.__x.$data) {
-                    el.__x.$data.checkIn = dateStr;
+                if (el && el._x_dataStack) {
+                    el._x_dataStack[0].checkIn = dateStr;
                 }
             }
         });

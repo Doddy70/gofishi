@@ -777,7 +777,7 @@
         </li>
 
         {{-- Subscription log --}}
-        @if (is_null($roleInfo) || (!empty($rolePermissions) && in_array('Subscription Log', $rolePermissions)))
+        @if (is_null($roleInfo) || (!empty($rolePermissions) && (in_array('Subscription Log', $rolePermissions) || in_array('Payment Log', $rolePermissions))))
         <li class="nav-item @if (request()->routeIs('admin.subscription-log')) active @endif">
           <a href="{{ route('admin.subscription-log', ['language' => $defaultLang->code]) }}">
             <i class="fas fa-clipboard-list"></i>
@@ -827,7 +827,7 @@
         @endif
 
         {{-- packages management --}}
-        @if (is_null($roleInfo) || (!empty($rolePermissions) && in_array('Packages Management', $rolePermissions)))
+        @if (is_null($roleInfo) || (!empty($rolePermissions) && (in_array('Packages Management', $rolePermissions) || in_array('Package Management', $rolePermissions))))
         <li class="nav-item @if (request()->routeIs('admin.package.settings')) active 
             @elseif (request()->routeIs('admin.package.index')) active 
             @elseif (request()->routeIs('admin.package.edit')) active @endif">
@@ -870,7 +870,7 @@
         </li>
         @endif
 
-        @if (is_null($roleInfo) || (!empty($rolePermissions) && in_array('Pages', $rolePermissions)))
+        @if (is_null($roleInfo) || (!empty($rolePermissions) && (in_array('Pages', $rolePermissions) || in_array('Custom Pages', $rolePermissions))))
         <li class="nav-item
             @if (request()->routeIs([
                     'admin.pages.home_page.section_content',
@@ -1448,7 +1448,7 @@
         @endif
 
         {{-- Settings --}}
-        @if (is_null($roleInfo) || (!empty($rolePermissions) && in_array('Settings', $rolePermissions)))
+        @if (is_null($roleInfo) || (!empty($rolePermissions) && (in_array('Settings', $rolePermissions) || in_array('Basic Settings', $rolePermissions))))
         <li class="nav-item 
             @if (request()->routeIs([
                     'admin.pages.contact_page',
@@ -1600,7 +1600,7 @@
         @endif
 
         {{-- admin --}}
-        @if (is_null($roleInfo) || (!empty($rolePermissions) && in_array('Staffs Management', $rolePermissions)))
+        @if (is_null($roleInfo) || (!empty($rolePermissions) && (in_array('Staffs Management', $rolePermissions) || in_array('Admin Management', $rolePermissions))))
         <li class="nav-item @if (request()->routeIs('admin.admin_management.role_permissions')) active 
             @elseif (request()->routeIs('admin.admin_management.role.permissions')) active 
             @elseif (request()->routeIs('admin.admin_management.registered_admins')) active @endif">

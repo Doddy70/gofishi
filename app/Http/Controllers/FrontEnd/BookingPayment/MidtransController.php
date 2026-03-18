@@ -46,8 +46,17 @@ class MidtransController extends Controller
         $gateway = OnlineGateway::whereKeyword('midtrans')->first();
         $info = json_decode($gateway->information, true);
 
-        MidtransConfig::$serverKey = $info['server_key'];
-        MidtransConfig::$isProduction = ($info['midtrans_mode'] == 0);
+        $isProd = false;
+        if (array_key_exists('midtrans_mode', $info)) {
+            $isProd = ($info['midtrans_mode'] == 0);
+        } elseif (array_key_exists('sandbox_status', $info)) {
+            $isProd = ($info['sandbox_status'] == 0);
+        } elseif (array_key_exists('is_production', $info)) {
+            $isProd = ($info['is_production'] == 1);
+        }
+        
+        MidtransConfig::$serverKey = $info['server_key'] ?? '';
+        MidtransConfig::$isProduction = $isProd;
         MidtransConfig::$isSanitized = true;
         MidtransConfig::$is3ds = true;
 
@@ -61,6 +70,16 @@ class MidtransController extends Controller
         $orderId = \Carbon\Carbon::now()->format('ymdHis') . \Illuminate\Support\Str::upper(\Illuminate\Support\Str::random(4));
         $arrData['order_number'] = $orderId;
         
+        // Anti-clash: Hapus booking pending (online) milik user ini untuk armada/jadwal yang sama sebelum membuat yang baru.
+        // Ini mencegah user terblokir oleh 'dirinya sendiri' saat mencoba ulang/retry checkout.
+        \App\Models\Booking::where('room_id', $arrData['room_id'])
+            ->where('booking_email', $request['booking_email'])
+            ->where('check_in_date', $arrData['check_in_date'])
+            ->where('payment_status', 0)
+            ->where('gateway_type', 'online')
+            ->where('order_status', 'pending')
+            ->delete();
+
         $bookingInfo = $bookingProcess->storeData($arrData);
         $params = [
             'transaction_details' => [
@@ -86,7 +105,10 @@ class MidtransController extends Controller
         session()->put('arrData', $arrData);
         session()->put('midtrans_order_id', $orderId);
 
-        return view('frontend.payment.booking-midtrans', compact('snapToken', 'info'));
+        $data = $info; // Match view variable name
+        $data['client_key'] = $info['client_key'] ?? ''; // Ensure client_key is available for blade
+
+        return view('frontend.payment.booking-midtrans', compact('snapToken', 'data'));
     }
 
     /**
@@ -129,7 +151,18 @@ class MidtransController extends Controller
 
         $gateway = OnlineGateway::whereKeyword('midtrans')->first();
         $info = json_decode($gateway->information, true);
-        MidtransConfig::$serverKey = $info['server_key'];
+
+        $isProd = false;
+        if (array_key_exists('midtrans_mode', $info)) {
+            $isProd = ($info['midtrans_mode'] == 0);
+        } elseif (array_key_exists('sandbox_status', $info)) {
+            $isProd = ($info['sandbox_status'] == 0);
+        } elseif (array_key_exists('is_production', $info)) {
+            $isProd = ($info['is_production'] == 1);
+        }
+        
+        MidtransConfig::$serverKey = $info['server_key'] ?? '';
+        MidtransConfig::$isProduction = $isProd;
 
         try {
             $notif = new MidtransNotification();

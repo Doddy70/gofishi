@@ -82,6 +82,26 @@
                             <h2 class="text-2xl font-semibold text-neutral-900">{{ __('Pilih cara pembayaran') }}</h2>
                         </div>
 
+                        {{-- Section 3.5: Additional Services (Custom) --}}
+                        @if(!empty($additional_services) && count($additional_services) > 0)
+                        <div class="bg-neutral-50 p-5 rounded-2xl border border-neutral-100 flex flex-col gap-4">
+                            <h3 class="font-semibold text-neutral-900 text-sm">{{ __('Layanan Tambahan (Opsional)') }}</h3>
+                            <div class="flex flex-col gap-3">
+                                @foreach($additional_services as $service)
+                                <label class="flex justify-between items-center cursor-pointer group">
+                                    <div class="flex items-center gap-3">
+                                        <input type="checkbox" name="services[]" value="{{ $service->id }}" 
+                                               class="w-4 h-4 rounded border-neutral-300 text-rose-500 focus:ring-rose-500 service-checkbox"
+                                               data-price="{{ $service->price }}">
+                                        <span class="text-sm text-neutral-700 font-light group-hover:text-black transition">{{ $service->title }}</span>
+                                    </div>
+                                    <span class="text-sm font-semibold text-neutral-900">+ {{ symbolPrice($service->price) }}</span>
+                                </label>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
+
                         @if($room->availability_mode == 2)
                             <div class="p-4 bg-blue-50 border border-blue-100 rounded-xl text-blue-800 text-sm font-light">
                                 <i class="fas fa-info-circle mr-2"></i> {{ __('Pesanan ini memerlukan persetujuan Host. Anda belum akan ditagih biaya apa pun sekarang.') }}
@@ -208,11 +228,12 @@
                                 <img src="{{ asset('assets/img/perahu/featureImage/' . $room->feature_image) }}" class="w-full h-full object-cover">
                             </div>
                             <div class="flex flex-col overflow-hidden">
-                                <span class="text-xs text-neutral-500 font-light truncate">{{ $roomContent->room_category_name ?? 'Perahu' }}</span>
+                                <span class="text-xs text-neutral-500 font-light truncate">KM {{ $room->nama_km ?? 'Perahu' }} / {{ $roomContent->room_category_name ?? 'Armada' }}</span>
                                 <span class="text-sm font-semibold text-neutral-900 truncate">{{ $roomContent->title }}</span>
                                 <div class="flex items-center gap-1 text-[10px] mt-1">
                                     <i class="fas fa-star text-[8px]"></i>
                                     <span class="font-bold">{{ number_format($room->average_rating, 1) }}</span>
+                                    <span class="text-neutral-500 ml-1">· {{ __('Kapt.') }} {{ $room->captain_name ?? 'Profesional' }}</span>
                                 </div>
                             </div>
                         </div>
@@ -222,24 +243,28 @@
                             <h3 class="text-lg font-semibold text-neutral-900">{{ __('Rincian harga') }}</h3>
                             <div class="flex justify-between font-light text-neutral-800">
                                 <span>{{ $package->name }}</span>
-                                <span>{{ symbolPrice($package->price) }}</span>
+                                <span id="base-price" data-value="{{ (float)$package->price }}">{{ symbolPrice($package->price) }}</span>
                             </div>
+
                             @php 
                                 $taxData = App\Models\BasicSettings\Basic::select('hotel_tax_amount')->first();
-                                $subtotal = $package->price;
-                                $tax = $subtotal * ($taxData->hotel_tax_amount / 100);
-                                $total = $subtotal + $tax;
+                                $taxPercent = (float)($taxData->hotel_tax_amount ?? 0);
                             @endphp
-                            <div class="flex justify-between font-light text-neutral-800">
-                                <span class="underline">{{ __('Pajak') }} ({{ $taxData->hotel_tax_amount }}%)</span>
-                                <span>{{ symbolPrice($tax) }}</span>
+
+                            <div id="services-summary" class="flex flex-col gap-3" style="display: none;">
+                                {{-- Dynamically filled via JS --}}
+                            </div>
+
+                            <div class="flex justify-between font-light text-neutral-800 border-t border-dotted border-neutral-200 pt-3">
+                                <span class="underline">{{ __('Pajak') }} (<span id="tax-percent" data-value="{{ $taxPercent }}">{{ number_format($taxPercent, 3, '.', '') + 0 }}</span>%)</span>
+                                <span id="tax-amount"></span>
                             </div>
                         </div>
 
                         {{-- Total --}}
                         <div class="flex justify-between items-center text-lg font-bold text-neutral-900">
                             <span>{{ __('Total (IDR)') }}</span>
-                            <span>{{ symbolPrice($total) }}</span>
+                            <span id="grand-total">—</span>
                         </div>
 
                         {{-- Cancellation Info --}}
@@ -257,14 +282,86 @@
 
 @section('script')
 <script>
-$(document).ready(function() {
-    $('#gateway').on('change', function() {
-        let val = $(this).val();
-        $('.offline-info').addClass('hidden');
-        if(!isNaN(val)) {
-            $(`#offline-${val}`).removeClass('hidden');
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Selector Helpers
+    const getEl = (id) => document.getElementById(id);
+    const getAll = (sel) => document.querySelectorAll(sel);
+
+    // 2. State & Formatters
+    const formatter = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    });
+
+    const formatIDR = (amount) => formatter.format(amount).replace('IDR', 'Rp').trim();
+
+    // 3. Calculation Core
+    function updatePrices() {
+        const basePriceEl = getEl('base-price');
+        const taxPercentEl = getEl('tax-percent');
+        const summaryEl = getEl('services-summary');
+        const taxAmountEl = getEl('tax-amount');
+        const grandTotalEl = getEl('grand-total');
+
+        if (!basePriceEl || !taxPercentEl) return;
+
+        const basePrice = parseFloat(basePriceEl.getAttribute('data-value')) || 0;
+        const taxPercent = parseFloat(taxPercentEl.getAttribute('data-value')) || 0;
+        let servicesTotal = 0;
+        
+        // Reset Summary
+        summaryEl.innerHTML = '';
+        summaryEl.style.display = 'none';
+        
+        // Loop through checked services
+        getAll('.service-checkbox:checked').forEach(checkbox => {
+            const price = parseFloat(checkbox.getAttribute('data-price')) || 0;
+            const label = checkbox.closest('label');
+            const name = label ? label.querySelector('span.text-sm').textContent.trim() : 'Layanan';
+            
+            servicesTotal += price;
+            
+            // Build summary row
+            const row = document.createElement('div');
+            row.className = 'flex justify-between font-light text-neutral-800 animate-in fade-in slide-in-from-top-1 duration-200';
+            row.innerHTML = `<span>${name}</span><span>${formatIDR(price)}</span>`;
+            summaryEl.appendChild(row);
+            summaryEl.style.display = 'flex';
+        });
+
+        const subtotal = basePrice + servicesTotal;
+        const tax = subtotal * (taxPercent / 100);
+        const grandTotal = subtotal + tax;
+
+        if (taxAmountEl) taxAmountEl.textContent = formatIDR(tax);
+        if (grandTotalEl) grandTotalEl.textContent = formatIDR(grandTotal);
+    }
+
+    // 4. Event Listeners
+    // Handle Gateway Change
+    const gatewaySelect = getEl('gateway');
+    if (gatewaySelect) {
+        gatewaySelect.addEventListener('change', function() {
+            const val = this.value;
+            getAll('.offline-info').forEach(el => el.classList.add('hidden'));
+            if (val && !isNaN(val)) {
+                const infoEl = getEl(`offline-${val}`);
+                if (infoEl) infoEl.classList.remove('hidden');
+            }
+        });
+    }
+
+    // Handle Service Checkboxes (Event Delegation for robustness)
+    document.addEventListener('change', function(e) {
+        if (e.target.classList.contains('service-checkbox')) {
+            updatePrices();
         }
     });
+    
+    // 5. Initial Execution
+    updatePrices();
 });
 </script>
 @endsection

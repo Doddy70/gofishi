@@ -65,19 +65,19 @@
                   @endif
                 </div>
 
-                @php $paypalInfo = json_decode($paypal->information, true); @endphp
+                @php $paypalInfo = json_decode($paypal->information, true) ?? []; @endphp
 
                 <div class="form-group">
                   <label>{{ __('Paypal Test Mode') }}</label>
                   <div class="selectgroup w-100">
                     <label class="selectgroup-item">
                       <input type="radio" name="paypal_sandbox_status" value="1" class="selectgroup-input"
-                        {{ $paypalInfo['sandbox_status'] == 1 ? 'checked' : '' }}>
+                        {{ ($paypalInfo['sandbox_status'] ?? '') == 1 ? 'checked' : '' }}>
                       <span class="selectgroup-button">{{ __('Active') }}</span>
                     </label>
                     <label class="selectgroup-item">
                       <input type="radio" name="paypal_sandbox_status" value="0" class="selectgroup-input"
-                        {{ $paypalInfo['sandbox_status'] == 0 ? 'checked' : '' }}>
+                        {{ ($paypalInfo['sandbox_status'] ?? '') == 0 ? 'checked' : '' }}>
                       <span class="selectgroup-button">{{ __('Deactive') }}</span>
                     </label>
                   </div>
@@ -89,7 +89,7 @@
                 <div class="form-group">
                   <label>{{ __('Paypal Client ID') }}</label>
                   <input type="text" class="form-control" name="paypal_client_id"
-                    value="{{ $paypalInfo['client_id'] }}">
+                    value="{{ $paypalInfo['client_id'] ?? '' }}">
                   @if ($errors->has('paypal_client_id'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('paypal_client_id') }}</p>
                   @endif
@@ -98,7 +98,7 @@
                 <div class="form-group">
                   <label>{{ __('Paypal Client Secret') }}</label>
                   <input type="text" class="form-control" name="paypal_client_secret"
-                    value="{{ $paypalInfo['client_secret'] }}">
+                    value="{{ $paypalInfo['client_secret'] ?? '' }}">
                   @if ($errors->has('paypal_client_secret'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('paypal_client_secret') }}</p>
                   @endif
@@ -154,19 +154,19 @@
                   @endif
                 </div>
 
-                @php $instamojoInfo = json_decode($instamojo->information, true); @endphp
+                @php $instamojoInfo = json_decode($instamojo->information, true) ?? []; @endphp
 
                 <div class="form-group">
                   <label>{{ __('Instamojo Test Mode') }}</label>
                   <div class="selectgroup w-100">
                     <label class="selectgroup-item">
                       <input type="radio" name="instamojo_sandbox_status" value="1" class="selectgroup-input"
-                        {{ $instamojoInfo['sandbox_status'] == 1 ? 'checked' : '' }}>
+                        {{ ($instamojoInfo['sandbox_status'] ?? '') == 1 ? 'checked' : '' }}>
                       <span class="selectgroup-button">{{ __('Active') }}</span>
                     </label>
                     <label class="selectgroup-item">
                       <input type="radio" name="instamojo_sandbox_status" value="0" class="selectgroup-input"
-                        {{ $instamojoInfo['sandbox_status'] == 0 ? 'checked' : '' }}>
+                        {{ ($instamojoInfo['sandbox_status'] ?? '') == 0 ? 'checked' : '' }}>
                       <span class="selectgroup-button">{{ __('Deactive') }}</span>
                     </label>
                   </div>
@@ -178,7 +178,7 @@
                 <div class="form-group">
                   <label>{{ __('Instamojo API Key') }}</label>
                   <input type="text" class="form-control" name="instamojo_key"
-                    value="{{ $instamojoInfo['key'] }}">
+                    value="{{ $instamojoInfo['key'] ?? '' }}">
                   @if ($errors->has('instamojo_key'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('instamojo_key') }}</p>
                   @endif
@@ -187,7 +187,7 @@
                 <div class="form-group">
                   <label>{{ __('Instamojo Auth Token') }}</label>
                   <input type="text" class="form-control" name="instamojo_token"
-                    value="{{ $instamojoInfo['token'] }}">
+                    value="{{ $instamojoInfo['token'] ?? '' }}">
                   @if ($errors->has('instamojo_token'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('instamojo_token') }}</p>
                   @endif
@@ -244,19 +244,19 @@
                   @endif
                 </div>
 
-                @php $paytmInfo = json_decode($paytm->information, true); @endphp
+                @php $paytmInfo = json_decode($paytm->information, true) ?? []; @endphp
 
                 <div class="form-group">
                   <label>{{ __('Paytm Environment') }}</label>
                   <div class="selectgroup w-100">
                     <label class="selectgroup-item">
                       <input type="radio" name="paytm_environment" value="local" class="selectgroup-input"
-                        {{ $paytmInfo['environment'] == 'local' ? 'checked' : '' }}>
+                        {{ ($paytmInfo['environment'] ?? '') == 'local' ? 'checked' : '' }}>
                       <span class="selectgroup-button">{{ __('Local') }}</span>
                     </label>
                     <label class="selectgroup-item">
                       <input type="radio" name="paytm_environment" value="production" class="selectgroup-input"
-                        {{ $paytmInfo['environment'] == 'production' ? 'checked' : '' }}>
+                        {{ ($paytmInfo['environment'] ?? '') == 'production' ? 'checked' : '' }}>
                       <span class="selectgroup-button">{{ __('Production') }}</span>
                     </label>
                   </div>
@@ -268,7 +268,7 @@
                 <div class="form-group">
                   <label>{{ __('Paytm Merchant Key') }}</label>
                   <input type="text" class="form-control" name="paytm_merchant_key"
-                    value="{{ $paytmInfo['merchant_key'] }}">
+                    value="{{ $paytmInfo['merchant_key'] ?? '' }}">
                   @if ($errors->has('paytm_merchant_key'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('paytm_merchant_key') }}</p>
                   @endif
@@ -277,7 +277,7 @@
                 <div class="form-group">
                   <label>{{ __('Paytm Merchant MID') }}</label>
                   <input type="text" class="form-control" name="paytm_merchant_mid"
-                    value="{{ $paytmInfo['merchant_mid'] }}">
+                    value="{{ $paytmInfo['merchant_mid'] ?? '' }}">
                   @if ($errors->has('paytm_merchant_mid'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('paytm_merchant_mid') }}</p>
                   @endif
@@ -286,7 +286,7 @@
                 <div class="form-group">
                   <label>{{ __('Paytm Merchant Website') }}</label>
                   <input type="text" class="form-control" name="paytm_merchant_website"
-                    value="{{ $paytmInfo['merchant_website'] }}">
+                    value="{{ $paytmInfo['merchant_website'] ?? '' }}">
                   @if ($errors->has('paytm_merchant_website'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('paytm_merchant_website') }}</p>
                   @endif
@@ -295,7 +295,7 @@
                 <div class="form-group">
                   <label>{{ __('Industry Type') }}</label>
                   <input type="text" class="form-control" name="paytm_industry_type"
-                    value="{{ $paytmInfo['industry_type'] }}">
+                    value="{{ $paytmInfo['industry_type'] ?? '' }}">
                   @if ($errors->has('paytm_industry_type'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('paytm_industry_type') }}</p>
                   @endif
@@ -354,11 +354,11 @@
                   @endif
                 </div>
 
-                @php $stripeInfo = json_decode($stripe->information, true); @endphp
+                @php $stripeInfo = json_decode($stripe->information, true) ?? []; @endphp
 
                 <div class="form-group">
                   <label>{{ __('Stripe Key') }}</label>
-                  <input type="text" class="form-control" name="stripe_key" value="{{ $stripeInfo['key'] }}">
+                  <input type="text" class="form-control" name="stripe_key" value="{{ $stripeInfo['key'] ?? '' }}">
                   @if ($errors->has('stripe_key'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('stripe_key') }}</p>
                   @endif
@@ -367,7 +367,7 @@
                 <div class="form-group">
                   <label>{{ __('Stripe Secret') }}</label>
                   <input type="text" class="form-control" name="stripe_secret"
-                    value="{{ $stripeInfo['secret'] }}">
+                    value="{{ $stripeInfo['secret'] ?? '' }}">
                   @if ($errors->has('stripe_secret'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('stripe_secret') }}</p>
                   @endif
@@ -423,7 +423,7 @@
                   @endif
                 </div>
 
-                @php $flutterwaveInfo = json_decode($flutterwave->information, true); @endphp
+                @php $flutterwaveInfo = json_decode($flutterwave->information, true) ?? []; @endphp
 
                 <div class="form-group">
                   <label>{{ __('Flutterwave Public Key') }}</label>
@@ -494,11 +494,11 @@
                   @endif
                 </div>
 
-                @php $razorpayInfo = json_decode($razorpay->information, true); @endphp
+                @php $razorpayInfo = json_decode($razorpay->information, true) ?? []; @endphp
 
                 <div class="form-group">
                   <label>{{ __('Razorpay Key') }}</label>
-                  <input type="text" class="form-control" name="razorpay_key" value="{{ $razorpayInfo['key'] }}">
+                  <input type="text" class="form-control" name="razorpay_key" value="{{ $razorpayInfo['key'] ?? '' }}">
                   @if ($errors->has('razorpay_key'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('razorpay_key') }}</p>
                   @endif
@@ -507,7 +507,7 @@
                 <div class="form-group">
                   <label>{{ __('Razorpay Secret') }}</label>
                   <input type="text" class="form-control" name="razorpay_secret"
-                    value="{{ $razorpayInfo['secret'] }}">
+                    value="{{ $razorpayInfo['secret'] ?? '' }}">
                   @if ($errors->has('razorpay_secret'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('razorpay_secret') }}</p>
                   @endif
@@ -563,11 +563,11 @@
                   @endif
                 </div>
 
-                @php $mollieInfo = json_decode($mollie->information, true); @endphp
+                @php $mollieInfo = json_decode($mollie->information, true) ?? []; @endphp
 
                 <div class="form-group">
                   <label>{{ __('Mollie API Key') }}</label>
-                  <input type="text" class="form-control" name="mollie_key" value="{{ $mollieInfo['key'] }}">
+                  <input type="text" class="form-control" name="mollie_key" value="{{ $mollieInfo['key'] ?? '' }}">
                   @if ($errors->has('mollie_key'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('mollie_key') }}</p>
                   @endif
@@ -624,11 +624,11 @@
                   @endif
                 </div>
 
-                @php $paystackInfo = json_decode($paystack->information, true); @endphp
+                @php $paystackInfo = json_decode($paystack->information, true) ?? []; @endphp
 
                 <div class="form-group">
                   <label>{{ __('Paystack Secret Key') }}</label>
-                  <input type="text" class="form-control" name="paystack_key" value="{{ $paystackInfo['key'] }}">
+                  <input type="text" class="form-control" name="paystack_key" value="{{ $paystackInfo['key'] ?? '' }}">
                   @if ($errors->has('paystack_key'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('paystack_key') }}</p>
                   @endif
@@ -683,7 +683,7 @@
               @endif
             </div>
 
-            @php $mercadopagoInfo = json_decode($mercadopago->information, true); @endphp
+            @php $mercadopagoInfo = json_decode($mercadopago->information, true) ?? []; @endphp
 
             <div class="form-group">
               <label>{{ __('MercadoPago Test Mode') }}</label>
@@ -749,7 +749,7 @@
               <div class="col-lg-12">
                 @csrf
                 @php
-                  $anetInfo = json_decode($anet->information, true);
+                  $anetInfo = json_decode($anet->information, true) ?? [];
                 @endphp
                 <div class="form-group">
                   <label>{{ __('Authorize.Net') }}</label>
@@ -859,19 +859,19 @@
                   @endif
                 </div>
 
-                @php $iyzicoInfo = json_decode($iyzico?->information, true); @endphp
+                @php $iyzicoInfo = json_decode($iyzico?->information, true) ?? []; @endphp
 
                 <div class="form-group">
                   <label>{{ __('Iyzico Test Mode') }}</label>
                   <div class="selectgroup w-100">
                     <label class="selectgroup-item">
                       <input type="radio" name="iyzico_mode" value="1" class="selectgroup-input"
-                        {{ !empty($iyzicoInfo) && $iyzicoInfo['iyzico_mode'] == 1 ? 'checked' : '' }}>
+                        {{ ($iyzicoInfo['iyzico_mode'] ?? '') == 1 ? 'checked' : '' }}>
                       <span class="selectgroup-button">{{ __('Active') }}</span>
                     </label>
                     <label class="selectgroup-item">
                       <input type="radio" name="iyzico_mode" value="0" class="selectgroup-input"
-                        {{ !empty($iyzicoInfo) && $iyzicoInfo['iyzico_mode'] == 0 ? 'checked' : '' }}>
+                        {{ ($iyzicoInfo['iyzico_mode'] ?? '') == 0 ? 'checked' : '' }}>
                       <span class="selectgroup-button">{{ __('Deactive') }}</span>
                     </label>
                   </div>
@@ -883,7 +883,7 @@
                 <div class="form-group">
                   <label>{{ __('Iyzico Api Key') }}</label>
                   <input type="text" class="form-control" name="api_key"
-                    value="{{ !empty($iyzicoInfo['api_key']) ? $iyzicoInfo['api_key'] : null }}">
+                    value="{{ $iyzicoInfo['api_key'] ?? '' }}">
                   @if ($errors->has('api_key'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('api_key') }}</p>
                   @endif
@@ -891,7 +891,7 @@
                 <div class="form-group">
                   <label>{{ __('Iyzico Secret Key') }}</label>
                   <input type="text" class="form-control" name="secrect_key"
-                    value="{{ !empty($iyzicoInfo['secrect_key']) ? $iyzicoInfo['secrect_key'] : null }}">
+                    value="{{ $iyzicoInfo['secrect_key'] ?? '' }}">
                   @if ($errors->has('secrect_key'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('secrect_key') }}</p>
                   @endif
@@ -953,19 +953,19 @@
                   @endif
                 </div>
 
-                @php $midtransInfo = json_decode($midtrans?->information, true); @endphp
+                @php $midtransInfo = json_decode($midtrans?->information, true) ?? []; @endphp
 
                 <div class="form-group">
                   <label>{{ __('Midtrans Test Mode') }}</label>
                   <div class="selectgroup w-100">
                     <label class="selectgroup-item">
                       <input type="radio" name="midtrans_mode" value="1" class="selectgroup-input"
-                        {{ !empty($midtransInfo) && $midtransInfo['midtrans_mode'] == 1 ? 'checked' : '' }}>
+                        {{ ($midtransInfo['midtrans_mode'] ?? '') == 1 ? 'checked' : '' }}>
                       <span class="selectgroup-button">{{ __('Active') }}</span>
                     </label>
                     <label class="selectgroup-item">
                       <input type="radio" name="midtrans_mode" value="0" class="selectgroup-input"
-                        {{ !empty($midtransInfo) && $midtransInfo['midtrans_mode'] == 0 ? 'checked' : '' }}>
+                        {{ ($midtransInfo['midtrans_mode'] ?? '') == 0 ? 'checked' : '' }}>
                       <span class="selectgroup-button">{{ __('Deactive') }}</span>
                     </label>
                   </div>
@@ -976,7 +976,7 @@
                 <div class="form-group">
                   <label>{{ __('Midtrans Server Key') }}</label>
                   <input type="text" class="form-control" name="server_key"
-                    value="{{ !empty($midtransInfo['server_key']) ? $midtransInfo['server_key'] : null }}">
+                    value="{{ $midtransInfo['server_key'] ?? '' }}">
                   @if ($errors->has('server_key'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('server_key') }}</p>
                   @endif
@@ -1039,7 +1039,7 @@
                   @endif
                 </div>
 
-                @php $myfatoorahInfo = json_decode($myfatoorah->information, true); @endphp
+                @php $myfatoorahInfo = json_decode($myfatoorah->information, true) ?? []; @endphp
                 <div class="form-group">
                   <label>{{ __('Sandbox Status') }}</label>
                   <div class="selectgroup w-100">
@@ -1117,7 +1117,7 @@
                   @endif
                 </div>
 
-                @php $phonepeInfo = json_decode($phonepe->information, true); @endphp
+                @php $phonepeInfo = json_decode($phonepe->information, true) ?? []; @endphp
 
                 <div class="form-group">
                   <label>{{ __('Sandbox Status') }}</label>
@@ -1214,7 +1214,7 @@
                   @endif
                 </div>
 
-                @php $yocoInfo = json_decode($yoco->information, true); @endphp
+                @php $yocoInfo = json_decode($yoco->information, true) ?? []; @endphp
 
 
                 <div class="form-group">
@@ -1276,7 +1276,7 @@
                   @endif
                 </div>
 
-                @php $toyyibpayInfo = json_decode($toyyibpay->information, true); @endphp
+                @php $toyyibpayInfo = json_decode($toyyibpay->information, true) ?? []; @endphp
 
                 <div class="form-group">
                   <label>{{ __('Toyyibpay Test Mode') }}</label>
@@ -1365,7 +1365,7 @@
                   @endif
                 </div>
 
-                @php $paytabsInfo = json_decode($paytabs->information, true); @endphp
+                @php $paytabsInfo = json_decode($paytabs->information, true) ?? []; @endphp
 
                 <div class="form-group">
                   <label>{{ __('Country') }}</label>
@@ -1462,7 +1462,7 @@
                   @endif
                 </div>
 
-                @php $perfect_moneyInfo = json_decode($perfect_money->information, true); @endphp
+                @php $perfect_moneyInfo = json_decode($perfect_money->information, true) ?? []; @endphp
 
                 <div class="form-group">
                   <label>{{ __('Perfect Money Wallet Id') }}</label>
@@ -1526,13 +1526,13 @@
                   @endif
                 </div>
 
-                @php $xenditInfo = json_decode($xendit->information, true); @endphp
+                @php $xenditInfo = json_decode($xendit->information, true) ?? []; @endphp
 
 
                 <div class="form-group">
                   <label>{{ __('Secret Key') }}</label>
                   <input type="text" class="form-control" name="secret_key"
-                    value="{{ @$xenditInfo['secret_key'] }}">
+                    value="{{ $xenditInfo['secret_key'] ?? '' }}">
                   @if ($errors->has('secret_key'))
                     <p class="mt-1 mb-0 text-danger">{{ $errors->first('secret_key') }}</p>
                   @endif

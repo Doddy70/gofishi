@@ -84,6 +84,18 @@
 - [x] **Review System Stability**: Memperbaiki `BadMethodCallException` pada halaman ulasan vendor dengan menambahkan alias relasi `room()` dan `user()` pada model `RoomReview`. Menjamin kompatibilitas antara panel Admin (yang menggunakan `userInfo`/`hotelRoom`) dan panel Vendor.
 - [x] **Review Route Fix**: Memperbaiki rute `vendor.review.user.store` agar mengarah ke `ReviewController` yang benar (sebelumnya salah mengarah ke `PerahuBookingController`).
 
+### Terbaru (Critical Fixes - 2026-03-18 Night):
+- [x] **Critical Price Calculation Sync**: Memperbaiki bug kritis di mana backend checkout masih menggunakan legacy room columns (`price_day_x`) untuk perhitungan total biaya. Sekarang sistem sepenuhnya menggunakan harga dari `BoatPackage` yang dipilih user.
+- [x] **Dynamic Meeting Time Fix**: Memperbarui logika `timeCheck` untuk menarik waktu kumpul (`meeting_time`) dan waktu kembali (`return_time`) langsung dari data paket, bukan lagi dari kolom statis room.
+
+### Terbaru (Admin & Checkout Stability - 2026-03-18 Late Night):
+- [x] **Admin Permission Synchronization**: Menyelesaikan isu besar di mana Admin (Super Admin) tidak bisa mengakses menu Pengaturan & Manajemen Staf. Sinkronisasi total nama izin antara Database (`Basic Settings`, `Admin Management`, `Package Management`, `Custom Pages`) dengan Sistem Route (`routes/admin.php`) dan Sidebar (`side-navbar.blade.php`).
+- [x] **Payment Gateway Schema Recovery**: Melakukan seeding paksa untuk 7 gerbang pembayaran yang hilang dari tabel `online_gateways` (Paytabs, Toyyibpay, Phonepe, Yoco, Myfatoorah, Xendit, Perfect Money). Ini memperbaiki error "Attempt to read property status on null" pada Panel Admin.
+- [x] **Global Defensive Gateways**: Menerapkan pola *Defensive Coding* pada seluruh 19 blok gerbang pembayaran di Admin Panel untuk mencegah crash jika data konfigurasi belum lengkap.
+- [x] **Enhanced Booking Clash Detection**: Menyempurnakan logika pendeteksian bentrok jadwal (Double Booking) di `BookingController` menggunakan rumus interval overlap yang lebih akurat. Ditambah fitur *Anti-Clash* otomatis untuk menghapus percobaan booking 'pending' lama milik user yang sama agar tidak menghalangi proses pembayaran ulang (Retry).
+- [x] **Calendar Date Disabling**: Integrasi Flatpickr di halaman detail perahu kini otomatis memblokir (disable) tanggal-tanggal yang sudah penuh (Booked), memberikan visualisasi ketersediaan armada yang akurat bagi user sebelum checkout.
+- [x] **Admin Dashboard Redirect Fix**: Menghilangkan loop redirect ke Dashboard saat mengakses menu spesifik dengan menyelaraskan middleware izin pada file route utama.
+
 ### Strategic Plan (2026-03-18): Go-Live Stabilization (Zero Rewrite Rule)
 - [x] **Final Frontend Transaction Sandbox**: Validated end-to-end checkout flow.
 - [x] **Production Environment Tidy-Up**: .env configurations for `APP_ENV=production` & `APP_DEBUG=false`, and server cache optimization executed.

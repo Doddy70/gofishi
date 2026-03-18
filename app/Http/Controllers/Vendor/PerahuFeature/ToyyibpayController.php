@@ -188,7 +188,7 @@ class ToyyibpayController extends Controller
         }
         Session::flash('warning', __('Something Went Wrong') . '!');
 
-        return redirect()->route('vendor.perahu_management.perahus');
+        return redirect()->route('vendor.perahu_management.perahu');
     }
 
     public function cancel()

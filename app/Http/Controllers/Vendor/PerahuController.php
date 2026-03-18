@@ -222,7 +222,7 @@ class PerahuController extends Controller
         } else {
 
             Session::flash('success', __('Please Buy a plan to manage Hide/Show') . '!');
-            return redirect()->route('vendor.perahu_management.perahus');
+            return redirect()->route('vendor.perahu_management.perahu');
         }
     }
 
@@ -365,5 +365,110 @@ class PerahuController extends Controller
 
         Session::flash('success', __('Perahu deleted successfully') . '!');
         return response()->json(['status' => 'success'], 200);
+    }
+    public function edit($id)
+    {
+        $vendorId = Auth::guard('vendor')->user()->id;
+        $current_package = VendorPermissionHelper::packagePermission($vendorId);
+        $defaultLang = Language::query()->where('is_default', 1)->first();
+
+        if ($current_package && (is_object($current_package) || $current_package->isNotEmpty())) {
+            $information['room'] = Perahu::with('room_galleries')->where('vendor_id', '=', $vendorId)->findOrFail($id);
+            $information['languages'] = Language::all();
+
+            $information['room_content'] = RoomContent::where([
+                ['language_id', $defaultLang->id],
+                ['room_id', $id]
+            ])->first();
+
+            $language = Language::where('is_default', 1)->first();
+            $language_id = $language->id;
+
+            $information['hotels'] = Hotel::with([
+                'hotel_contents' => function ($q) use ($language_id) {
+                    $q->where('language_id', $language_id);
+                },
+            ])
+                ->where('vendor_id', $vendorId)
+                ->orderBy('id', 'desc')
+                ->select('id')
+                ->get();
+            $information['categories'] = RoomCategory::where('language_id', $language_id)->get();
+
+            return view('vendors.perahu.edit', $information);
+        } else {
+            Session::flash('success', __('Please Buy a plan to edit perahu') . '!');
+            return redirect()->route('vendor.perahu_management.perahu');
+        }
+    }
+
+    public function manageAdditionalService($id)
+    {
+        $vendorId = Auth::guard('vendor')->user()->id;
+        Perahu::where([['id', $id], ['vendor_id', $vendorId]])->firstOrFail();
+
+        $information['perahu_id'] = $id;
+        $information['languages'] = Language::all();
+        $information['additional_services'] = AdditionalService::where('room_id', $id)->get();
+        $information['defaultLang'] = Language::where('is_default', 1)->first();
+
+        return view('vendors.perahu.additional_services', $information);
+    }
+
+    public function updateAdditionalService(Request $request, $id)
+    {
+        $languages = Language::all();
+        $vendorId = Auth::guard('vendor')->user()->id;
+        Perahu::where([['id', $id], ['vendor_id', $vendorId]])->firstOrFail();
+
+        foreach ($languages as $language) {
+            if (!empty($request[$language->code . '_name'])) {
+                $name_datas = $request[$language->code . '_name'];
+                foreach ($name_datas as $key => $data) {
+                    $additional_service = AdditionalService::where([['room_id', $id], ['key', $key]])->first();
+                    if (is_null($additional_service)) {
+                        $additional_service = new AdditionalService();
+                        $additional_service->room_id = $id;
+                        $additional_service->key = $key;
+                        $additional_service->save();
+                    }
+                    $additional_service_content = AdditionalServiceContent::where([['additional_service_id', $additional_service->id], ['language_id', $language->id]])->first();
+                    if (is_null($additional_service_content)) {
+                        $additional_service_content = new AdditionalServiceContent();
+                        $additional_service_content->additional_service_id = $additional_service->id;
+                        $additional_service_content->language_id = $language->id;
+                    }
+                    $additional_service_content->name = $data;
+                    $additional_service_content->amount = $request[$language->code . '_amount'][$key];
+                    $additional_service_content->save();
+                }
+            }
+        }
+
+        Session::flash('success', __('Additional Service updated successfully') . '!');
+        return Response::json(['status' => 'success'], 200);
+    }
+
+    public function amenitiesUpdate(Request $request)
+    {
+        $languages = Language::all();
+
+        foreach ($languages as $language) {
+            $room_content = RoomContent::where([['room_id', $request->roomId], ['language_id', $language->id]])->first();
+            if ($room_content) {
+                if ($request->amenities) {
+                    $room_content->update([
+                        'amenities' => json_encode($request->amenities)
+                    ]);
+                } else {
+                    $room_content->update([
+                        'amenities' => null
+                    ]);
+                }
+            }
+        }
+
+        Session::flash('success', __('Amenities updated successfully') . '!');
+        return redirect()->back();
     }
 }

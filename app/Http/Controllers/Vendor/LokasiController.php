@@ -389,15 +389,20 @@ class LokasiController extends Controller
     public function manageCounterInformation($id)
     {
         $vendorId = Auth::guard('vendor')->user()->id;
-        Hotel::where([['id', $id], ['vendor_id', $vendorId]])->firstOrFail();
+        $hotel = Hotel::where([['id', $id], ['vendor_id', $vendorId]])->first();
+
+        if (is_null($hotel)) {
+             abort(404, "Lokasi with ID $id not found for this vendor.");
+        }
 
         $current_package = VendorPermissionHelper::packagePermission($vendorId);
 
-        if ($current_package != '[]') {
+        if ($current_package && (is_object($current_package) || $current_package->isNotEmpty())) {
 
             $information['hotel_id'] = $id;
             $information['languages'] = Language::all();
             $information['specifications'] = HotelCounter::where('hotel_id', $id)->get();
+            $information['defaultLang'] = Language::where('is_default', 1)->first();
             return view('vendors.lokasi.counter', $information);
         } else {
 
@@ -465,7 +470,7 @@ class LokasiController extends Controller
         $current_package = VendorPermissionHelper::packagePermission($vendorId);
         $defaultLang = Language::query()->where('is_default', 1)->first();
 
-        if ($current_package != '[]') {
+        if ($current_package && (is_object($current_package) || $current_package->isNotEmpty())) {
             $information['hotel'] = Hotel::with('hotel_galleries')->where('vendor_id', '=', Auth::guard('vendor')->user()->id)->findOrFail($id);
             $information['hotelAddress'] = HotelContent::where([
                 ['language_id', $defaultLang->id],

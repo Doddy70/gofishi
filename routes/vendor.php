@@ -78,7 +78,7 @@ Route::prefix('vendor')->middleware('auth:vendor', 'Demo', 'Deactive', 'email.ve
         Route::post('update-status', 'Vendor\LokasiController@updateStatus')->name('vendor.lokasi_management.update_lokasi_status');
 
         Route::get('manage-counter-section/{id}', 'Vendor\LokasiController@manageCounterInformation')->name('vendor.lokasi_management.manage_counter_section');
-        Route::post('upadte-counter-section/{id}', 'Vendor\LokasiController@updateCounterInformation')->name('vendor.lokasi_management.update_counter_section')->middleware('packageLimitsCheck:hotel,update');
+        Route::post('update-counter-section/{id}', 'Vendor\LokasiController@updateCounterInformation')->name('vendor.lokasi_management.update_counter_section')->middleware('packageLimitsCheck:hotel,update');
         Route::post('counter/delete', 'Vendor\LokasiController@CounterDelete')->name('vendor.lokasi_management.delete_counter');
 
         Route::post('aminitie/cng', 'Vendor\LokasiController@amenitiesUpdate')->name('vendor.lokasi_management.update_amenities');
@@ -160,7 +160,7 @@ Route::prefix('vendor')->middleware('auth:vendor', 'Demo', 'Deactive', 'email.ve
         Route::post('bulk_delete', 'Vendor\PerahuController@bulkDelete')->name('vendor.perahu_management.bulk_delete.perahu');
         Route::post('update-status', 'Vendor\PerahuController@updateStatus')->name('vendor.perahu_management.update_perahu_status');
         Route::get('manage-additional-service/{id}', 'Vendor\PerahuController@manageAdditionalService')->name('vendor.perahu_management.manage_additional_service');
-        Route::post('upadte-additional-service/{id}', 'Vendor\PerahuController@updateAdditionalService')->name('vendor.perahu_management.update_additional_service')->middleware('packageLimitsCheck:hotel,update');
+        Route::post('update-additional-service/{id}', 'Vendor\PerahuController@updateAdditionalService')->name('vendor.perahu_management.update_additional_service')->middleware('packageLimitsCheck:hotel,update');
         Route::post('aminitie/cng', 'Vendor\PerahuController@amenitiesUpdate')->name('vendor.perahu_management.update_amenities');
 
         // Boat Packages Routes

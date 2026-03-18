@@ -161,7 +161,7 @@ class PaytabsController extends Controller
         } else {
             Session::flash('warning', __('Something Went Wrong') . '!');
 
-            return redirect()->route('vendor.perahu_management.perahus');
+            return redirect()->route('vendor.perahu_management.perahu');
         }
     }
 

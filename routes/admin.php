@@ -232,7 +232,7 @@ Route::prefix('/admin')->middleware(['auth:admin', 'Demo', 'adminLang'])->group(
           Route::post('update-status', 'Admin\LokasiManagement\LokasiController@updateStatus')->name('admin.lokasi_management.update_lokasi_status');
 
           Route::get('manage-counter-section/{id}', 'Admin\LokasiManagement\LokasiController@manageCounterInformation')->name('admin.lokasi_management.manage_counter_section');
-          Route::post('upadte-counter-section/{id}', 'Admin\LokasiManagement\LokasiController@updateCounterInformation')->name('admin.lokasi_management.update_counter_section');
+          Route::post('update-counter-section/{id}', 'Admin\LokasiManagement\LokasiController@updateCounterInformation')->name('admin.lokasi_management.update_counter_section');
           Route::post('counter/delete', 'Admin\LokasiManagement\LokasiController@CounterDelete')->name('admin.lokasi_management.delete_counter');
 
 
@@ -355,7 +355,7 @@ Route::prefix('/admin')->middleware(['auth:admin', 'Demo', 'adminLang'])->group(
 
         Route::get('additional-services/{id}', 'Admin\PerahuManagement\PerahuController@manageAdditionalService')->name('admin.perahu_management.manage_additional_service');
 
-        Route::post('upadte-additional-service/{id}', 'Admin\PerahuManagement\PerahuController@updateAdditionalService')->name('admin.perahu_management.update_additional_service');
+        Route::post('update-additional-service/{id}', 'Admin\PerahuManagement\PerahuController@updateAdditionalService')->name('admin.perahu_management.update_additional_service');
 
         Route::post('/update_featured', 'Admin\PerahuManagement\PerahuController@updateFeatured')->name('admin.perahu_management.purchase_feature');
 

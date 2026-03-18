@@ -73,6 +73,14 @@
 - [x] **Internal Relationship Fixes**: Memperbaiki relasi `page_contents` (tambah `page_id`) dan `blog_informations` (tambah `blog_category_id`) agar sesuai dengan kueri JOIN di backend.
 - [x] **Cache Optimization & Sync**: Menjalankan `optimize:clear` untuk memastikan perubahan skema dan rute terbaca oleh sistem. Memperbaiki logika redirect unauthenticated vendor agar tepat sasaran ke halaman login vendor.
 
+### Terbaru (Bug Fixes - 2026-03-18 - Vendor Dashboard & Route Stability):
+- [x] **Vendor Route Typos Fix**: Memperbaiki typo pada rute `upadte-counter-section` dan `upadte-additional-service` yang menyebabkan error 404 saat menyimpan data spesifikasi atau layanan tambahan.
+- [x] **Perahu Controller Recovery**: Mengimplementasikan method `edit`, `manageAdditionalService`, `updateAdditionalService`, dan `amenitiesUpdate` yang sebelumnya hilang pada `Vendor\PerahuController`. Ini menyelesaikan rentetan error 404 pada menu "Kelola Perahu" dan "Layanan Tambahan".
+- [x] **Robust Package Checks**: Memperbaiki logika pengecekan paket (`current_package`) di `LokasiController` & `PerahuController` agar lebih stabil saat vendor tidak memiliki paket aktif atau paket dalam format Collection.
+- [x] **Global Route Pluralization Fix**: Memperbaiki puluhan rute redirect yang salah panggil (`.perahus` -> `.perahu`) di berbagai Payment Gateway Feature Controllers (PayPal, Stripe, Midtrans, dll) untuk menjamin alur transaksi lancar.
+- [x] **Counter Logic Refinement**: Memperbaiki `manageCounterInformation` pada `LokasiController` dengan penanganan error 404 yang lebih informatif dan penyertaan variabel `$defaultLang` yang wajib ada di view.
+
 ### Strategic Plan (2026-03-18): Go-Live Stabilization (Zero Rewrite Rule)
 - [x] **Final Frontend Transaction Sandbox**: Validated end-to-end checkout flow.
 - [x] **Production Environment Tidy-Up**: .env configurations for `APP_ENV=production` & `APP_DEBUG=false`, and server cache optimization executed.
+- [x] **GitHub Synchronization**: Project pushed to `https://github.com/Doddy70/gofishi.git` with all recent fixes and schema alignments.

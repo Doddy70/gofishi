@@ -141,14 +141,14 @@ class AuthorizeNetController extends Controller
                 return redirect()->route('success.page');
             } else {
                 Session::flash('warning', __('Something Went Wrong') . '!');
-                return redirect()->route('vendor.perahu_management.perahus');
+                return redirect()->route('vendor.perahu_management.perahu');
             }
         } else {
             Session::flash('warning', __('Something Went Wrong') . '!');
-            return redirect()->route('vendor.perahu_management.perahus');
+            return redirect()->route('vendor.perahu_management.perahu');
         }
 
         Session::flash('warning', __('Something Went Wrong') . '!');
-        return redirect()->route('vendor.perahu_management.perahus');
+        return redirect()->route('vendor.perahu_management.perahu');
     }
 }

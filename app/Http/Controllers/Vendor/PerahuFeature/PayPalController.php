@@ -68,7 +68,7 @@ class PayPalController extends Controller
 
         $title = 'Activation Feature';
         $notifyURL = route('vendor.perahu_management.perahu.purchase_feature.paypal.notify');
-        $cancelURL = route('vendor.perahu_management.perahus');
+        $cancelURL = route('vendor.perahu_management.perahu');
 
         $payer = new Payer();
         $payer->setPaymentMethod('paypal');

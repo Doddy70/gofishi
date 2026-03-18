@@ -43,7 +43,7 @@ class MercadoPagoController extends Controller
 
         $title = 'Feature Activation ';
         $notifyURL = route('vendor.perahu_management.perahu.purchase_feature.mercadopago.notify');
-        $cancelURL = route('vendor.perahu_management.perahus');
+        $cancelURL = route('vendor.perahu_management.perahu');
 
         $vendor_mail = Vendor::Find(Auth::guard('vendor')->user()->id);
 
@@ -204,7 +204,7 @@ class MercadoPagoController extends Controller
             $request->session()->forget('chargeId');
             $request->session()->forget('roomId');
             Session::flash('warning', __('Something Went Wrong') . '!');
-            return redirect()->route('vendor.perahu_management.perahus');
+            return redirect()->route('vendor.perahu_management.perahu');
         }
     }
 }

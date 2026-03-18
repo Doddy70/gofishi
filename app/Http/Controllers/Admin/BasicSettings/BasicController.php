@@ -668,16 +668,28 @@ class BasicController extends Controller
             ]
         );
 
-        // Auto update .env with GEMINI_API_KEY
+        // Auto update .env with GEMINI_API_KEY and AI_PROVIDER
         if ($request->has('google_gemini_api_key')) {
             $path = base_path('.env');
             if (file_exists($path)) {
                 $content = file_get_contents($path);
+                
+                // Set GEMINI_API_KEY
                 if (strpos($content, 'GEMINI_API_KEY=') !== false) {
                     $content = preg_replace('/^GEMINI_API_KEY=.*/m', 'GEMINI_API_KEY=' . $request->google_gemini_api_key, $content);
                 } else {
                     $content .= "\nGEMINI_API_KEY=" . $request->google_gemini_api_key;
                 }
+
+                // Set AI_PROVIDER if active
+                if ($request->google_gemini_status == 1) {
+                    if (strpos($content, 'AI_PROVIDER=') !== false) {
+                        $content = preg_replace('/^AI_PROVIDER=.*/m', 'AI_PROVIDER=gemini', $content);
+                    } else {
+                        $content .= "\nAI_PROVIDER=gemini";
+                    }
+                }
+
                 file_put_contents($path, $content);
             }
         }

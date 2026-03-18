@@ -148,7 +148,7 @@ Route::prefix('/admin')->middleware(['auth:admin', 'Demo', 'adminLang'])->group(
     );
 
     //========Lokasi Management//
-    Route::prefix('lokasi-management')->middleware('permission:Lokasi Management')->group(function () {
+    Route::prefix('lokasi-management')->group(function () {
 
       // settings route
       Route::get('/settings', 'Admin\LokasiManagement\LokasiController@settings')->name('admin.lokasi_management.settings');

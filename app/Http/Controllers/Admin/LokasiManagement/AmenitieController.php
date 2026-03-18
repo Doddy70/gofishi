@@ -17,7 +17,7 @@ class AmenitieController extends Controller
 {
     public function index(Request $request)
     {
-        $language = Language::query()->where('code', '=', $request->language)->firstOrFail();
+        $language = Language::where('code', $request->language)->first() ?: Language::where('is_default', 1)->first() ?: Language::first();
         $information['amenities'] = $language->amenitieInfo()->orderByDesc('id')->get();
         $information['langs'] = Language::all();
         $information['language'] = $language;

@@ -1,140 +1,117 @@
-@extends('frontend.layout')
+@extends('frontend.layout-airbnb')
 
 @section('pageHeading')
-  @if (!empty($pageHeading))
-    {{ $pageHeading->blog_page_title }}
-  @else
-    {{ __('Tips & Cerita Wisata') }}
-  @endif
+  {{ !empty($pageHeading) ? $pageHeading->blog_page_title : __('Tips & Cerita Wisata') }}
 @endsection
 
-@section('metaKeywords')
-  @if (!empty($seoInfo))
-    {{ $seoInfo->meta_keyword_blog }}
-  @endif
-@endsection
-
-@section('metaDescription')
-  @if (!empty($seoInfo))
-    {{ $seoInfo->meta_description_blog }}
-  @endif
-@endsection
 @section('content')
-  <!-- Page title start-->
-  @includeIf('frontend.partials.breadcrumb', [
-      'breadcrumb' => $bgImg->breadcrumb,
-      'title' => !empty($pageHeading) ? $pageHeading->blog_page_title : __('Tips & Cerita Wisata'),
-  ])
-  <!-- Page title end-->
-  <div class="blog-area blog-area_v1 pt-70 pb-60">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-9">
-          <div class="row pb-10" data-aos="fade-up">
-            @if (count($blogs) > 0)
-              @foreach ($blogs as $blog)
-                <div class="col-md-6">
-                  <article class="card border radius-md mt-30">
-                    <div class="card_top mb-30">
-                      <div class="card_img">
-                        <a href="{{ route('frontend.blog_details', ['slug' => $blog->slug, 'id' => $blog->id]) }}" target="_self"
-                          title="{{ __('Link') }}" class="lazy-container radius-sm ratio ratio-2-3">
-                          <img class="lazyload" src="{{ asset('assets/img/blogs/' . $blog->image) }}"
-                            data-src="{{ asset('assets/img/blogs/' . $blog->image) }}" alt="Blog Image">
-                        </a>
-                      </div>
-                    </div>
-                    <div class="card_content px-20">
-                      <h4 class="card_title lc-2 mb-15">
-                        <a href="{{ route('frontend.blog_details', ['slug' => $blog->slug, 'id' => $blog->id]) }}" target="_self"
-                          title="{{ __('Link') }}">
-                          {{ @$blog->title }}
-                        </a>
-
-                      </h4>
-                      <p class="card_text lc-2">
-                        {{ strlen(strip_tags(convertUtf8($blog->content))) > 100 ? substr(strip_tags(convertUtf8($blog->content)), 0, 100) . '...' : strip_tags(convertUtf8($blog->content)) }}
-                      </p>
-                      <div class="cta-btn mt-20">
-                        <a href="{{ route('frontend.blog_details', ['slug' => $blog->slug, 'id' => $blog->id]) }}"
-                          class="btn btn-lg btn-secondary radius-sm shadow-md icon-end"
-                          title="{{ strlen(strip_tags($blog->content)) > 10 ? mb_substr(strip_tags($blog->content), 0, 10, 'UTF-8') . '...' : $blog->content }}"
-                          target="_self">
-                          <span>{{ __('Read More') }}</span>
-                          <i
-                            class="fal {{ $currentLanguageInfo->direction == 1 ? 'fa-long-arrow-left' : 'fa-long-arrow-right' }}"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-              @endforeach
-            @else
-              <div class="p-3 text-center bg-light radius-md">
-                <h6 class="mb-0">{{ __('NO POST FOUND') }}</h6>
-              </div>
-            @endif
-
-          </div>
-          <nav class="pagination-nav mt-20 mb-40" data-aos="fade-up">
-            <ul class="pagination justify-content-center">
-              {{ $blogs->links() }}
-            </ul>
-          </nav>
-          @if (!empty(showAd(3)))
-            <div class="text-center">
-              {!! showAd(3) !!}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="flex flex-col lg:flex-row gap-16">
+        
+        {{-- Main Blog Feed --}}
+        <div class="flex-grow">
+            <div class="mb-12">
+                <h1 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">
+                    {{ !empty($pageHeading) ? $pageHeading->blog_page_title : __('Tips & Cerita Wisata') }}
+                </h1>
+                <p class="text-lg text-gray-500 font-light">
+                    {{ __('Temukan panduan memancing, cerita perjalanan, dan tips terbaik dari Go Fishi.') }}
+                </p>
             </div>
-          @endif
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                @forelse ($blogs as $blog)
+                    <article class="group relative flex flex-col bg-white rounded-3xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-2xl transition-all duration-500">
+                        <div class="aspect-[16/10] overflow-hidden bg-gray-100 relative">
+                            <img src="{{ asset('assets/img/blogs/' . $blog->image) }}" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition duration-700" 
+                                 alt="{{ $blog->title }}">
+                            <div class="absolute top-4 left-4">
+                                <span class="px-4 py-1.5 bg-white/90 backdrop-blur-md rounded-full text-xs font-bold text-gray-900 shadow-sm">
+                                    {{ $blog->categoryName }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <div class="flex items-center text-xs text-rose-500 font-bold uppercase tracking-widest mb-4">
+                                <i data-lucide="calendar" class="w-3 h-3 mr-2"></i>
+                                {{ \Carbon\Carbon::parse($blog->created_at)->format('M d, Y') }}
+                            </div>
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4 group-hover:text-airbnb-red transition line-clamp-2 leading-tight">
+                                <a href="{{ route('frontend.blog_details', ['slug' => $blog->slug, 'id' => $blog->id]) }}">
+                                    {{ $blog->title }}
+                                </a>
+                            </h2>
+                            <p class="text-gray-500 text-sm font-light leading-relaxed line-clamp-3 mb-6 flex-grow">
+                                {{ strip_tags($blog->content) }}
+                            </p>
+                            <div class="pt-6 border-t border-gray-50 flex items-center justify-between mt-auto">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 mr-3">
+                                        <i data-lucide="user" class="w-4 h-4"></i>
+                                    </div>
+                                    <span class="text-sm font-semibold text-gray-900">{{ $blog->author ?? 'Admin' }}</span>
+                                </div>
+                                <a href="{{ route('frontend.blog_details', ['slug' => $blog->slug, 'id' => $blog->id]) }}" 
+                                   class="text-airbnb-red font-bold text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                                    {{ __('Read More') }}
+                                    <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                @empty
+                    <div class="col-span-full py-20 text-center bg-gray-50 rounded-3xl border border-dashed border-gray-200">
+                        <i data-lucide="book-open" class="w-12 h-12 text-gray-300 mx-auto mb-4"></i>
+                        <h6 class="text-gray-500 font-medium">{{ __('Belum ada artikel yang dipublikasikan.') }}</h6>
+                    </div>
+                @endforelse
+            </div>
+
+            {{-- Pagination --}}
+            <div class="mt-16 flex justify-center">
+                {{ $blogs->links('pagination::tailwind') }}
+            </div>
         </div>
-        <div class="col-xl-3">
-          <!-- Spacer -->
-          <div class="mt-30 d-none d-lg-block"></div>
-          <aside class="widget-area border radius-md px-25" data-aos="fade-up">
-            <div class="widget widget-search py-25">
-              <h5 class="title mb-15">{{ __('Cari Postingan') }}</h5>
-              <div class="search-form"action="{{ route('frontend.blogs') }}" method="GET">
-                <form id="searchForm">
-                  <div class="input-inline bg-white shadow-md rounded-pill">
-                    <input class="form-control border-0" placeholder="{{ __('Search here') . '...' }}" type="text"
-                      value="{{ request()->input('SEARCH') }}" name="SEARCH" required="">
-                    <button class="btn-icon rounded-pill" type="submit" aria-label="Search button">
-                      <i class="far fa-search"></i>
+
+        {{-- Sidebar --}}
+        <aside class="w-full lg:w-80 shrink-0 space-y-12">
+            
+            {{-- Search Widget --}}
+            <div class="p-8 bg-white border border-gray-100 rounded-3xl shadow-sm">
+                <h3 class="text-lg font-bold text-gray-900 mb-6">{{ __('Cari Postingan') }}</h3>
+                <form action="{{ route('frontend.blogs') }}" method="GET" class="relative">
+                    <input type="text" name="title" value="{{ request('title') }}"
+                           class="w-full pl-6 pr-12 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-airbnb-red/20 focus:border-airbnb-red outline-none transition text-sm" 
+                           placeholder="{{ __('Search blogs...') }}">
+                    <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-airbnb-red text-white rounded-xl shadow-md flex items-center justify-center hover:scale-105 transition">
+                        <i data-lucide="search" class="w-4 h-4"></i>
                     </button>
-                  </div>
                 </form>
-              </div>
             </div>
-            <div class="widget widget-blog-categories py-25">
-              <h5 class="title">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#blogCategory">
-                  {{ __('Kategori') }}
-                </button>
-              </h5>
-              <div id="blogCategory" class="collapse show">
-                <div class="accordion-body mt-20 scroll-y">
-                  <ul class="list-unstyled m-0">
+
+            {{-- Categories Widget --}}
+            <div class="p-8 bg-white border border-gray-100 rounded-3xl shadow-sm">
+                <h3 class="text-lg font-bold text-gray-900 mb-6">{{ __('Kategori') }}</h3>
+                <div class="space-y-3">
                     @foreach ($categories as $category)
-                      <li class="d-flex align-items-center justify-content-between">
-                        <a href="{{ route('frontend.blogs', ['category' => $category->slug]) }}"><i class="fal fa-folder"></i>
-                          {{ $category->name }}</a>
-                        <span class="tqy">({{ $category->blogCount }})</span>
-                      </li>
+                        <a href="{{ route('frontend.blogs', ['category' => $category->slug]) }}" 
+                           class="flex items-center justify-between p-3 rounded-xl transition {{ request('category') == $category->slug ? 'bg-rose-50 text-airbnb-red' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                            <span class="text-sm font-semibold tracking-tight">{{ $category->name }}</span>
+                            <span class="text-xs px-2.5 py-1 bg-gray-100 rounded-full font-bold group-hover:bg-rose-100 transition">
+                                {{ $category->blogCount }}
+                            </span>
+                        </a>
                     @endforeach
-                  </ul>
                 </div>
-              </div>
             </div>
+
             @if (!empty(showAd(1)))
-              <div class="text-center">
-                {!! showAd(1) !!}
-              </div>
+                <div class="flex justify-center">
+                    {!! showAd(1) !!}
+                </div>
             @endif
-          </aside>
-          <!-- Spacer -->
-          <div class="pb-40"></div>
-        </div>
-      </div>
+        </aside>
     </div>
-  </div>
+</div>
 @endsection

@@ -15,7 +15,7 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $language = Language::where('code', $request->language)->firstOrFail();
+        $language = Language::where('code', $request->language)->first() ?: Language::where('is_default', 1)->first() ?: Language::first();
         $information['language'] = $language;
         $information['categories'] = $language->hotelCategory()->orderByDesc('id')->get();
         $information['langs'] = Language::all();
@@ -25,6 +25,7 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+        \Illuminate\Support\Facades\Log::info('CategoryController@store hit', $request->all());
         $rules = [
             'language_id' => 'required',
             'name' => [
@@ -45,19 +46,27 @@ class CategoryController extends Controller
         $validator = Validator::make($request->all(), $rules, $message);
 
         if ($validator->fails()) {
+            \Illuminate\Support\Facades\Log::warning('Category validation failed', $validator->errors()->toArray());
             return Response::json([
                 'errors' => $validator->getMessageBag()
             ], 400);
         }
 
-        $in = $request->all();
-        $in['slug'] = createSlug($request->name);
+        try {
+            $in = $request->all();
+            $in['slug'] = createSlug($request->name);
 
-        HotelCategory::create($in);
+            HotelCategory::create($in);
 
-        Session::flash('success', __('New category added successfully') . '!');
+            Session::flash('success', __('New category added successfully') . '!');
 
-        return Response::json(['status' => 'success'], 200);
+            return Response::json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Category creation failed: ' . $e->getMessage());
+            return Response::json([
+                'errors' => ['name' => [$e->getMessage()]]
+            ], 400);
+        }
     }
 
     public function update(Request $request)

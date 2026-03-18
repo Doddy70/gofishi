@@ -36,13 +36,19 @@ class PerahuService
 
         $query = Perahu::query()
             ->with([
-                'room_content' => fn($q) => $q->where('language_id', $languageId),
-                'hotel.hotel_contents' => fn($q) => $q->where('language_id', $languageId),
+                'room_content' => function($q) use ($languageId) { $q->where('language_id', $languageId); },
+                'hotel.hotel_contents' => function($q) use ($languageId) { $q->where('language_id', $languageId); },
                 'vendor'
             ])
             ->join('room_contents', 'rooms.id', '=', 'room_contents.room_id')
             ->join('hotels', 'rooms.hotel_id', '=', 'hotels.id')
-            ->where('room_contents.language_id', $languageId)
+            ->join('hotel_contents', 'hotels.id', '=', 'hotel_contents.hotel_id')
+            ->where(function ($q) use ($languageId) {
+                $q->where('room_contents.language_id', $languageId);
+            })
+            ->where(function ($q) use ($languageId) {
+                $q->where('hotel_contents.language_id', $languageId);
+            })
             ->where('rooms.status', 1)
             ->where('hotels.status', 1);
 
@@ -128,7 +134,12 @@ class PerahuService
         }
     }
 
-        return $query->select('rooms.*')->paginate($perPage);
+        return $query->select(
+            'rooms.*',
+            'room_contents.title',
+            'room_contents.slug',
+            'hotel_contents.title as hotelName'
+        )->paginate($perPage);
     }
 
     /**

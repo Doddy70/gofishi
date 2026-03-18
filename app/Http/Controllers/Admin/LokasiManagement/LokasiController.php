@@ -37,6 +37,7 @@ class LokasiController extends Controller
 
     public function settings()
     {
+        \Illuminate\Support\Facades\Log::info('LokasiController@settings is reached');
         $info = DB::table('basic_settings')->select('hotel_view',  'time_format')->first();
         return view('admin.lokasi-management.settings', ['info' => $info]);
     }
@@ -74,9 +75,9 @@ class LokasiController extends Controller
         $information['currencyInfo'] = $this->getCurrencyInfo();
         $information['langs'] = Language::all();
 
-        $language = Language::query()->where('code', '=', $request->language)->firstOrFail();
+        $language = Language::where('code', $request->language)->first() ?: Language::where('is_default', 1)->first() ?: Language::first();
         $information['language'] = $language;
-        $information['defaultLang'] = Language::query()->where('is_default', 1)->first();
+        $information['defaultLang'] = Language::where('is_default', 1)->first() ?: Language::first();
 
         $language_id = $language->id;
         $status = $title = $category = $vendor_id = $featured = null;

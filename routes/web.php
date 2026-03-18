@@ -79,7 +79,7 @@ Route::middleware(['change.lang'])->group(function () {
   // Lokasi & Destinasi
   Route::get('/lokasi', 'FrontEnd\LokasiController@index')->name('frontend.lokasi');
   Route::get('/lokasi/{slug}/{id}', 'FrontEnd\LokasiController@details')->name('frontend.lokasi.details');
-  Route::get('/destinasi/{slug}', 'FrontEnd\PerahuController@index')->name('frontend.destinasi');
+  Route::get('/faq', 'FrontEnd\FaqController@faq')->name('faq');
 });
 
 // Admin Auth (Outside global middleware to avoid loop)
@@ -98,8 +98,6 @@ Route::get('/vendor/{username}', 'FrontEnd\VendorController@details')
     ->name('frontend.vendor.details')
     ->middleware('change.lang');
 
-
-
-Route::fallback(function () {  return view('errors.404');
-})->middleware('change.lang');
-Route::get('/faq', 'FrontEnd\MiscellaneousController@faq')->name('faq');
+Route::fallback(function () {
+    return view('errors.404');
+})->middleware(['web', 'change.lang']);

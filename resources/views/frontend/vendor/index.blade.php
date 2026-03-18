@@ -1,253 +1,70 @@
-@extends('frontend.layout')
-
+@extends('frontend.layout-airbnb')
 
 @section('pageHeading')
-  {{ !empty($pageHeading) ? $pageHeading->vendor_page_title : __('Vendors') }}
-@endsection
-
-@section('metaKeywords')
-  @if (!empty($seoInfo))
-    {{ $seoInfo->meta_keywords_vendor_page }}
-  @endif
-@endsection
-
-@section('metaDescription')
-  @if (!empty($seoInfo))
-    {{ $seoInfo->meta_description_vendor_page }}
-  @endif
+  {{ !empty($pageHeading) ? $pageHeading->vendor_page_title : __('Our Partners & Vendors') }}
 @endsection
 
 @section('content')
-  @includeIf('frontend.partials.breadcrumb', [
-      'breadcrumb' => $bgImg->breadcrumb,
-      'title' => !empty($pageHeading) ? $pageHeading->vendor_page_title : __('Vendors'),
-  ])
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20" x-data="{ expanded: false }">
+    
+    {{-- Search Header --}}
+    <div class="bg-gray-50 rounded-3xl p-10 mb-16 border border-gray-100 shadow-sm relative overflow-hidden">
+        <div class="absolute -right-20 -top-20 w-64 h-64 bg-rose-50 rounded-full blur-3xl opacity-50"></div>
+        <div class="relative z-10">
+            <h1 class="text-3xl font-extrabold text-gray-900 mb-2 tracking-tight">
+                {{ __('Temukan Mitra & Kapten Terbaik') }}
+            </h1>
+            <p class="text-gray-500 font-light mb-10 max-w-xl">
+                {{ __('Pelajari lebih lanjut tentang vendor kapal berlisensi kami yang siap memberikan pengalaman memancing terbaik untuk Anda.') }}
+            </p>
 
-  <!-- Vendor-area start -->
-  <div class="vendor-area pt-100 pb-75">
-    <div class="container">
-      <div class="product-sort-area pb-20" data-aos="fade-up">
-        <div class="row align-items-center">
-          <div class="col-lg-6">
-            @if (count($vendors) + ($admin ? 1 : 0) > 0)
-              <h4 class="mb-20">{{ count($vendors) + ($admin ? 1 : 0) }}
-                {{ count($vendors) + ($admin ? 1 : 0) > 1 ? __('Vendors') : __('Vendor') }} {{ __('Found') }}</h4>
-            @endif
-          </div>
-          <div class="col-lg-6">
-            <form action="{{ route('frontend.lokasi') }}" method="GET">
-              <div class="row">
-                <div class="col-md-5">
-                  <div class="form-group icon-start mb-20">
-                    <span class="icon color-primary">
-                      <i class="fas fa-user"></i>
-                    </span>
-                    <input type="text" name="name" value="{{ request()->input('name') }}"
-                      class="form-control radius-0 border-primary" placeholder="{{ __('Vendor name/username') }}">
-                  </div>
+            <form action="{{ route('frontend.vendors') }}" method="GET" class="flex flex-col md:flex-row items-center gap-4 bg-white p-3 rounded-2xl shadow-xl border border-gray-100 max-w-3xl">
+                <div class="flex-grow flex items-center px-4 w-full">
+                    <i data-lucide="user" class="w-5 h-5 text-gray-400 mr-3"></i>
+                    <input type="text" name="name" value="{{ request('name') }}"
+                           class="w-full py-3 outline-none bg-transparent text-sm font-medium border-none focus:ring-0" 
+                           placeholder="{{ __('Nama Vendor atau Username') }}">
                 </div>
-                <div class="col-md-5">
-                  <div class="form-group icon-start mb-20">
-                    <span class="icon color-primary">
-                      <i class="fas fa-map-marker-alt"></i>
-                    </span>
-                    <input type="text" name="location" class="form-control radius-0 border-primary"
-                      value="{{ request()->input('location') }}" placeholder="{{ __('Enter location') }}">
-                  </div>
+                <div class="hidden md:block w-px h-8 bg-gray-100 mx-2"></div>
+                <div class="flex-grow flex items-center px-4 w-full">
+                    <i data-lucide="map-pin" class="w-5 h-5 text-gray-400 mr-3"></i>
+                    <input type="text" name="location" value="{{ request('location') }}"
+                           class="w-full py-3 outline-none bg-transparent text-sm font-medium border-none focus:ring-0" 
+                           placeholder="{{ __('Lokasi (Kota/Dermaga)') }}">
                 </div>
-                <div class="col-md-2">
-                  <div class="form-group icon-start">
-                    <button type="submit" class="btn btn-icon bg-primary color-white w-100">
-                      <i class="fal fa-search"></i>
-                      <span class="d-inline-block d-md-none">&nbsp;{{ __('Search') }}</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
+                <button type="submit" class="w-full md:w-auto px-8 py-3 bg-airbnb-red text-white font-bold rounded-xl hover:bg-rose-600 transition shadow-md flex items-center justify-center gap-2">
+                    <i data-lucide="search" class="w-4 h-4"></i>
+                    {{ __('Cari') }}
+                </button>
             </form>
-          </div>
         </div>
-      </div>
-
-      <div class="row">
-        @if (count($vendors) + ($admin ? 1 : 0) == 0)
-          <h3 class="text-center">{{ __('NO VENDOR FOUND') . '!' }}</h3>
-        @else
-          @if ($admin)
-            <div class="col-xl-3 col-lg-4 col-sm-6" data-aos="fade-up">
-              <div class="card mb-25 shadow-md radius-0">
-                <div class="card-info-area bg-primary-light p-3">
-                  <div class="card-img">
-                    <a href="{{ route('frontend.vendor.details', ['username' => 'admin']) }}"
-                      class="lazy-container ratio ratio-1-1 rounded-circle">
-                      <img class="lazyload" src="assets/images/placeholder.png"
-                        data-src="{{ asset('assets/img/admins/' . $admin->image) }}" alt="Vendor">
-                    </a>
-                  </div>
-                  <div class="card-info">
-                    <h6 class="title mb-1">
-                      <a href="{{ route('frontend.vendor.details', ['username' => 'admin']) }}" target="_self"
-                        title="Vendor">{{ $admin->username }}
-                      </a>
-                    </h6>
-                    <div>
-                      <span class="text-muted mb-1"><a
-                          href="{{ route('frontend.vendor.details', ['username' => 'admin']) }}">{{ $admin->first_name }}
-                          {{ $admin->last_name }}</a>
-                      </span>
-                    </div>
-                    <div>
-                      @php
-                        $total_hotels = App\Models\Hotel::where('vendor_id', 0)->count();
-                      @endphp
-                      <span>{{ __('Total Lokasi') . ':' }}&nbsp;</span>
-                      <span class="color-dark">{{ $total_hotels }}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-details p-3">
-                  <ul class="card-list list-unstyled">
-
-                    @if ($admin->address != null)
-                      <li class="icon-start font-sm">
-                        <i class="fal fa-map-marker-alt"></i>
-                        <span>{{ $admin->address }}</span>
-                      </li>
-                    @endif
-
-                    @if ($admin->show_phone_number == 1)
-                      @if (!is_null($admin->phone))
-                        <li class="icon-start font-sm">
-                          <i class="fal fa-phone-plus"></i>
-                          <span><a href="tel:{{ $admin->phone }}"class="text-dark">{{ $admin->phone }}</a></span>
-                        </li>
-                      @endif
-                    @endif
-                    @if ($admin->show_email_address == 1)
-                      <li class="icon-start font-sm">
-                        <i class="fal fa-envelope"></i>
-                        <span><a href="mailto:{{ $admin->email }}"class="text-dark">{{ $admin->email }}</a></span>
-                      </li>
-                    @endif
-
-                  </ul>
-                  <div class="btn-groups d-flex gap-3 flex-wrap mt-20">
-                    <a href="{{ route('frontend.vendor.details', ['username' => 'admin']) }}"
-                      class="btn btn-md btn-primary w-100" title="{{ __('Visit Profile') }}"
-                      target="_self">{{ __('Visit Profile') }}</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          @endif
-
-          @foreach ($vendors as $vendor)
-            <div class="col-xl-3 col-lg-4 col-sm-6" data-aos="fade-up">
-              <div class="card mb-25 shadow-md radius-0">
-                <div class="card-info-area bg-primary-light p-3">
-                  <div class="card-img">
-                    <a href="{{ route('frontend.vendor.details', ['username' => $vendor->username]) }}"
-                      class="lazy-container ratio ratio-1-1 rounded-circle">
-                      @php
-                        if ($vendor->id == 0) {
-                            $vendorInfo = App\Models\Admin::first();
-                        }
-                      @endphp
-                      @if ($vendor->id == 0)
-                        <img class="lazyload" src="assets/images/placeholder.png"
-                          data-src="{{ asset('assets/img/admins/' . $vendorInfo->image) }}" alt="Vendor">
-                      @else
-                        @if ($vendor->photo != null)
-                          <img class="lazyload" src="assets/images/placeholder.png"
-                            data-src="{{ asset('assets/admin/img/vendor-photo/' . $vendor->photo) }}" alt="Vendor">
-                        @else
-                          <img class="lazyload" src="assets/images/placeholder.png"
-                            data-src="{{ asset('assets/img/blank-user.jpg') }}" alt="Vendor">
-                        @endif
-                      @endif
-                    </a>
-                  </div>
-                  <div class="card-info">
-                    <h6 class="title mb-1">
-                      <a href="{{ route('frontend.vendor.details', ['username' => $vendor->username]) }}" target="_self"
-                        title="Vendor">{{ $vendor->username }}
-                      </a>
-                    </h6>
-                    <div>
-                      @php
-                        $vendor_info = App\Models\VendorInfo::where([
-                            ['vendor_id', $vendor->vendorId],
-                            ['language_id', $language->id],
-                        ])
-                            ->select('name')
-                            ->first();
-                      @endphp
-                      <span class="text-muted mb-1"><a
-                          href="{{ route('frontend.vendor.details', ['username' => $vendor->username]) }}">{{ @$vendor_info->name }}</a>
-                      </span>
-                    </div>
-                    <div>
-                      @php
-                        $total_hotels = App\Models\Hotel::where('vendor_id', $vendor->vendorId)->count();
-                      @endphp
-                      <span>{{ __('Total Lokasi') . ':' }}&nbsp;</span>
-                      <span class="color-dark">{{ $total_hotels }}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-details p-3">
-                  <ul class="card-list list-unstyled">
-                    @php
-                      $vendorInfo = App\Models\VendorInfo::where([
-                          ['vendor_id', $vendor->vendorId],
-                          ['language_id', $language->id],
-                      ])->first();
-                    @endphp
-                    @if ($vendorInfo)
-                      @if ($vendorInfo->address != null)
-                        <li class="icon-start font-sm">
-                          <i class="fal fa-map-marker-alt"></i>
-                          <span>{{ $vendorInfo->address }}</span>
-                        </li>
-                      @endif
-                    @endif
-
-                    @if ($vendor->show_phone_number == 1)
-                      @if (!is_null($vendor->phone))
-                        <li class="icon-start font-sm">
-                          <i class="fal fa-phone-plus"></i>
-                          <span><a href="tel:{{ $vendor->phone }}"class="text-dark">{{ $vendor->phone }}</a></span>
-                        </li>
-                      @endif
-                    @endif
-                    @if ($vendor->show_email_addresss == 1)
-                      <li class="icon-start font-sm">
-                        <i class="fal fa-envelope"></i>
-                        <span><a href="mailto:{{ $vendor->email }}"class="text-dark">{{ $vendor->email }}</a></span>
-                      </li>
-                    @endif
-                  </ul>
-                  <div class="btn-groups d-flex gap-3 flex-wrap mt-20">
-                    <a href="{{ route('frontend.vendor.details', ['username' => $vendor->username]) }}"
-                      class="btn btn-md btn-primary w-100" title="{{ __('Visit Profile') }}"
-                      target="_self">{{ __('Visit Profile') }}</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          @endforeach
-        @endif
-      </div>
-      <div class="pagination mt-20 mb-25 justify-content-center" data-aos="fade-up">
-        {{ $vendors->links() }}
-      </div>
-
-      @if (!empty(showAd(3)))
-        <div class="text-center mt-4">
-          {!! showAd(3) !!}
-        </div>
-      @endif
     </div>
-  </div>
-  <!-- Vendor-area end -->
+
+    {{-- Vendors Grid --}}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        @if ($admin)
+            @include('frontend.vendor._card', ['vendor' => $admin, 'isAdmin' => true])
+        @endif
+
+        @forelse ($vendors as $vendor)
+            @include('frontend.vendor._card', ['vendor' => $vendor, 'isAdmin' => false])
+        @empty
+            <div class="col-span-full py-20 text-center bg-gray-50 rounded-3xl border border-dashed border-gray-200">
+                <i data-lucide="users" class="w-12 h-12 text-gray-300 mx-auto mb-4"></i>
+                <h6 class="text-gray-500 font-medium">{{ __('Tidak ada vendor yang ditemukan.') }}</h6>
+            </div>
+        @endforelse
+    </div>
+
+    {{-- Pagination --}}
+    <div class="mt-16 flex justify-center">
+        {{ $vendors->links('pagination::tailwind') }}
+    </div>
+
+    @if (!empty(showAd(3)))
+        <div class="mt-20 flex justify-center">
+            {!! showAd(3) !!}
+        </div>
+    @endif
+</div>
 @endsection

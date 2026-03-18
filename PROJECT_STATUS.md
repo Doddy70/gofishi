@@ -96,7 +96,50 @@
 - [x] **Calendar Date Disabling**: Integrasi Flatpickr di halaman detail perahu kini otomatis memblokir (disable) tanggal-tanggal yang sudah penuh (Booked), memberikan visualisasi ketersediaan armada yang akurat bagi user sebelum checkout.
 - [x] **Admin Dashboard Redirect Fix**: Menghilangkan loop redirect ke Dashboard saat mengakses menu spesifik dengan menyelaraskan middleware izin pada file route utama.
 
+### Terbaru (Admin & AI Integration - 2026-03-19 Early Morning):
+- [x] **General Settings & Maintenance Recovery**: Sinkronisasi masif tabel `basic_settings` (penambahan 22+ kolom yang hilang) termasuk `maintenance_img`, `maintenance_msg`, `bypass_token`, `contact_details`, dan gambar background section. Ini menstabilkan seluruh menu Pengaturan Umum.
+- [x] **Cookie Alert Table Repair**: Memperbaiki tabel `cookie_alerts` yang kehilangan kolom fungsional (`cookie_alert_status`, `cookie_alert_text`, dll) dan melakukan seeding data default (ID/EN).
+- [x] **Plugins Page SQL Fix**: Menambal kolom `disqus_status`, `disqus_short_name`, dan `logo_two` di tabel `basic_settings` yang menyebabkan crash saat mengakses menu Plugins.
+- [x] **Gemini AI Engine Activation**: 
+    - **Global Enable**: Status Google Gemini diaktifkan secara paksa di DB sehingga fitur **Smart Search** dan **AI Chat Bubble** muncul di Homepage.
+    - **Search SQL Fix**: Memperbaiki error `hotel_contents.title` pada fitur pencarian dengan menambahkan `JOIN` yang sebelumnya hilang pada `PerahuService`.
+    - **Env Automation**: Sinkronisasi otomatis `AI_PROVIDER=gemini` ke `.env` saat engine diaktifkan di Admin Panel.
+- [x] **UI Icon Restore**: Menambahkan FontAwesome 6 ke `layout-airbnb` untuk menjamin ikon-ikon AI (sparkles, magic, bot) tampil sempurna di frontend.
+
 ### Strategic Plan (2026-03-18): Go-Live Stabilization (Zero Rewrite Rule)
 - [x] **Final Frontend Transaction Sandbox**: Validated end-to-end checkout flow.
 - [x] **Production Environment Tidy-Up**: .env configurations for `APP_ENV=production` & `APP_DEBUG=false`, and server cache optimization executed.
 - [x] **GitHub Synchronization**: Project pushed to `https://github.com/Doddy70/gofishi.git` with all recent fixes and schema alignments.
+
+### Terbaru (UI/UX Transformation - 2026-03-19 Afternoon):
+- [x] **Premium UI Expansion (Informational Pages)**: Merombak total 4 halaman utama ke layout premium `layout-airbnb`:
+    - **FAQ Page**: Grid accordion lebar dengan desain bersih dan tipografi modern.
+    - **Contact Page**: Two-column split layout (Form + Interactive Map & Info) dengan estetika high-end.
+    - **Blog Hub**: Grid kartu artikel yang canggih dengan efek hover, sidebar kategori, dan optimasi konten detail yang fokus pada keterbacaan.
+    - **Vendors/Captains List**: Transformasi halaman daftar mitra menjadi galeri profil kapten dengan lencana "Verified", hitungan armada, dan kartu profil yang elegan.
+- [x] **Custom Airbnb Pagination**: Membangun view pagination Tailwind kustom di `resources/views/vendor/pagination/tailwind.blade.php` untuk menggantikan default Bootstrap yang kaku. Navigasi halaman sekarang terasa sangat mulus dan menyatu dengan desain keseluruhan.
+- [x] **AI Intelligence Integration**: Memastikan fitur **Smart Search** dan **AI Assistant** berfungsi sempurna di seluruh halaman yang baru diupgrade, menjaga konsistensi fitur pintar di seluruh ekosistem Go Fishi.
+- [x] **Code Quality & Stability Sweep**: Membereskan rentetan linting errors di `PerahuService` dan `checkout.blade.php`. Menggunakan pola *Optional Access* dan *Query Closures* untuk menjamin aplikasi tidak crash saat data profil user atau vendor tidak lengkap.
+
+### Terbaru (UI/UX Transformation & Bug Squashing - 2026-03-19 Night):
+- [x] **Redundant Component Cleanup**: Menghapus "Airbnb-style category bar" di bawah hero home untuk tampilan yang lebih bersih dan minimalis.
+- [x] **Dynamic "Destinations to Explore"**: Mengganti konten statis dengan data riil dari **Kota (Nearby)**, **Kategori Lokasi (Marina/Port)**, **Fasilitas (Amenities)**, dan **Inspirasi (Blog)**.
+- [x] **Critical Route Fixes**: 
+    - **Vendors Page**: Memperbaiki typo route dari `frontend.vendor` menjadi `frontend.vendors` yang sempat menyebabkan error 500.
+    - **FAQ Page**: Memperbaiki pemetaan route yang salah (sebelumnya redirect ke home) sehingga sekarang menampilkan konten FAQ dengan layout accordion premium.
+- [x] **Database Schema Alignment**: Menambahkan kolom yang hilang (`language_id`, `name`, `slug`, `status`) pada tabel `blog_categories` melalui migrasi resmi dan melakukan *data patching* untuk blog yang tidak terkategori.
+
+### Terbaru (Language Consolidation & Admin Stability - 2026-03-19 Night):
+- [x] **Single-Language Consolidation (Indonesian)**: Menyederhanakan seluruh sistem dengan menghapus bahasa Inggris (ID 2). Seluruh data kategori, fasilitas, dan konten telah dimigrasikan ke ID 1 (Indonesian) untuk mencegah kebingungan input dan duplikasi data.
+- [x] **Admin Menu Recovery (Lokasi Management)**: Memperbaiki error 404 pada seluruh sub-menu Pengaturan Lokasi. Perbaikan dilakukan pada rute `fallback` di `web.php` agar mendukung middleware `web` (session), sehingga navigasi admin kembali normal.
+- [x] **Blog Detail SEO Recovery**: Menambahkan kolom `meta_keywords` dan `meta_description` yang hilang pada tabel `blog_informations` melalui migrasi `2026_03_18_175025`. Ini memperbaiki crash "Unknown column" saat membuka detail artikel blog.
+- [x] **Robust Category Management**: Melakukan pembersihan data "sampah" pada tabel `hotel_categories` dan menambahkan sistem logging/try-catch pada `CategoryController` untuk stabilitas saat penambahan data baru.
+
+### Strategic Plan (2026-03-19): Final Polish & Handover
+- [x] **UI Consistency Check**: Memastikan seluruh halaman (Dermaga, Perahu, Blog, FAQ, Vendor) menggunakan sistem ikon Lucide & FontAwesome yang sinkron.
+- [x] **Single Language Deployment**: Mengunci sistem pada bahasa tunggal (Indonesia) sebagai standarisasi operasional Go Fishi.
+- [x] **GitHub Final Synchronization**: Semua perubahan UI/UX dan konsolidasi bahasa telah disinkronkan ke repositori utama.
+- [ ] **Final User Walkthrough**: Menunggu feedback USER untuk visual akhir sebelum masuk ke tahap pemeliharaan (Maintenance).
+
+---
+*(Ekosistem Go Fishi kini memiliki identitas visual yang kohesif, modern, dan premium di setiap sudut aplikasinya, dari pencarian cerdas berbasis AI hingga detail transaksi yang aman)*

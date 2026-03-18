@@ -35,43 +35,6 @@
         </div>
     </div>
 
-    {{-- Airbnb Style Categories Bar --}}
-    @if($showCategories)
-    <div class="sticky top-[80px] z-40 bg-white border-b border-gray-200 shadow-sm hidden md:block">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center space-x-8 overflow-x-auto no-scrollbar py-4" x-data="{ active: 'All' }">
-                @foreach([
-                    ['name' => 'All Boats', 'icon' => 'fas fa-ship', 'color' => 'text-gray-800'],
-                    ['name' => 'Fishing', 'icon' => 'fas fa-fish', 'color' => 'text-blue-500'],
-                    ['name' => 'Luxury', 'icon' => 'fas fa-gem', 'color' => 'text-yellow-500'],
-                    ['name' => 'Speedboats', 'icon' => 'fas fa-tachometer-alt', 'color' => 'text-red-500'],
-                    ['name' => 'Sailboats', 'icon' => 'fab fa-first-order-alt', 'color' => 'text-indigo-500'],
-                    ['name' => 'Party Boats', 'icon' => 'fas fa-glass-cheers', 'color' => 'text-purple-500'],
-                    ['name' => 'Catamarans', 'icon' => 'fas fa-water', 'color' => 'text-teal-500'],
-                    ['name' => 'Diving', 'icon' => 'fas fa-swimmer', 'color' => 'text-cyan-500'],
-                    ['name' => 'Yachts', 'icon' => 'fas fa-anchor', 'color' => 'text-rose-500'],
-                    ['name' => 'Overnight', 'icon' => 'fas fa-bed', 'color' => 'text-slate-500'],
-                    ['name' => 'Jet Skis', 'icon' => 'fas fa-motorcycle', 'color' => 'text-orange-500']
-                ] as $cat)
-                <button @click="active = '{{ $cat['name'] }}'" 
-                        class="flex flex-col items-center justify-center min-w-[70px] gap-2 transition group"
-                        :class="active === '{{ $cat['name'] }}' ? 'text-gray-900 border-b-2 border-gray-900 pb-2 -mb-[18px]' : 'text-gray-500 hover:text-gray-900 hover:border-b-2 hover:border-gray-300 pb-2 -mb-[18px] opacity-70 hover:opacity-100'">
-                    <i class="{{ $cat['icon'] }} {{ $cat['color'] }} text-[22px] group-hover:scale-110 transition-transform"></i>
-                    <span class="text-[12px] font-semibold whitespace-nowrap">{{ $cat['name'] }}</span>
-                </button>
-                @endforeach
-                
-                {{-- Filters Button --}}
-                <div class="ml-auto pl-6 border-l border-gray-200 py-1">
-                    <button class="flex items-center space-x-2 border border-gray-300 rounded-xl px-4 py-3 hover:border-gray-900 transition">
-                        <i class="fas fa-sliders-h text-sm"></i>
-                        <span class="text-xs font-bold">{{ __('Filters') }}</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
 
     {{-- Listings Grid --}}
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -109,73 +72,108 @@
         @endif
     </div>
 
-    {{-- Destinations to explore (Benchmark from Screenshot) --}}
-    <div class="bg-white border-t border-gray-200 py-16" x-data="{ activeTab: 'nearby' }">
+    {{-- Destinations to explore (Attributes from Lokasi Feature) --}}
+    <div class="bg-white border-t border-gray-200 py-16" x-data="{ activeTab: 'popular' }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-2xl font-semibold text-gray-900 mb-6">{{ __('Destinations to explore') }}</h2>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 tracking-tight">{{ __('Destinations to explore') }}</h2>
             
-            {{-- Tabs --}}
-            <div class="flex items-center gap-8 border-b border-gray-200 mb-8 overflow-x-auto no-scrollbar">
-                <button @click="activeTab = 'nearby'" 
-                        class="pb-4 text-sm font-medium transition-all relative"
-                        :class="activeTab === 'nearby' ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-500 hover:text-gray-700'">
-                    {{ __('Nearby destinations') }}
+            {{-- Modern Tabs --}}
+            <div class="flex items-center gap-8 border-b border-gray-200 mb-8 overflow-x-auto no-scrollbar scroll-smooth">
+                <button @click="activeTab = 'popular'" 
+                        class="pb-4 text-sm font-semibold transition-all relative whitespace-nowrap"
+                        :class="activeTab === 'popular' ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-500 hover:text-gray-700 hover:border-b-2 hover:border-gray-300'">
+                    {{ __('Lokasi Populer') }}
                 </button>
-                <button @click="activeTab = 'other'" 
-                        class="pb-4 text-sm font-medium transition-all relative"
-                        :class="activeTab === 'other' ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-500 hover:text-gray-700'">
-                    {{ __('Other types of stays') }}
+                <button @click="activeTab = 'categories'" 
+                        class="pb-4 text-sm font-semibold transition-all relative whitespace-nowrap"
+                        :class="activeTab === 'categories' ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-500 hover:text-gray-700 hover:border-b-2 hover:border-gray-300'">
+                    {{ __('Kategori Lokasi') }}
                 </button>
-                <button @click="activeTab = 'sights'" 
-                        class="pb-4 text-sm font-medium transition-all relative"
-                        :class="activeTab === 'sights' ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-500 hover:text-gray-700'">
-                    {{ __('Nearby Top Sights') }}
+                <button @click="activeTab = 'amenities'" 
+                        class="pb-4 text-sm font-semibold transition-all relative whitespace-nowrap"
+                        :class="activeTab === 'amenities' ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-500 hover:text-gray-700 hover:border-b-2 hover:border-gray-300'">
+                    {{ __('Fasilitas Unggulan') }}
                 </button>
                 <button @click="activeTab = 'inspiration'" 
-                        class="pb-4 text-sm font-medium transition-all relative"
-                        :class="activeTab === 'inspiration' ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-500 hover:text-gray-700'">
-                    {{ __('Travel tips & inspiration') }}
+                        class="pb-4 text-sm font-semibold transition-all relative whitespace-nowrap"
+                        :class="activeTab === 'inspiration' ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-500 hover:text-gray-700 hover:border-b-2 hover:border-gray-300'">
+                    {{ __('Inspirasi Perjalanan') }}
                 </button>
             </div>
 
-            {{-- Grid Locations --}}
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-6 gap-x-4">
-                <template x-if="activeTab === 'nearby'">
+            {{-- Grid Data --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-y-6 gap-x-4">
+                
+                {{-- Tabs Content: Lokasi Populer --}}
+                <template x-if="activeTab === 'popular'">
                     <div class="contents">
-                        @foreach($cities->take(12) as $city)
+                        @forelse($cities->take(12) as $city)
                         @php $cityName = optional($city)->name; @endphp
-                        @if(!empty($cityName))
-                        <a href="{{ route('frontend.perahu', ['location' => $cityName]) }}" class="flex flex-col group">
-                            <span class="text-sm font-semibold text-gray-900 group-hover:underline">{{ $cityName }}</span>
-                            <span class="text-sm text-gray-500">{{ __('Vacation rentals') }}</span>
+                        <a href="{{ route('frontend.perahu', ['location' => $cityName]) }}" class="flex flex-col group p-2 hover:bg-gray-50 rounded-xl transition">
+                            <span class="text-sm font-bold text-gray-900 group-hover:text-airbnb-red transition-colors">{{ $cityName }}</span>
+                            <span class="text-xs text-gray-500 font-light">{{ __('Jelajahi perahu terbaik') }}</span>
                         </a>
-                        @endif
-                        @endforeach
+                        @empty
+                        <div class="col-span-full py-4 text-gray-400 text-sm font-light italic">Belum ada lokasi yang tersedia.</div>
+                        @endforelse
                     </div>
                 </template>
-                <template x-if="activeTab === 'other'">
+
+                {{-- Tabs Content: Kategori Lokasi --}}
+                <template x-if="activeTab === 'categories'">
                     <div class="contents">
-                        <a href="#" class="flex flex-col group">
-                            <span class="text-sm font-semibold text-gray-900 group-hover:underline">Lakehouse rentals</span>
-                            <span class="text-sm text-gray-500">{{ __('United States') }}</span>
+                        @forelse($location_categories as $l_cat)
+                        <a href="{{ route('frontend.lokasi', ['category' => $l_cat->slug]) }}" class="flex flex-col group p-2 hover:bg-gray-50 rounded-xl transition">
+                            <span class="text-sm font-bold text-gray-900 group-hover:text-airbnb-red transition-colors">{{ $l_cat->name }}</span>
+                            <span class="text-xs text-gray-500 font-light">{{ __('Tipe Lokasi') }}</span>
                         </a>
-                        <a href="#" class="flex flex-col group">
-                            <span class="text-sm font-semibold text-gray-900 group-hover:underline">Villa rentals</span>
-                            <span class="text-sm text-gray-500">{{ __('United Kingdom') }}</span>
+                        @empty
+                        <div class="col-span-full py-4 text-gray-400 text-sm font-light italic">Belum ada kategori yang tersedia.</div>
+                        @endforelse
+                    </div>
+                </template>
+
+                {{-- Tabs Content: Fasilitas Unggulan --}}
+                <template x-if="activeTab === 'amenities'">
+                    <div class="contents">
+                        @forelse($all_amenities as $amenity)
+                        <div class="flex flex-col group p-2 hover:bg-gray-50 rounded-xl transition cursor-default">
+                            <div class="flex items-center gap-2 mb-1">
+                                <i class="{{ $amenity->icon ?? 'fas fa-star' }} text-rose-500 text-xs"></i>
+                                <span class="text-sm font-bold text-gray-900">{{ $amenity->title }}</span>
+                            </div>
+                            <span class="text-xs text-gray-500 font-light">{{ __('Fasilitas Standar') }}</span>
+                        </div>
+                        @empty
+                        <div class="col-span-full py-4 text-gray-400 text-sm font-light italic">Belum ada fasilitas yang tercatat.</div>
+                        @endforelse
+                    </div>
+                </template>
+
+                {{-- Tabs Content: Inspirasi Perjalanan --}}
+                <template x-if="activeTab === 'inspiration'">
+                    <div class="contents">
+                        @forelse($blogs->take(12) as $blg)
+                        <a href="{{ route('frontend.blog_details', ['slug' => $blg->slug, 'id' => $blg->id]) }}" class="flex flex-col group p-2 hover:bg-gray-50 rounded-xl transition">
+                            <span class="text-sm font-bold text-gray-900 group-hover:text-airbnb-red transition-colors line-clamp-1">{{ $blg->title }}</span>
+                            <span class="text-xs text-gray-500 font-light">{{ __('Baca selengkapnya') }}</span>
                         </a>
+                        @empty
+                        <div class="col-span-full py-4 text-gray-400 text-sm font-light italic">Belum ada inspirasi tersedia.</div>
+                        @endforelse
                     </div>
                 </template>
             </div>
 
             {{-- Breadcrumb like info --}}
-            <div class="mt-12 pt-8 border-t border-gray-100 flex gap-2 text-sm text-gray-500">
-                <a href="{{ route('index') }}" class="hover:underline">Airbnb</a>
-                <span>›</span>
-                <a href="#" class="hover:underline">Indonesia</a>
-                <span>›</span>
-                <a href="#" class="hover:underline">Jakarta</a>
-                <span>›</span>
-                <span class="font-semibold text-gray-900">Jakarta Utara</span>
+            <div class="mt-16 pt-10 border-t border-gray-100 flex flex-wrap gap-x-2 gap-y-1 text-[13px] text-gray-500 font-light">
+                <a href="{{ route('index') }}" class="hover:text-gray-900 transition underline decoration-gray-300 underline-offset-4">Airbnb</a>
+                <span class="opacity-50">›</span>
+                <a href="#" class="hover:text-gray-900 transition underline decoration-gray-300 underline-offset-4">Indonesia</a>
+                <span class="opacity-50">›</span>
+                <a href="#" class="hover:text-gray-900 transition underline decoration-gray-300 underline-offset-4">Jakarta</a>
+                <span class="opacity-50">›</span>
+                <span class="font-bold text-gray-900">Jakarta Utara</span>
             </div>
         </div>
     </div>

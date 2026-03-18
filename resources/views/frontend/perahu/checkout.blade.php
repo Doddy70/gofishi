@@ -6,6 +6,8 @@
 
 @php
     $roomContent = $room->room_content()->where('language_id', $language->id)->first();
+    $roomCategory = $roomContent->room_category_name ?? __('Armada');
+    $roomTitle = $roomContent->title ?? __('Perahu');
 @endphp
 
 @section('content')
@@ -52,7 +54,7 @@
                             <div class="flex flex-col gap-2">
                                 <label class="text-[12px] font-bold uppercase text-neutral-500">{{ __('Nama Lengkap') }}</label>
                                 <input type="text" name="booking_name" class="border-b border-neutral-300 focus:border-black transition-all py-2 outline-none font-light" 
-                                       placeholder="{{ __('Masukkan Nama') }}" value="{{ !empty($authUser) ? $authUser->username : old('booking_name') }}">
+                                       placeholder="{{ __('Masukkan Nama') }}" value="{{ optional($authUser)->username ?? old('booking_name') }}">
                                 @error('booking_name') <p class="text-rose-500 text-xs mt-1">{{ $message }}</p> @enderror
                             </div>
                             <div class="flex flex-col gap-2">
@@ -64,7 +66,7 @@
                             <div class="flex flex-col gap-2">
                                 <label class="text-[12px] font-bold uppercase text-neutral-500">{{ __('Email') }}</label>
                                 <input type="email" name="booking_email" class="border-b border-neutral-300 focus:border-black transition-all py-2 outline-none font-light" 
-                                       placeholder="{{ __('Alamat Email') }}" value="{{ !empty($authUser) ? $authUser->email : old('booking_email') }}">
+                                       placeholder="{{ __('Alamat Email') }}" value="{{ optional($authUser)->email ?? old('booking_email') }}">
                                 @error('booking_email') <p class="text-rose-500 text-xs mt-1">{{ $message }}</p> @enderror
                             </div>
                             <div class="flex flex-col gap-2">
@@ -90,9 +92,9 @@
                                 @foreach($additional_services as $service)
                                 <label class="flex justify-between items-center cursor-pointer group">
                                     <div class="flex items-center gap-3">
-                                        <input type="checkbox" name="services[]" value="{{ $service->id }}" 
+                                        <input type="checkbox" name="services[]" value="{{ @$service->id }}" 
                                                class="w-4 h-4 rounded border-neutral-300 text-rose-500 focus:ring-rose-500 service-checkbox"
-                                               data-price="{{ $service->price }}">
+                                               data-price="{{ @$service->price }}">
                                         <span class="text-sm text-neutral-700 font-light group-hover:text-black transition">{{ $service->title }}</span>
                                     </div>
                                     <span class="text-sm font-semibold text-neutral-900">+ {{ symbolPrice($service->price) }}</span>
@@ -228,8 +230,8 @@
                                 <img src="{{ asset('assets/img/perahu/featureImage/' . $room->feature_image) }}" class="w-full h-full object-cover">
                             </div>
                             <div class="flex flex-col overflow-hidden">
-                                <span class="text-xs text-neutral-500 font-light truncate">KM {{ $room->nama_km ?? 'Perahu' }} / {{ $roomContent->room_category_name ?? 'Armada' }}</span>
-                                <span class="text-sm font-semibold text-neutral-900 truncate">{{ $roomContent->title }}</span>
+                                <span class="text-xs text-neutral-500 font-light truncate">KM {{ $room->nama_km ?? 'Perahu' }} / {{ $roomCategory }}</span>
+                                <span class="text-sm font-semibold text-neutral-900 truncate">{{ $roomTitle }}</span>
                                 <div class="flex items-center gap-1 text-[10px] mt-1">
                                     <i class="fas fa-star text-[8px]"></i>
                                     <span class="font-bold">{{ number_format($room->average_rating, 1) }}</span>

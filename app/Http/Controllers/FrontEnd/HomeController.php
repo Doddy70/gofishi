@@ -74,8 +74,21 @@ class HomeController extends Controller
     $information['categories'] = RoomCategory::where('language_id', $language->id)->where('status', 1)
         ->orderBy('serial_number', 'asc')->get();
 
-    // Data Kota / City
+    // Data Kota / City (Lokasi)
     $information['cities'] = City::where('language_id', $language->id)->get();
+
+    // Data Kategori Lokasi (Dermaga)
+    $information['location_categories'] = \App\Models\HotelCategory::where('language_id', $language->id)
+        ->where('status', 1)
+        ->orderBy('serial_number', 'asc')
+        ->limit(12)
+        ->get();
+
+    // Data Fasilitas (Amenities)
+    $information['all_amenities'] = \App\Models\Amenitie::where('language_id', $language->id)
+        ->orderBy('id', 'asc')
+        ->limit(12)
+        ->get();
 
     // Data Fitur / Keunggulan
     $information['features'] = Feature::where('language_id', $language->id)->orderBy('serial_number', 'ASC')->get();

@@ -1,166 +1,200 @@
-@extends('frontend.layout')
+@extends('frontend.layout-airbnb')
 
 @section('pageHeading')
   {{ $vendor->username }} - Certified Fishing Captain
 @endsection
 
-@section('customStyle')
-<style>
-    :root {
-        --airbnb-rose: #E31C5F;
-        --fishing-blue: #0052cc;
-    }
-    .captain-header { padding: 40px 0; background: #f7f7f7; border-bottom: 1px solid #ddd; }
-    .captain-card { border-radius: 24px; box-shadow: 0 6px 16px rgba(0,0,0,0.12); padding: 24px; background: white; }
-    .captain-img-vip { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-    .badge-certified { background: var(--fishing-blue); color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
-    .big-catch-gallery img { border-radius: 12px; height: 200px; object-fit: cover; width: 100%; transition: transform 0.3s; }
-    .big-catch-gallery img:hover { transform: scale(1.03); }
-    .spec-tag { background: #eee; padding: 4px 12px; border-radius: 15px; display: inline-block; margin: 2px; font-size: 13px; }
-    .section-title { font-weight: 800; font-size: 24px; margin-bottom: 24px; }
-</style>
-@endsection
-
 @section('content')
-<div class="captain-header header-next">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                <div class="d-flex align-items-center gap-4">
-                    <div class="position-relative">
-                        @if ($vendor_id == 0)
-                            <img class="captain-img-vip" src="{{ asset('assets/img/admins/' . $vendor->image) }}" alt="Captain">
-                        @else
-                            <img class="captain-img-vip" src="{{ $vendor->photo ? asset('assets/admin/img/vendor-photo/' . $vendor->photo) : asset('assets/img/blank-user.jpg') }}" alt="Captain">
-                        @endif
-                        @if(@$vendorInfo->license_number)
-                            <div class="position-absolute bottom-0 end-0 bg-white rounded-circle p-1 shadow-sm">
-                                <i class="fas fa-check-circle text-primary" style="font-size: 24px;"></i>
-                            </div>
-                        @endif
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    
+    {{-- Captain Header Card --}}
+    <div class="bg-white rounded-[2rem] border border-gray-100 shadow-2xl p-8 md:p-12 mb-12 relative overflow-hidden group">
+        <div class="absolute -right-20 -top-20 w-96 h-96 bg-rose-50 rounded-full blur-3xl opacity-40 group-hover:scale-110 transition duration-1000"></div>
+        
+        <div class="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-10">
+            {{-- Avatar & Badge --}}
+            <div class="relative shrink-0">
+                <div class="w-40 h-40 rounded-full overflow-hidden border-8 border-white shadow-xl bg-gray-50">
+                    @if ($vendor_id == 0)
+                        <img src="{{ asset('assets/img/admins/' . $vendor->image) }}" class="w-full h-full object-cover" alt="Captain">
+                    @else
+                        <img src="{{ $vendor->photo ? asset('assets/admin/img/vendor-photo/' . $vendor->photo) : asset('assets/img/blank-user.jpg') }}" 
+                             class="w-full h-full object-cover" alt="Captain">
+                    @endif
+                </div>
+                @if(@$vendorInfo->license_number)
+                    <div class="absolute bottom-2 right-2 w-10 h-10 bg-blue-500 rounded-full border-4 border-white flex items-center justify-center text-white shadow-lg" title="USCG Licensed">
+                        <i data-lucide="check" class="w-5 h-5"></i>
                     </div>
-                    <div>
-                        <h1 class="mb-1 fw-bold" style="font-size: 32px;">{{ $vendor->username }}</h1>
-                        <div class="d-flex flex-wrap gap-2 align-items-center mt-2">
-                            @if(@$vendorInfo->license_number)
-                                <span class="badge-certified"><i class="fas fa-ship me-1"></i> U.S. Coast Guard Licensed</span>
-                            @endif
-                            <span class="text-muted"><i class="fal fa-calendar-alt me-1"></i> Member since {{ \Carbon\Carbon::parse($vendor->created_at)->format('Y') }}</span>
-                        </div>
+                @endif
+            </div>
+
+            {{-- Info Content --}}
+            <div class="flex-grow text-center md:text-left">
+                <div class="flex flex-col md:flex-row md:items-center gap-4 mb-4">
+                    <h1 class="text-4xl font-black text-gray-900 tracking-tight">{{ $vendor->username }}</h1>
+                    @if(@$vendorInfo->license_number)
+                        <span class="inline-flex items-center px-4 py-1.5 bg-blue-50 text-blue-600 rounded-full text-xs font-bold uppercase tracking-widest border border-blue-100">
+                            <i data-lucide="shield-check" class="w-3.5 h-3.5 mr-2"></i>
+                            Certified Captain
+                        </span>
+                    @endif
+                </div>
+                
+                <div class="flex flex-wrap justify-center md:justify-start gap-6 text-gray-500 font-light mb-8">
+                    <div class="flex items-center">
+                        <i data-lucide="map-pin" class="w-4 h-4 mr-2 text-airbnb-red"></i>
+                        {{ @$vendorInfo->city ?: 'Coastal Base' }}, {{ @$vendorInfo->country }}
+                    </div>
+                    <div class="flex items-center">
+                        <i data-lucide="calendar" class="w-4 h-4 mr-2 text-airbnb-red"></i>
+                        Member since {{ \Carbon\Carbon::parse($vendor->created_at)->format('Y') }}
+                    </div>
+                    <div class="flex items-center">
+                        <i data-lucide="anchor" class="w-4 h-4 mr-2 text-airbnb-red"></i>
+                        {{ count($hotel_contents) }} Active Listings
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
-                <button class="btn btn-lg btn-outline-dark radius-md px-4" data-bs-toggle="modal" data-bs-target="#contactModal">
-                    <i class="fal fa-envelope me-2"></i> {{ __('Tanya Kapten') }}
-                </button>
+
+                <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                    <button class="px-8 py-3.5 bg-gray-900 text-white font-bold rounded-2xl hover:bg-black transition shadow-lg transform active:scale-95 flex items-center gap-3" 
+                            data-bs-toggle="modal" data-bs-target="#contactModal">
+                        <i data-lucide="message-square" class="w-5 h-5"></i>
+                        {{ __('Tanya Kapten') }}
+                    </button>
+                    @if($vendor->phone && ($vendor->show_phone_number == 1))
+                        <a href="tel:{{ $vendor->phone }}" class="px-8 py-3.5 bg-white border border-gray-200 text-gray-700 font-bold rounded-2xl hover:bg-gray-50 transition transform active:scale-95 flex items-center gap-3">
+                            <i data-lucide="phone" class="w-5 h-5"></i>
+                            {{ __('WhatsApp') }}
+                        </a>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="container py-5">
-    <div class="row gx-lg-5">
-        {{-- Left Sidebar: Info & Stats --}}
-        <div class="col-lg-4">
-            <div class="captain-card mb-4">
-                <h5 class="fw-bold mb-3">{{ __('Tentang Kapten') }}</h5>
-                <p class="text-muted" style="line-height: 1.6;">
-                    {{ @$vendorInfo->details ?: __('Belum ada informasi bio untuk kapten ini.') }}
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        {{-- Left: Bio & Stats --}}
+        <div class="lg:col-span-4 space-y-10">
+            <div class="p-8 bg-white rounded-3xl border border-gray-100 shadow-sm">
+                <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i data-lucide="info" class="w-5 h-5 mr-3 text-airbnb-red"></i>
+                    {{ __('Tentang Kapten') }}
+                </h3>
+                <p class="text-gray-500 leading-relaxed font-light mb-8">
+                    {{ @$vendorInfo->details ?: __('Kapten ini berdedikasi untuk memberikan pengalaman memancing di laut dalam yang tak tertandingi dengan pengetahuan lokal yang mendalam.') }}
                 </p>
-                <hr>
-                <div class="mb-3">
-                    <h6 class="fw-bold small text-uppercase text-muted">{{ __('Spesialisasi Teknik') }}</h6>
-                    <div class="mt-2">
-                        @if(@$vendorInfo->specializations)
-                            @foreach(explode(',', $vendorInfo->specializations) as $spec)
-                                <span class="spec-tag">{{ trim($spec) }}</span>
-                            @endforeach
-                        @else
-                            <span class="text-muted small">General Saltwater Fishing</span>
-                        @endif
-                    </div>
-                </div>
-                <div class="mb-0">
-                    <h6 class="fw-bold small text-uppercase text-muted">{{ __('Lokasi Operasi') }}</h6>
-                    <p class="mb-0 mt-1"><i class="fal fa-map-marker-alt text-primary me-2"></i> {{ @$vendorInfo->city ?: 'Jakarta Utara' }}, {{ @$vendorInfo->country }}</p>
-                </div>
-            </div>
 
-            {{-- Verified Badge Box --}}
-            @if(@$vendorInfo->license_number)
-            <div class="alert alert-info border-0 radius-md p-4">
-                <div class="d-flex gap-3">
-                    <i class="fas fa-shield-check text-info" style="font-size: 24px;"></i>
+                <div class="space-y-6">
                     <div>
-                        <h6 class="fw-bold mb-1">Identitas Terverifikasi</h6>
-                        <p class="small mb-0">Kapten ini telah memverifikasi lisensi profesional dan identitas mereka dengan Go Fishi.</p>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">{{ __('Spesialisasi') }}</h4>
+                        <div class="flex flex-wrap gap-2">
+                            @forelse(explode(',', @$vendorInfo->specializations ?? 'Fly Fishing,Deep Sea,Trolling') as $spec)
+                                <span class="px-3 py-1.5 bg-gray-50 text-gray-600 rounded-xl text-xs font-medium border border-gray-100">
+                                    {{ trim($spec) }}
+                                </span>
+                            @empty
+                                <span class="text-gray-400 italic text-sm">General</span>
+                            @endforelse
+                        </div>
                     </div>
-                </div>
-            </div>
-            @endif
-        </div>
 
-        {{-- Right Content: Big Catch & Listings --}}
-        <div class="col-lg-8">
-            
-            {{-- Big Catch Gallery --}}
-            <section class="mb-5">
-                <h3 class="section-title"><i class="fas fa-trophy text-warning me-2"></i> {{ __('Galeri "Big Catch"') }}</h3>
-                <div class="row big-catch-gallery g-3">
-                    @if(count($captain_galleries) > 0)
-                        @foreach($captain_galleries as $gallery)
-                            <div class="col-md-4 col-6">
-                                <a href="{{ asset('assets/img/captain/gallery/' . $gallery->image) }}" class="lightbox-single">
-                                    <img src="{{ asset('assets/img/captain/gallery/' . $gallery->image) }}" alt="{{ $gallery->title }}">
-                                    @if($gallery->title || $gallery->weight)
-                                        <div class="mt-2">
-                                            <span class="fw-bold d-block small">{{ $gallery->title }}</span>
-                                            <span class="text-muted" style="font-size: 11px;">{{ $gallery->weight }}</span>
-                                        </div>
-                                    @endif
-                                </a>
-                            </div>
-                        @endforeach
-                    @else
-                        <div class="col-12">
-                            <div class="p-5 text-center bg-light radius-md">
-                                <i class="fal fa-camera-retro mb-3 d-block" style="font-size: 40px; color: #ccc;"></i>
-                                <p class="text-muted">Kapten belum mengunggah foto hasil tangkapan.</p>
+                    @php
+                        $license = @$vendorInfo->license_number;
+                    @endphp
+                    @if($license)
+                        <div class="p-4 bg-blue-50/50 rounded-2xl border border-blue-100 border-dashed">
+                            <div class="flex items-center gap-3 text-blue-700">
+                                <i data-lucide="award" class="w-5 h-5"></i>
+                                <div class="text-xs font-bold leading-none">
+                                    <p class="mb-1 text-[10px] uppercase opacity-70">License Verified</p>
+                                    <p>{{ $license }}</p>
+                                </div>
                             </div>
                         </div>
                     @endif
+                </div>
+            </div>
+
+            @include('frontend.partials._trust_badges')
+        </div>
+
+        {{-- Right: Gallery & Listings --}}
+        <div class="lg:col-span-8 space-y-16">
+            
+            {{-- Big Catch Gallery --}}
+            <section>
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="text-2xl font-bold text-gray-900">{{ __('Hasil Tangkapan Utama') }}</h3>
+                    <div class="h-px bg-gray-100 flex-grow mx-6"></div>
+                    <i data-lucide="trophy" class="w-6 h-6 text-yellow-500"></i>
+                </div>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
+                    @forelse($captain_galleries as $gallery)
+                        <a href="{{ asset('assets/img/captain/gallery/' . $gallery->image) }}" 
+                           class="group relative aspect-square rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition block border-4 border-white">
+                            <img src="{{ asset('assets/img/captain/gallery/' . $gallery->image) }}" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition duration-700" 
+                                 alt="{{ $gallery->title }}">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex flex-col justify-end p-4">
+                                <p class="text-white text-sm font-bold truncate">{{ $gallery->title }}</p>
+                                <p class="text-white/80 text-[10px] font-medium">{{ $gallery->weight }}</p>
+                            </div>
+                        </a>
+                    @empty
+                        <div class="col-span-full py-20 text-center bg-gray-50 rounded-3xl border border-dashed border-gray-200">
+                            <i data-lucide="camera" class="w-12 h-12 text-gray-300 mx-auto mb-4"></i>
+                            <p class="text-gray-400 font-light">{{ __('Kapten belum mengunggah foto hasil tangkapan.') }}</p>
+                        </div>
+                    @endforelse
                 </div>
             </section>
 
             {{-- Charter Listings --}}
             <section>
-                <h3 class="section-title">{{ __('Charter Perahu dari Kapten Ini') }}</h3>
-                <div class="row">
-                    @if (count($hotel_contents) > 0)
-                        @foreach ($hotel_contents as $hotel_content)
-                            <div class="col-md-6">
-                                {{-- Kita gunakan partial card yang sudah ada namun disesuaikan --}}
-                                <div class="card border-0 shadow-sm radius-md mb-4 overflow-hidden">
-                                    <img src="{{ asset('assets/img/hotel/logo/' . $hotel_content->logo) }}" class="card-img-top" style="height: 200px; object-fit: cover;">
-                                    <div class="card-body">
-                                        <h5 class="fw-bold mb-1">{{ $hotel_content->title }}</h5>
-                                        <p class="small text-muted mb-3"><i class="fal fa-map-marker-alt me-1"></i> {{ $hotel_content->address }}</p>
-                                        <a href="{{ route('frontend.lokasi.details', ['slug' => $hotel_content->slug, 'id' => $hotel_content->id]) }}" class="btn btn-dark btn-sm w-100 radius-md">Lihat Paket Charter</a>
-                                    </div>
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="text-2xl font-bold text-gray-900">{{ __('Daftar Charter Aktif') }}</h3>
+                    <div class="h-px bg-gray-100 flex-grow mx-6"></div>
+                    <i data-lucide="anchor" class="w-6 h-6 text-blue-500"></i>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    @forelse ($hotel_contents as $boat)
+                        <div class="group bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden">
+                            <div class="aspect-[16/10] bg-gray-100 overflow-hidden relative">
+                                <img src="{{ asset('assets/img/hotel/logo/' . $boat->logo) }}" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition duration-700" 
+                                     alt="{{ $boat->title }}">
+                                <div class="absolute top-4 left-4">
+                                    <span class="px-4 py-1.5 bg-white/90 backdrop-blur-md rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-900 shadow-sm">
+                                        {{ $boat->categoryName }}
+                                    </span>
                                 </div>
                             </div>
-                        @endforeach
-                    @else
-                        <p class="text-muted">Kapten ini belum memiliki daftar charter aktif.</p>
-                    @endif
+                            <div class="p-6">
+                                <h4 class="text-lg font-bold text-gray-900 mb-2 truncate group-hover:text-airbnb-red transition">{{ $boat->title }}</h4>
+                                <div class="flex items-center text-xs text-gray-400 mb-6">
+                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 mr-1.5 text-airbnb-red"></i>
+                                    {{ $boat->address }}
+                                </div>
+                                <a href="{{ route('frontend.lokasi.details', ['slug' => $boat->slug, 'id' => $boat->id ?? $boat->hotel_id]) }}" 
+                                   class="flex items-center justify-center w-full py-3 bg-gray-50 text-gray-900 font-bold rounded-xl hover:bg-airbnb-red hover:text-white transition shadow-sm">
+                                    {{ __('Lihat Detail Charter') }}
+                                </a>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="col-span-full py-12 text-center bg-gray-50 rounded-3xl">
+                            <p class="text-gray-400">{{ __('Tidak ada charter yang aktif saat ini.') }}</p>
+                        </div>
+                    @endforelse
                 </div>
             </section>
         </div>
     </div>
 </div>
 
-{{-- Modal Contact --}}
 @include('frontend.vendor.contact-modal')
-
 @endsection

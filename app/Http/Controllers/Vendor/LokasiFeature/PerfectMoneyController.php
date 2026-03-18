@@ -164,7 +164,7 @@ class PerfectMoneyController extends Controller
         } else {
             Session::flash('warning', __('Something Went Wrong') . '!');
 
-            return redirect()->route('vendor.lokasi_management.lokasis');
+            return redirect()->route('vendor.lokasi_management.lokasi');
         }
     }
 }

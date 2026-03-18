@@ -96,9 +96,9 @@
 
         {{-- PERAHU MANAGEMENT --}}
         <li
-          class="nav-item @if (request()->routeIs('vendor.perahu_management.rooms')) active
-            @elseif (request()->routeIs('vendor.perahu_management.create_room')) active
-            @elseif (request()->routeIs('vendor.perahu_management.edit_room')) active
+          class="nav-item @if (request()->routeIs('vendor.perahu_management.perahu')) active
+            @elseif (request()->routeIs('vendor.perahu_management.create_perahu')) active
+            @elseif (request()->routeIs('vendor.perahu_management.edit_perahu')) active
             @elseif (request()->routeIs('vendor.perahu_management.coupons')) active
             @elseif (request()->routeIs('vendor.perahu_management.create_coupon')) active
             @elseif (request()->routeIs('vendor.perahu_management.edit_coupon')) active
@@ -111,9 +111,9 @@
 
           <div id="room"
             class="collapse
-              @if (request()->routeIs('vendor.perahu_management.rooms')) show
-              @elseif (request()->routeIs('vendor.perahu_management.create_room')) show
-              @elseif (request()->routeIs('vendor.perahu_management.edit_room')) show
+              @if (request()->routeIs('vendor.perahu_management.perahu')) show
+              @elseif (request()->routeIs('vendor.perahu_management.create_perahu')) show
+              @elseif (request()->routeIs('vendor.perahu_management.edit_perahu')) show
               @elseif (request()->routeIs('vendor.perahu_management.coupons')) show
               @elseif (request()->routeIs('vendor.perahu_management.create_coupon')) show
               @elseif (request()->routeIs('vendor.perahu_management.edit_coupon')) show
@@ -132,7 +132,7 @@
               </li>
 
               <li
-                class="{{ request()->routeIs('vendor.perahu_management.rooms') || request()->routeIs('vendor.perahu_management.edit_room') ? 'active' : '' }}">
+                class="{{ request()->routeIs('vendor.perahu_management.perahu') || request()->routeIs('vendor.perahu_management.edit_perahu') ? 'active' : '' }}">
                 <a href="{{ route('vendor.perahu_management.perahu', ['language' => $defaultLang->code]) }}">
                   <span class="sub-item">{{ __('Kelola Perahu') }}</span>
                 </a>

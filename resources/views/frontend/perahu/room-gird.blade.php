@@ -9,21 +9,19 @@
 @endsection
 
 @section('content')
-{{-- Categories Navigation --}}
+{{-- Categories Navigation (Sticky) --}}
 @include('frontend.partials.categories-slider')
 
-{{-- Dual Panel Container --}}
-<div class="flex flex-col lg:flex-row h-[calc(100vh-172px)] overflow-hidden">
+{{-- Main Grid List --}}
+<div class="max-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4 py-8" x-data="{ showMap: false }">
     
-    {{-- Left Panel: Listing List --}}
-    <div class="w-full lg:w-[50%] xl:w-[60%] overflow-y-auto no-scrollbar px-4 sm:px-8 lg:px-12 py-8 bg-white flex flex-col border-r border-gray-100">
-        
-        {{-- Search Summary --}}
-        <div class="mb-10">
-            <div class="text-[14px] text-gray-500 font-light mb-2">
+    {{-- Search & Filter Summary --}}
+    <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+            <div class="text-[14px] text-gray-500 font-light mb-1">
                 {{ $room_contents->total() }} {{ __('listings found') }}
             </div>
-            <h1 class="text-[32px] font-bold text-gray-900 tracking-tight leading-none mb-6">
+            <h1 class="text-[28px] font-bold text-gray-900 tracking-tight">
                 @if(request('location'))
                     {{ __('Perahu di') }} {{ request('location') }}
                 @elseif(request('category'))
@@ -32,78 +30,65 @@
                     {{ __('Semua Armada Go Fishi') }}
                 @endif
             </h1>
-
-            {{-- Smart AI Quick Query --}}
-            <div class="relative group max-w-2xl">
-                <form action="{{ route('frontend.perahu.ai_search') }}" method="GET">
-                    <div class="relative flex items-center bg-white border border-gray-300 rounded-full py-4 px-6 hover:shadow-lg focus-within:shadow-lg focus-within:border-transparent focus-within:ring-2 focus-within:ring-airbnb-red transition-all">
-                        <i data-lucide="sparkles" class="w-5 h-5 text-airbnb-red mr-3 group-hover:animate-pulse"></i>
-                        <input type="text" name="q" placeholder="{{ __('Tanya AI: Saya ingin mancing 10 orang di Jakarta...') }}" class="w-full bg-transparent border-none focus:ring-0 text-[16px] text-gray-900 placeholder-gray-400" value="{{ request('q') }}">
-                        <button type="submit" class="bg-airbnb-red text-white py-2 px-6 rounded-full font-bold text-sm ml-2 hover:brightness-110 transition">
-                            AI Search
-                        </button>
-                    </div>
-                </form>
-            </div>
         </div>
-
-        {{-- Flash Messages --}}
-        @if(session('success'))
-            <div class="mb-8 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-start gap-4 text-emerald-800 text-sm">
-                <i data-lucide="bot" class="w-6 h-6 text-emerald-600 shrink-0"></i>
-                <div class="leading-relaxed">
-                    <span class="font-bold underline">Go Fishi Assistant:</span> {!! session('success') !!}
-                </div>
-            </div>
-        @endif
-
-        {{-- Listing Grid --}}
-        @if($room_contents->total() < 1)
-            <div class="flex-grow flex flex-col items-center justify-center py-20 text-center">
-                <div class="bg-gray-100 p-8 rounded-full mb-6">
-                    <i data-lucide="search-x" class="w-16 h-16 text-gray-400"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ __('Tidak menemukan yang pas?') }}</h3>
-                <p class="text-gray-500 max-w-sm">{{ __('Coba gunakan fitur tanya AI di atas atau bersihkan filter pencarian Anda.') }}</p>
-                <a href="{{ route('frontend.perahu') }}" class="mt-8 font-bold underline">{{ __('Lihat semua armada') }}</a>
-            </div>
-        @else
-            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-12">
-                @foreach($room_contents as $room)
-                    @include('frontend.perahu._card', ['room' => $room])
-                @endforeach
-            </div>
-
-            {{-- Pagination Airbnb Style --}}
-            <div class="mt-16 pt-12 border-t border-gray-100 flex flex-col items-center gap-6 mb-12">
-                {{ $room_contents->appends(request()->input())->links('pagination::tailwind') }}
-                <p class="text-sm text-gray-500 font-light">
-                    {{ __('Menampilkan') }} {{ $room_contents->firstItem() }} – {{ $room_contents->lastItem() }} {{ __('dari') }} {{ $room_contents->total() }} {{ __('armada') }}
-                </p>
-            </div>
-        @endif
         
-    </div>
-
-    {{-- Right Panel: Interactive Map --}}
-    <div class="hidden lg:block lg:flex-grow bg-gray-50 relative group/map">
-        <div id="main-map" class="absolute inset-0"></div>
-        
-        {{-- Map Controls --}}
-        <div class="absolute top-6 left-1/2 -translate-x-1/2 z-10 flex items-center gap-4">
-            <button id="search-area-btn" class="bg-white border border-gray-300 rounded-full px-6 py-2.5 text-[14px] font-bold shadow-xl hover:bg-gray-50 transition active:scale-95 flex items-center gap-2">
-                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-                {{ __('Cari di area ini') }}
-            </button>
-        </div>
-
-        {{-- Floating Price Tooltip --}}
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 bg-white/90 backdrop-blur-sm border border-gray-200 py-2.5 px-6 rounded-2xl shadow-2xl opacity-0 group-hover/map:opacity-100 transition-opacity">
-            <i data-lucide="info" class="w-4 h-4 text-airbnb-red"></i>
-            <span class="text-xs font-bold text-gray-800 tracking-tight">{{ __('Klik marker untuk detail harga armada') }}</span>
+        {{-- AI Search Bar (Narrower for Airbnb look) --}}
+        <div class="relative group w-full md:w-[400px]">
+            <form action="{{ route('frontend.perahu.ai_search') }}" method="GET">
+                <div class="relative flex items-center bg-white border border-gray-200 rounded-full py-2.5 px-5 hover:shadow-md transition-shadow">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-rose-500 mr-2"></i>
+                    <input type="text" name="q" placeholder="{{ __('Tanya AI...') }}" class="w-full bg-transparent border-none focus:ring-0 text-sm" value="{{ request('q') }}">
+                </div>
+            </form>
         </div>
     </div>
 
+    {{-- Listing Grid: Full Width columns --}}
+    @if($room_contents->total() < 1)
+        <div class="py-20 text-center flex flex-col items-center">
+            <div class="bg-gray-50 p-10 rounded-full mb-6">
+                <i data-lucide="search-x" class="w-16 h-16 text-gray-300"></i>
+            </div>
+            <h3 class="text-xl font-bold">{{ __('Tidak menemukan hasil') }}</h3>
+            <p class="text-gray-500">{{ __('Coba hapus filter atau gunakan pencarian lain.') }}</p>
+        </div>
+    @else
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-6 gap-y-10 transition-all duration-500">
+            @foreach($room_contents as $room)
+                @include('frontend.perahu._card', ['room' => $room])
+            @endforeach
+        </div>
+
+        {{-- Pagination --}}
+        <div class="mt-16 pt-12 border-t border-gray-100 flex flex-col items-center gap-4">
+            {{ $room_contents->appends(request()->input())->links('pagination::tailwind') }}
+            <p class="text-sm text-gray-400">
+                {{ __('Menampilkan') }} {{ $room_contents->total() }} {{ __('armada terbaik.') }}
+            </p>
+        </div>
+    @endif
+
+    {{-- Floating Map Toggle Button --}}
+    <div class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[45]">
+        <button @click="showMap = !showMap" 
+                class="bg-gray-900 text-white px-5 py-3.5 rounded-full font-bold flex items-center space-x-3 shadow-2xl hover:scale-105 active:scale-95 transition backdrop-blur-md">
+            <span x-text="showMap ? 'Tampilkan Daftar' : 'Tampilkan Peta'"></span>
+            <i :data-lucide="showMap ? 'list' : 'map'" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    {{-- Full Screen Map Overlay --}}
+    <div x-show="showMap" 
+         x-cloak
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 translate-y-10"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 translate-y-10"
+         class="fixed inset-0 z-[40] bg-white">
+        <div id="main-map" class="w-full h-full"></div>
+    </div>
 </div>
 @endsection
 

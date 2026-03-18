@@ -13,6 +13,9 @@ Route::prefix('vendor')->middleware('change.lang')->group(function () {
   Route::post('/signup/submit', 'Vendor\VendorController@create')->name('vendor.signup_submit')->middleware('Demo');
   Route::get('/login', 'Vendor\VendorController@login')->name('vendor.login');
   Route::post('/login/submit', 'Vendor\VendorController@authentication')->name('vendor.login_submit');
+  Route::get('/admin', function() {
+      return redirect()->route('vendor.dashboard');
+  });
 
   Route::get('/email/verify', 'Vendor\VendorController@confirm_email');
 

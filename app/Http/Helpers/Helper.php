@@ -161,43 +161,41 @@ if (!function_exists('onlyDigitalItems')) {
 }
 
 if (!function_exists('get_href')) {
-  function get_href($data)
-  {
-    $link_href = '';
-
-    if ($data->type == 'home') {
-      $link_href = route('index');
-    } else if ($data->type == 'rooms') {
-      $link_href = route('frontend.perahu');
-    } else if ($data->type == 'pricing') {
-      $link_href = route('frontend.pricing');
-    } else if ($data->type == 'hotels') {
-      $link_href = route('frontend.lokasi');
-    } else if ($data->type == 'blog') {
-      $link_href = route('blog');
-    } else if ($data->type == 'faq') {
-      $link_href = route('faq');
-    } else if ($data->type == 'contact') {
-      $link_href = route('contact');
-    } else if ($data->type == 'about-us') {
-      $link_href = route('about_us');
-    } else if ($data->type == 'custom') {
-      /**
-       * this menu has created using menu-builder from the admin panel.
-       * this menu will be used as drop-down or to link any outside url to this system.
-       */
-      if ($data->href == '') {
+    function get_href($data)
+    {
         $link_href = '#';
-      } else {
-        $link_href = $data->href;
-      }
-    } else {
-      // this menu is for the custom page which has been created from the admin panel.
-      $link_href = route('dynamic_page', ['slug' => $data->type]);
-    }
+        $data = (object)$data;
 
-    return $link_href;
-  }
+        try {
+            $type = $data->type ?? '';
+            
+            if ($type == 'home') {
+                $link_href = route('index');
+            } else if ($type == 'rooms') {
+                $link_href = route('frontend.perahu');
+            } else if ($type == 'hotels') {
+                $link_href = route('frontend.lokasi');
+            } else if ($type == 'blog') {
+                $link_href = \Route::has('frontend.blogs') ? route('frontend.blogs') : ( \Route::has('blog') ? route('blog') : '#' );
+            } else if ($type == 'faq') {
+                $link_href = route('faq');
+            } else if ($type == 'contact') {
+                $link_href = route('contact');
+            } else if ($type == 'about-us') {
+                $link_href = route('about_us');
+            } else if ($type == 'vendors') {
+                $link_href = \Route::has('frontend.vendors') ? route('frontend.vendors') : '#';
+            } else if ($type == 'custom') {
+                $link_href = empty($data->href) ? '#' : $data->href;
+            } else {
+                $link_href = \Route::has('dynamic_page') ? route('dynamic_page', ['slug' => $type]) : '#';
+            }
+        } catch (\Exception $e) {
+            $link_href = '#';
+        }
+
+        return $link_href;
+    }
 }
 
 if (!function_exists('format_price')) {

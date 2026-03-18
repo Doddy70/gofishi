@@ -1,4 +1,4 @@
-# Go Fishi - Technical Project Status (v1.4 - Final Backend Master)
+# Go Fishi - Technical Project Status (v1.5 - Vendor Stability Fixes)
 
 ## Foundation (Completed)
 - [x] **Database Schema**: Penyelarasan total tabel `bookings`, metadata kapal, dan area rute.
@@ -57,3 +57,22 @@
     - **Views**: Sinkronisasi path view `frontend/hotel` menjadi `frontend/lokasi` dan pembersihan path `vendors/perahu/packages`.
 - [x] **Single Page Integration**: Halaman detail Lokasi (Dermaga) kini telah terintegrasi penuh dengan daftar Perahu (Armada) yang tersedia di lokasi tersebut, lengkap dengan rating, kategori, dan detail operasional ala Airbnb.
 - [x] **Multi-Language Cleanup**: Menghapus redundansi bahasa di database untuk memastikan UI Admin & Frontend bersih (Hanya ID & EN sesuai kebutuhan MVP).
+
+### Terbaru (Bug Fixes - 2026-03-18):
+- [x] **Boat Details Integration**: Halaman detail perahu (`room-details.blade.php`) kini terintegrasi penuh dengan sistem paket (`packages`) dan harga dinamis. Tombol "Kontak Vendor" telah diubah menjadi link WhatsApp langsung.
+- [x] **Checkout Flow Fix**: Memastikan data dari detail perahu (tanggal, paket, tamu) diteruskan dengan benar ke halaman checkout melalui session.
+- [x] **Relationship Name Consistency**: Memperbaiki error `RelationNotFoundException` dengan menambahkan relasi `packages` pada model `Room` dan alias `room` pada model `Booking`. Menyelaraskan penggunaan `hotelRoom` pada logic notifikasi.
+- [x] **Mandatory Boat Metadata**: Menambahkan kolom `captain_name` ke tabel `rooms` dan menampilkannya bersama Nama KM, Mesin, dan Kru di halaman detail sesuai Mandat GEMINI.md.
+- [x] **17+ Age Verification**: Memastikan validasi usia 17+ aktif di alur pendaftaran user dan proses checkout booking.
+- [x] **Notification Optimization**: Menambahkan nomor HP vendor ke dalam data notifikasi booking agar WhatsApp owner terpicu secara otomatis melalui `NotificationService`.
+
+### Terbaru (Bug Fixes - 2026-03-18 - Essential Dashboard & Schema Fixes):
+- [x] **Database Schema Consistency Sweep**: Menambahkan kolom `serial_number` yang hilang pada tabel `faqs`, `blog_categories`, `languages`, `memberships`, `packages`, `rooms`, `hotels`, dan `vendor_informations`. Ini memperbaiki error `Unknown column 'serial_number' in 'order clause'` di berbagai halaman.
+- [x] **Amenities Table Recovery**: Memperbaiki tabel `amenities` yang kehilangan kolom inti (`language_id`, `title`, `icon`). Ini menghentikan crash saat mengedit perahu atau lokasi.
+- [x] **Vendor Controller Missing Method**: Mengimplementasikan method `subscriptionLog` yang hilang pada `VendorController`, memperbaiki error 404 pada menu "Log Langganan".
+- [x] **Internal Relationship Fixes**: Memperbaiki relasi `page_contents` (tambah `page_id`) dan `blog_informations` (tambah `blog_category_id`) agar sesuai dengan kueri JOIN di backend.
+- [x] **Cache Optimization & Sync**: Menjalankan `optimize:clear` untuk memastikan perubahan skema dan rute terbaca oleh sistem. Memperbaiki logika redirect unauthenticated vendor agar tepat sasaran ke halaman login vendor.
+
+### Strategic Plan (2026-03-18): Go-Live Stabilization (Zero Rewrite Rule)
+- [x] **Final Frontend Transaction Sandbox**: Validated end-to-end checkout flow.
+- [x] **Production Environment Tidy-Up**: .env configurations for `APP_ENV=production` & `APP_DEBUG=false`, and server cache optimization executed.

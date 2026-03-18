@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="page-header">
-    <h4 class="page-title">{{ __('Counter Information') }}</h4>
+    <h4 class="page-title">{{ __('Spesifikasi Dermaga') }}</h4>
     <ul class="breadcrumbs">
       <li class="nav-home">
         <a href="{{ route('vendor.dashboard') }}">
@@ -35,7 +35,7 @@
         <i class="flaticon-right-arrow"></i>
       </li>
       <li class="nav-item">
-        <a href="#">{{ __('Counter Information') }}</a>
+        <a href="#">{{ __('Spesifikasi Dermaga') }}</a>
       </li>
     </ul>
   </div>
@@ -44,9 +44,9 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <div class="card-title d-inline-block">{{ __('Counter Information') }}</div>
+          <div class="card-title d-inline-block">{{ __('Spesifikasi Dermaga') }}</div>
           <a class="btn btn-info btn-sm float-right d-inline-block"
-            href="{{ route('vendor.lokasi_management.lokasi', ['language' => $defaultLang->code]) }}">
+            href="{{ route('vendor.lokasi_management.lokasi', ['language' => !empty($defaultLang) ? $defaultLang->code : 'id']) }}">
             <span class="btn-label">
               <i class="fas fa-backward"></i>
             </span>
@@ -54,7 +54,7 @@
           </a>
           @php
             $dContent = App\Models\HotelContent::where('hotel_id', $hotel_id)
-                ->where('language_id', $defaultLang->id)
+                ->where('language_id', !empty($defaultLang) ? $defaultLang->id : 0)
                 ->first();
             $slug = !empty($dContent) ? $dContent->slug : '';
           @endphp
@@ -81,7 +81,7 @@
 
                 <div class="row">
                   <div class="col-lg-12" id="variation_pricing">
-                    <h4 for="">{{ __('Counter Information') }}</h4>
+                    <h4 for="">{{ __('Input Spesifikasi Dermaga') }}</h4>
                     <table class="table table-bordered ">
                       <thead>
                         <tr>
@@ -104,9 +104,9 @@
                                     ])->first();
                                   @endphp
                                   <div class="form-group">
-                                    <input type="text" name="{{ $language->code }}_label[]"
+                                      <input type="text" name="{{ optional($language)->code }}_label[]"
                                       value="{{ @$sp_content->label }}" class="form-control"
-                                      placeholder="Label ({{ $language->name }})">
+                                      placeholder="{{ optional($language)->code == 'id' ? 'Contoh: Kedalaman Dermaga' : 'Label (' . optional($language)->name . ')' }}">
                                   </div>
                                 @endforeach
                               </td>
@@ -121,7 +121,7 @@
                                   <div class="form-group">
                                     <input type="text" name="{{ $language->code }}_value[]"
                                       value="{{ @$sp_content->value }}" class="form-control"
-                                      placeholder="Value ({{ $language->name }})">
+                                      placeholder="{{ $language->code == 'id' ? 'Contoh: 5 Meter' : 'Value (' . $language->name . ')' }}">
                                   </div>
                                 @endforeach
                               </td>

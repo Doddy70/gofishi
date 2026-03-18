@@ -31,10 +31,13 @@ class MidtransController extends Controller
 
         $vendorinfo = VendorInfo::where('vendor_id', Auth::guard('vendor')->user()->id)->where('language_id', $currentLang->id)->with('vendor')->first();
 
-        $data = OnlineGateway::whereKeyword('midtrans')->first();
-        $data = json_decode($data->information, true);
+        $dataGateway = OnlineGateway::whereKeyword('midtrans')->first();
+        $data = $dataGateway ? json_decode($dataGateway->information, true) : [];
+        if (!isset($data['midtrans_mode'])) {
+            $data['midtrans_mode'] = isset($data['sandbox_check']) ? (int)$data['sandbox_check'] : 1;
+        }
         // will come from database
-        MidtransConfig::$serverKey = $data['server_key'];
+        MidtransConfig::$serverKey = $data['server_key'] ?? '';
         if ($data['midtrans_mode'] == 1) {
             MidtransConfig::$isProduction = false;
         } elseif ($data['midtrans_mode'] == 0) {

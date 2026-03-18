@@ -64,7 +64,7 @@
                 <span>·</span>
                 <span class="underline font-semibold cursor-pointer">{{ $reviewsCount }} {{ __('ulasan') }}</span>
                 <span>·</span>
-                <span class="underline font-semibold cursor-pointer">{{ optional($hotel)->address }}</span>
+                <span class="underline font-semibold cursor-pointer">{{ @$hotel->address }}</span>
             </div>
         </div>
         <div class="flex items-center space-x-4 pb-2">
@@ -105,39 +105,57 @@
         </button>
     </div>
 
+    {{-- Quick Stats Bar --}}
+    <div class="flex flex-wrap items-center gap-y-4 gap-x-8 py-6 border-b border-gray-200 text-[14px] font-medium text-gray-900">
+        <div class="flex items-center space-x-2">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <span class="font-bold">{{ @$hotel->average_rating }}</span>
+            <span class="text-gray-400">·</span>
+            <span class="underline">{{ $numOfReview }} {{ __('ulasan') }}</span>
+        </div>
+        <div class="flex items-center space-x-2">
+            <i data-lucide="award" class="w-4 h-4 text-rose-500"></i>
+            <span>{{ __('Superhost') }}</span>
+        </div>
+        <div class="flex items-center space-x-2">
+            <i data-lucide="map-pin" class="w-4 h-4"></i>
+            <span class="underline">{{ @$hotel->address }}</span>
+        </div>
+        <div class="ml-auto flex items-center space-x-4">
+            <button class="flex items-center space-x-2 underline font-bold focus:outline-none">
+                <i data-lucide="share" class="w-4 h-4"></i>
+                <span>{{ __('Bagikan') }}</span>
+            </button>
+            <button class="flex items-center space-x-2 underline font-bold focus:outline-none">
+                <i data-lucide="heart" class="w-4 h-4"></i>
+                <span>{{ __('Simpan') }}</span>
+            </button>
+        </div>
+    </div>
+
     {{-- Main Layout: 2 Columns --}}
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16 mt-10">
         
         {{-- Left: Details --}}
         <div class="lg:col-span-2 space-y-12">
             
             {{-- Header Info --}}
-            <div class="flex justify-between items-start pb-8 border-b border-gray-200">
+            <div class="flex justify-between items-start pb-8">
                 <div>
-                    <h2 class="text-[24px] font-bold text-gray-900 leading-tight">
-                        {{ $hotel->categoryName }} · {{ __('Dikelola oleh') }} {{ $vendorName }}
+                    <h2 class="text-[26px] font-bold text-gray-900 leading-tight">
+                        {{ __('Dermaga') }} {{ @$hotel->title }}
                     </h2>
-                    <ul class="flex flex-wrap items-center mt-2 space-x-4 text-[16px] text-gray-600">
-                        <li class="flex items-center space-x-1">
-                            <i data-lucide="users" class="w-4 h-4"></i>
-                            <span>{{ count($rooms) }} {{ __('Armada Kapal') }}</span>
-                        </li>
-                        <li class="flex items-center space-x-1">
-                            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-                            <span>{{ __('Diverifikasi') }}</span>
-                        </li>
-                    </ul>
+                    <p class="text-[16px] text-gray-600 mt-1">
+                        {{ count($rooms) }} {{ __('Armada Kapal') }} · {{ count(json_decode($hotel->amenities, true) ?? []) }} {{ __('Fasilitas Utama') }}
+                    </p>
                 </div>
                 <div class="shrink-0 relative">
-                    <img src="{{ $vendorPhoto }}" class="w-16 h-16 rounded-full object-cover border-2 border-white ring-1 ring-gray-100 shadow-md">
-                    <div class="absolute -bottom-1 -right-1 bg-rose-500 text-white p-1 rounded-full border-2 border-white shadow-sm">
-                        <i data-lucide="award" class="w-3.5 h-3.5"></i>
-                    </div>
+                    <img src="{{ $vendorPhoto }}" class="w-14 h-14 rounded-full object-cover">
                 </div>
             </div>
 
             {{-- Feature Highlights --}}
-            <div class="grid grid-cols-1 gap-8 pb-12 border-b border-gray-200">
+            <div class="space-y-6 pb-12 border-b border-gray-200">
                 <div class="flex items-start space-x-5">
                     <div class="mt-1 flex-shrink-0">
                         <i data-lucide="anchor" class="w-8 h-8 text-rose-500"></i>
@@ -211,10 +229,44 @@
                  @endif
             </div>
 
+            {{-- FILTER SECTION --}}
+            <div class="p-6 bg-white border border-gray-200 rounded-3xl shadow-sm space-y-4">
+                <h3 class="text-[18px] font-bold text-gray-900">{{ __('Cek Ketersediaan di Dermaga Ini') }}</h3>
+                <form action="{{ url()->current() }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="relative">
+                        <label class="absolute top-2 left-4 text-[10px] font-bold uppercase text-gray-500">{{ __('Check-in') }}</label>
+                        <input type="date" name="checkin" value="{{ request('checkin') }}" 
+                               class="w-full pt-6 pb-2 px-4 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-rose-500 focus:border-transparent">
+                    </div>
+                    <div class="relative">
+                        <label class="absolute top-2 left-4 text-[10px] font-bold uppercase text-gray-500">{{ __('Check-out') }}</label>
+                        <input type="date" name="checkout" value="{{ request('checkout') }}" 
+                               class="w-full pt-6 pb-2 px-4 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-rose-500 focus:border-transparent">
+                    </div>
+                    <div class="relative">
+                        <label class="absolute top-2 left-4 text-[10px] font-bold uppercase text-gray-500">{{ __('Tamu') }}</label>
+                        <select name="guests" class="w-full pt-6 pb-2 px-4 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-rose-500 focus:border-transparent appearance-none">
+                            @for($i=1; $i<=20; $i++)
+                                <option value="{{ $i }}" {{ request('guests') == $i ? 'selected' : '' }}>{{ $i }} {{ __('Orang') }}</option>
+                            @endfor
+                        </select>
+                    </div>
+                    <button type="submit" class="bg-rose-500 text-white font-bold rounded-xl hover:bg-rose-600 transition h-full min-h-[50px]">
+                        {{ __('Cari') }}
+                    </button>
+                </form>
+            </div>
+
             {{-- LISTING ARMADA (ROOMS) --}}
             <div id="section-boats" class="pb-12 border-b border-gray-200">
                 <div class="flex justify-between items-center mb-10">
-                    <h3 class="text-[26px] font-bold text-gray-900 tracking-tight">{{ __('Daftar Armada di Dermaga Ini') }}</h3>
+                    <h3 class="text-[26px] font-bold text-gray-900 tracking-tight">
+                        @if(request('checkin') && request('checkout'))
+                            {{ __('Armada Tersedia untuk Tanggal Terpilih') }}
+                        @else
+                            {{ __('Daftar Armada di Dermaga Ini') }}
+                        @endif
+                    </h3>
                     <div class="bg-gray-100 px-3 py-1 rounded-full text-xs font-bold text-gray-500 uppercase tracking-widest">
                         {{ count($rooms) }} {{ __('KM Ditemukan') }}
                     </div>
@@ -289,63 +341,57 @@
 
         </div>
 
-        {{-- Right: Sticky Info --}}
-        <div>
-            <div class="sticky top-28 space-y-8">
-                
-                {{-- Info Card --}}
-                <div class="border border-gray-200 rounded-3xl p-8 shadow-2xl space-y-8 bg-white ring-1 ring-gray-900/5 transition hover:shadow-rose-100/50">
-                    <div class="flex justify-between items-baseline">
-                        <div>
-                            <span class="text-[26px] font-bold text-gray-900 leading-none">{{ __('Info Lokasi') }}</span>
-                        </div>
-                        <div class="flex items-center space-x-1.5 p-1 px-2 border border-gray-100 rounded-lg bg-gray-50">
-                            <i data-lucide="star" class="w-3.5 h-3.5 text-black fill-current"></i>
-                            <span class="text-[14px] font-bold text-gray-900">{{ $rating }}</span>
-                            <span class="text-xs text-gray-400">·</span>
-                            <span class="text-xs text-gray-500 underline font-medium">{{ $reviewsCount }} {{ __('ulasan') }}</span>
-                        </div>
-                    </div>
-
-                    {{-- Stats Grid --}}
-                    <div class="grid grid-cols-2 gap-px bg-gray-200 rounded-2xl overflow-hidden border border-gray-200 shadow-inner">
-                        <div class="col-span-2 p-4 bg-white hover:bg-gray-50 transition cursor-default">
-                             <label class="text-[10px] uppercase font-bold text-rose-500 tracking-widest mb-1 block">{{ __('Nama Dermaga') }}</label>
-                             <p class="text-[15px] font-bold text-gray-900 leading-snug">{{ $hotel->title }}</p>
-                        </div>
-                        <div class="p-4 bg-white border-r border-t border-gray-200 hover:bg-gray-50 transition">
-                             <label class="text-[10px] uppercase font-bold text-gray-400 tracking-widest mb-1 block">{{ __('Kategori') }}</label>
-                             <p class="text-[15px] font-bold text-gray-900">{{ $hotel->categoryName }}</p>
-                        </div>
-                        <div class="p-4 bg-white border-t border-gray-200 hover:bg-gray-50 transition">
-                             <label class="text-[10px] uppercase font-bold text-gray-400 tracking-widest mb-1 block">{{ __('Armada Aktif') }}</label>
-                             <p class="text-[15px] font-extrabold text-rose-600">{{ count($rooms) }} {{ __('KM') }}</p>
-                        </div>
-                    </div>
-
-                    <button @click="document.getElementById('section-boats').scrollIntoView({ behavior: 'smooth', block: 'start' })" 
-                            class="w-full py-4 bg-rose-500 hover:bg-rose-600 text-white rounded-2xl font-bold text-[18px] transition transform active:scale-95 shadow-xl shadow-rose-200/50 airbnb-gradient-btn">
-                        {{ __('Lihat Daftar Kapal') }}
-                    </button>
-
-                    <p class="text-center text-[13px] text-gray-500 font-medium px-4">
-                        {{ __('Semua armada di dermaga ini telah melewati inspeksi kelaikan laut oleh Go Fishi.') }}
-                    </p>
-
-                    {{-- Local Metrics --}}
-                    <div class="space-y-4 pt-4 border-t border-gray-100">
-                        @foreach ($hotelCounters as $counter)
-                        <div class="flex justify-between items-center text-[15px]">
-                            <span class="text-gray-900 font-light border-b border-dotted border-gray-400">{{ $counter->label }}</span>
-                            <span class="font-bold text-gray-900">{{ $counter->value }}</span>
-                        </div>
-                        @endforeach
+                {{-- Right: Sticky Info --}}
+                <div class="hidden lg:block">
+                    <div class="sticky top-28 space-y-8">
                         
-                        <div class="flex items-start space-x-4 pt-6 text-[13px] text-gray-600 leading-relaxed">
-                            <i data-lucide="shield-check" class="w-10 h-10 text-rose-500 shrink-0"></i>
-                            <div>
-                                <b class="text-gray-900">{{ __('Proteksi Go Fishi') }}</b>. 
-                                {{ __('Kami menjamin keamanan transaksi dan ketersediaan kapal untuk setiap booking yang Anda lakukan.') }}
+                        {{-- Info Card --}}
+                        <div class="border border-gray-200 rounded-3xl p-8 shadow-2xl space-y-8 bg-white ring-1 ring-gray-900/5 transition hover:shadow-rose-100/50">
+                            <div class="space-y-4">
+                                @php
+                                    $minPrice = $rooms->min('price_day_1') ?? 0;
+                                @endphp
+                                <div class="flex justify-between items-baseline">
+                                    <div class="flex items-baseline space-x-1">
+                                        <span class="text-[22px] font-bold text-gray-900">{{ symbolPrice($minPrice) }}</span>
+                                        <span class="text-[14px] text-gray-500 font-light"> / {{ __('trip') }}</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                        <span class="text-sm font-bold">{{ $hotel->average_rating ?? '0.0' }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="p-3 bg-gray-50 rounded-2xl border border-gray-100 text-[13px] text-gray-600">
+                                    <p>{{ __('Dermaga ini memiliki') }} <b>{{ count($rooms) }} {{ __('armada aktif') }}</b> {{ __('yang siap dipesan.') }}</p>
+                                </div>
+                            </div>
+
+                            <button @click="document.getElementById('section-boats').scrollIntoView({ behavior: 'smooth', block: 'start' })" 
+                                    class="w-full py-4 bg-rose-500 hover:bg-rose-600 text-white rounded-2xl font-bold text-[18px] transition transform active:scale-95 shadow-xl shadow-rose-200/50 airbnb-gradient-btn">
+                                {{ __('Cek Ketersediaan') }}
+                            </button>
+
+                            <div class="space-y-4 pt-4 border-t border-gray-100">
+                                @foreach ($hotelCounters as $counter)
+                                <div class="flex justify-between items-center text-[14px]">
+                                    <span class="text-gray-900 font-light border-b border-dotted border-gray-400">{{ $counter->label }}</span>
+                                    <span class="font-bold text-gray-900">{{ $counter->value }}</span>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        {{-- Quick Info Card --}}
+                        <div class="border border-gray-200 rounded-3xl p-6 flex items-center justify-between bg-white hover:bg-gray-50 transition-all cursor-pointer shadow-sm">
+                            <div class="flex items-center space-x-4">
+                                <div class="p-3 bg-rose-50 rounded-xl">
+                                    <i data-lucide="shield-check" class="w-6 h-6 text-rose-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-gray-900">{{ __('Jaminan Harga Terbaik') }}</h4>
+                                    <p class="text-[12px] text-gray-500">{{ __('Langsung dari pengelola dermaga') }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>

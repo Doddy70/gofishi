@@ -10,7 +10,7 @@ class Room extends Model
     use HasFactory;
     protected $table = 'rooms';
     protected $fillable = [
-        'hotel_id', 'vendor_id', 'feature_image', 'nama_km', 'average_rating', 
+        'hotel_id', 'vendor_id', 'feature_image', 'nama_km', 'captain_name', 'average_rating', 
         'latitude', 'longitude', 'status', 'booking_type', 'deposit_type', 
         'deposit_amount', 'bed', 'min_price', 'max_price', 'adult', 'children', 
         'bathroom', 'bedroom_count', 'toilet_count', 'number_of_rooms_of_this_same_type', 
@@ -51,5 +51,9 @@ class Room extends Model
     public function room_feature()
     {
         return $this->hasOne(RoomFeature::class, 'room_id', 'id');
+    }
+    public function packages()
+    {
+        return $this->hasMany(BoatPackage::class, 'room_id', 'id');
     }
 }

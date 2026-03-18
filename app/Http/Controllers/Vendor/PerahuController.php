@@ -39,8 +39,11 @@ class PerahuController extends Controller
     {
         $information['currencyInfo'] = $this->getCurrencyInfo();
         $information['langs'] = Language::all();
-        $midtrans = OnlineGateway::whereKeyword('midtrans')->first();
-        $midtrans = json_decode($midtrans->information, true);
+        $midtransGateway = OnlineGateway::whereKeyword('midtrans')->first();
+        $midtrans = $midtransGateway ? json_decode($midtransGateway->information, true) : [];
+        if (!isset($midtrans['midtrans_mode'])) {
+            $midtrans['midtrans_mode'] = isset($midtrans['sandbox_check']) ? (int)$midtrans['sandbox_check'] : 1;
+        }
         $information['midtrans'] = $midtrans;
 
 

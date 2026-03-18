@@ -10,7 +10,7 @@
       </div>
 
       <div class="modal-body">
-        <form id="ajaxForm" class="modal-form create" action="{{ route('admin.perahu_management.featured_room.charge_store') }}"
+        <form id="ajaxForm" class="modal-form create" action="{{ route('admin.perahu_management.featured_perahu.charge_store') }}"
           method="post">
           @csrf
           <div class="form-group">

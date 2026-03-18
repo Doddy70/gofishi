@@ -139,7 +139,7 @@
                 @endif
               </div>
 
-              <form id="roomForm" action="{{ route('admin.perahu_management.update_room', $room->id) }}" method="POST"
+              <form id="roomForm" action="{{ route('admin.perahu_management.update_perahu', $room->id) }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="room_id" value="{{ $room->id }}">
@@ -591,9 +591,9 @@
 @section('variables')
   <script>
     "use strict";
-    var storeUrl = "{{ route('admin.perahu_management.room.imagesstore') }}";
-    var removeUrl = "{{ route('admin.perahu_management.room.imagermv') }}";
-    var rmvdbUrl = "{{ route('admin.perahu_management.room.imgdbrmv') }}";
+    var storeUrl = "{{ route('admin.perahu_management.perahu.imagesstore') }}";
+    var removeUrl = "{{ route('admin.perahu_management.perahu.imagermv') }}";
+    var rmvdbUrl = "{{ route('admin.perahu_management.perahu.imgdbrmv') }}";
     var galleryImages = {{ $numberoffImages }};
     var languages = {!! json_encode($languages) !!};
 

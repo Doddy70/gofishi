@@ -72,7 +72,7 @@
                         <option value="All" {{ request()->input('category') == 'All' ? 'selected' : '' }}>
                           {{ __('All') }}</option>
                         @foreach ($categories as $category)
-                          <option @selected($category->slug == request()->input('category')) value="{{ $category->slug }}">{{ $category->name }}
+                          <option @selected($category['slug'] == request()->input('category')) value="{{ $category['slug'] }}">{{ $category['name'] }}
                           </option>
                         @endforeach
                       </select>
@@ -143,7 +143,7 @@
                         @if (count($charges) > 0)
                           <th scope="col">{{ __('Featured Status') }}</th>
                         @endif
-                        <th scope="col">{{ __('Counter') }}</th>
+                        <th scope="col">{{ __('Spesifikasi') }}</th>
                         <th scope="col">{{ __('Category') }}</th>
                         <th scope="col">{{ __('Status') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
@@ -273,7 +273,7 @@
                           <td>
                             <a
                               href="{{ route('admin.lokasi_management.manage_counter_section', ['id' => $hotel->id]) }}">
-                              <button class="btn btn-primary btn-sm">{{ __('Manage') }}</button>
+                              <button class="btn btn-primary btn-sm">{{ __('Kelola Spek') }}</button>
                             </a>
 
                           </td>

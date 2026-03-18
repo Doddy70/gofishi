@@ -142,17 +142,17 @@ class AuthorizenetController extends Controller
                 $request->session()->forget('chargeId');
                 $request->session()->forget('hotelId');
                 Session::flash('success', __('Something Went Wrong') . '!');
-                return redirect()->route('vendor.lokasi_management.lokasis');
+                return redirect()->route('vendor.lokasi_management.lokasi');
             }
         } else {
             $request->session()->forget('chargeId');
             $request->session()->forget('hotelId');
             Session::flash('success', __('Something Went Wrong') . '!');
-            return redirect()->route('vendor.lokasi_management.lokasis');
+            return redirect()->route('vendor.lokasi_management.lokasi');
         }
         $request->session()->forget('chargeId');
         $request->session()->forget('hotelId');
         Session::flash('success', __('Something Went Wrong') . '!');
-        return redirect()->route('vendor.lokasi_management.lokasis');
+        return redirect()->route('vendor.lokasi_management.lokasi');
     }
 }

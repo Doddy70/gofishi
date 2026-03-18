@@ -1,96 +1,91 @@
-@extends('frontend.layout')
+@extends('frontend.layout-airbnb')
 
 @section('pageHeading')
   {{ !empty($pageHeading) ? $pageHeading->vendor_login_page_title : __('Login') }}
 @endsection
+
 @section('metaKeywords')
   @if (!empty($seoInfo))
-    {{ $seoInfo->meta_keyword_login }}
+    {{ $seoInfo->meta_keywords_vendor_login }}
   @endif
 @endsection
 
 @section('metaDescription')
   @if (!empty($seoInfo))
-    {{ $seoInfo->meta_description_login }}
+    {{ $seoInfo->meta_description_vendor_login }}
   @endif
 @endsection
 
 @section('content')
-  @includeIf('frontend.partials.breadcrumb', [
-      'breadcrumb' => $bgImg->breadcrumb,
-      'title' => !empty($pageHeading) ? $pageHeading->login_page_title : __('Login'),
-  ])
-
-  <!-- Authentication Start -->
-  <div class="authentication-area bg-light ptb-100">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <div class="main-form">
-            <div class="main-form-wrapper">
-              <h3 class="title mb-30 text-center">{{ __('Welcome back') . '!' }}</h3>
-
-              @if (Session::has('success'))
-                <div class="alert alert-success">{{ __(Session::get('success')) }}</div>
-              @endif
-              @if (Session::has('error'))
-                <div class="alert alert-danger">{{ __(Session::get('error')) }}</div>
-              @endif
-              <form action="{{ route('vendor.login_submit') }}" method="POST">
-                @csrf
-                <div class="form-group mb-20">
-                  <label for="userName" class="form-label font-sm">{{ __('Username') }}<span
-                      class="color-red">*</span></label>
-                  <input type="text" class="form-control" value="{{ old('username') }}" name="username"
-                    placeholder="{{ __('Username') }}" required>
-                  @error('username')
-                    <p class="text-danger mt-2">{{ $message }}</p>
-                  @enderror
-                </div>
-                <div class="form-group mb-20">
-                  <label for="password" class="form-label font-sm">{{ __('Password') }}<span
-                      class="color-red">*</span></label>
-                  <div class="position-relative">
-                    <input type="password" class="form-control" value="{{ old('password') }}" name="password"
-                      placeholder="{{ __('Password') }}" required>
-                    <span class="show-password-field">
-                      <i class="show-icon"></i>
-                    </span>
-                    @error('password')
-                      <p class="text-danger mt-2">{{ $message }}</p>
-                    @enderror
-                  </div>
-                </div>
-                @if ($bs->google_recaptcha_status == 1)
-                  <div class="form-group mb-30">
-                    {!! NoCaptcha::renderJs() !!}
-                    {!! NoCaptcha::display() !!}
-
-                    @error('g-recaptcha-response')
-                      <p class="mt-1 text-danger">{{ $message }}</p>
-                    @enderror
-                  </div>
-                @endif
-                <div class="text-center pt-10">
-                  <button class="btn btn-lg btn-primary w-100 radius-sm" type="submit"
-                    aria-label="Login">{{ __('Login') }}</button>
-                </div>
-              </form>
-            </div>
-            <div class="d-flex justify-content-between flex-wrap gap-2 mt-20">
-              <div class="link font-sm">
-                <a href="{{ route('vendor.forget.password') }}"
-                  title="Forgot Password">{{ __('Forgot password') . '?' }}</a>
-              </div>
-              <div class="link font-sm">
-                {{ __('don\'t have an account') . '?' }} <a href="{{ route('vendor.signup') }}" title="Go Signup"
-                  target="_self">{{ __('Click Here') }}</a> {{ __('to Signup') }}
-              </div>
-            </div>
-          </div>
+<div class="min-h-screen bg-gray-50 flex items-center justify-center py-16">
+  <div class="w-full max-w-md px-4">
+    {{-- Card --}}
+    <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-10">
+      {{-- Header --}}
+      <div class="text-center mb-8">
+        <div class="w-14 h-14 bg-rose-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <i data-lucide="ship" class="w-7 h-7 text-airbnb-red"></i>
         </div>
+        <h1 class="text-2xl font-extrabold text-gray-900">{{ __('Selamat Datang') }}</h1>
+        <p class="text-gray-500 text-sm mt-1">{{ __('Login ke akun Host Go Fishi Anda') }}</p>
+      </div>
+
+      {{-- Alerts --}}
+      @if (Session::has('success'))
+        <div class="mb-4 p-4 bg-green-50 border border-green-200 text-green-700 rounded-xl text-sm">{{ __(Session::get('success')) }}</div>
+      @endif
+      @if (Session::has('error'))
+        <div class="mb-4 p-4 bg-red-50 border border-red-200 text-red-600 rounded-xl text-sm">{{ __(Session::get('error')) }}</div>
+      @endif
+      @if (Session::has('warning'))
+        <div class="mb-4 p-4 bg-yellow-50 border border-yellow-200 text-yellow-700 rounded-xl text-sm">{{ __(Session::get('warning')) }}</div>
+      @endif
+
+      {{-- Form --}}
+      <form action="{{ route('vendor.login_submit') }}" method="POST" class="space-y-5">
+        @csrf
+
+        <div>
+          <label class="block text-sm font-bold text-gray-700 mb-1">{{ __('Username') }} <span class="text-red-500">*</span></label>
+          <input type="text" name="username" value="{{ old('username') }}" required
+            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-rose-400 transition"
+            placeholder="username_anda">
+          @error('username') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <div>
+          <label class="block text-sm font-bold text-gray-700 mb-1">{{ __('Password') }} <span class="text-red-500">*</span></label>
+          <input type="password" name="password" required
+            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-rose-400 transition"
+            placeholder="••••••••">
+          @error('password') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        @if (!empty($bs) && $bs->google_recaptcha_status == 1)
+          <div>{!! NoCaptcha::renderJs() !!}{!! NoCaptcha::display() !!}</div>
+          @error('g-recaptcha-response') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+        @endif
+
+        <button type="submit"
+          class="w-full bg-airbnb-red text-white font-bold py-3 rounded-xl hover:bg-rose-600 transition active:scale-95 shadow-md">
+          {{ __('Login') }}
+        </button>
+      </form>
+
+      {{-- Footer links --}}
+      <div class="flex justify-between mt-6 text-sm text-gray-500">
+        <a href="{{ route('vendor.forget.password') }}" class="hover:text-rose-500 transition">{{ __('Lupa password?') }}</a>
+        <span>{{ __('Belum punya akun?') }} <a href="{{ route('vendor.signup') }}" class="text-airbnb-red font-bold hover:underline">{{ __('Daftar') }}</a></span>
       </div>
     </div>
   </div>
-  <!-- Authentication End -->
+</div>
+@endsection
+
+@section('script')
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  });
+</script>
 @endsection

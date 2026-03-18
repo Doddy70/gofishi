@@ -393,6 +393,7 @@ class BookingController extends Controller
 
             // Trigger Notification
             try {
+                $vendor = Vendor::find($arrData['vendor_id']);
                 $roomContent = $room->room_content()->first();
                 $notifData = [
                     'username' => $arrData['booking_name'],
@@ -400,6 +401,7 @@ class BookingController extends Controller
                     'booking_date' => $arrData['check_in_date'],
                     'order_id' => $orderNumber,
                     'recipient' => $arrData['booking_email'],
+                    'vendor_phone' => $vendor->phone ?? null,
                 ];
                 $this->notificationService->send($booking, 'booking_placed', $notifData);
             } catch (\Exception $e) {

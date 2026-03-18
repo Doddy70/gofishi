@@ -411,7 +411,7 @@
           <div class="card-body">
             <div class="col-lg-12">
 
-              @if (count($room) == 0)
+              @if (count($rooms) == 0)
               <h3 class="text-center">{{ __('NO PERAHU FOUND') . '!' }}</h3>
               @else
               <div class="table-responsive">
@@ -432,7 +432,7 @@
                   </thead>
                   <tbody>
 
-                    @foreach ($room as $room)
+                    @foreach ($rooms as $room)
                     @php
                     $vendor_id = $room->vendor_id;
 
@@ -546,7 +546,7 @@
 
                       <td>
                         <form id="StatusForm{{ $room->id }}" class="d-inline-block"
-                          action="{{ route('admin.perahu_management.update_room_status') }}" method="post">
+                          action="{{ route('admin.perahu_management.update_perahu_status') }}" method="post">
                           @csrf
                           <input type="hidden" name="roomId" value="{{ $room->id }}">
                           <select
@@ -567,7 +567,7 @@
 
                         @if ($current_package == '[]')
                         <form class="deleteForm d-inline-block"
-                          action="{{ route('admin.perahu_management.delete_room', ['id' => $room->id]) }}" method="post">
+                          action="{{ route('admin.perahu_management.delete_perahu', ['id' => $room->id]) }}" method="post">
                           @csrf
                           <button type="submit" class="btn btn-danger btn-sm deleteBtn  mb-1">
                             <span class="btn-label">
@@ -577,13 +577,13 @@
                         </form>
                         @else
                         <a class="btn btn-secondary btn-sm mr-1 mb-1"
-                          href="{{ route('admin.perahu_management.edit_room', ['id' => $room->id]) }}">
+                          href="{{ route('admin.perahu_management.edit_perahu', ['id' => $room->id]) }}">
                           <span class="btn-label">
                             <i class="fas fa-edit" class="mar--3"></i>
                           </span>
                         </a>
                         <form class="deleteForm d-inline-block"
-                          action="{{ route('admin.perahu_management.delete_room', ['id' => $room->id]) }}" method="post">
+                          action="{{ route('admin.perahu_management.delete_perahu', ['id' => $room->id]) }}" method="post">
                           @csrf
                           <button type="submit" class="btn btn-danger btn-sm deleteBtn  mb-1">
                             <span class="btn-label">

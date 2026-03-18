@@ -43,7 +43,7 @@ class MercadoPagoController extends Controller
 
         $title = 'Feature Activation ';
         $notifyURL = route('vendor.lokasi_management.lokasi.purchase_feature.mercadopago.notify');
-        $cancelURL = route('vendor.lokasi_management.lokasis');
+        $cancelURL = route('vendor.lokasi_management.lokasi');
 
         $vendor_mail = Vendor::Find(Auth::guard('vendor')->user()->id);
 
@@ -205,7 +205,7 @@ class MercadoPagoController extends Controller
             $request->session()->forget('chargeId');
             $request->session()->forget('roomId');
             Session::flash('warning', __('Something Went Wrong') . '!');
-            return redirect()->route('vendor.lokasi_management.lokasis');
+            return redirect()->route('vendor.lokasi_management.lokasi');
         }
     }
 }

@@ -44,7 +44,7 @@
                   {{ __('Add') }}</a>
 
                 <button class="btn btn-danger btn-sm ml-2 d-none bulk-delete"
-                  data-href="{{ route('admin.perahu_management.featured_room.charge.bulk_delete') }}">
+                  data-href="{{ route('admin.perahu_management.featured_perahu.charge.bulk_delete') }}">
                   <i class="flaticon-interface-5"></i> {{ __('Delete') }}
                 </button>
               </div>
@@ -88,7 +88,7 @@
                             </a>
 
                             <form class="deleteForm d-inline-block"
-                              action="{{ route('admin.perahu_management.featured_room.charge.delete', ['id' => $charge->id]) }}"
+                              action="{{ route('admin.perahu_management.featured_perahu.charge.delete', ['id' => $charge->id]) }}"
                               method="post">
                               @csrf
                               <button type="submit" class="btn btn-danger btn-sm  mt-1 deleteBtn">

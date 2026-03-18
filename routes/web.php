@@ -76,7 +76,6 @@ Route::middleware(['change.lang'])->group(function () {
 
   // Vendor Routes
   Route::get('/vendors', 'FrontEnd\VendorController@index')->name('frontend.vendors');
-  Route::get('/vendor/{username}', 'FrontEnd\VendorController@details')->name('frontend.vendor.details');
   // Lokasi & Destinasi
   Route::get('/lokasi', 'FrontEnd\LokasiController@index')->name('frontend.lokasi');
   Route::get('/lokasi/{slug}/{id}', 'FrontEnd\LokasiController@details')->name('frontend.lokasi.details');
@@ -93,6 +92,11 @@ Route::prefix('/admin')->middleware('guest:admin')->group(function () {
 
 require base_path('routes/admin.php');
 require base_path('routes/vendor.php');
+
+// MUST be LAST: wildcard vendor profile (catches /vendor/{username} for frontend)
+Route::get('/vendor/{username}', 'FrontEnd\VendorController@details')
+    ->name('frontend.vendor.details')
+    ->middleware('change.lang');
 
 
 

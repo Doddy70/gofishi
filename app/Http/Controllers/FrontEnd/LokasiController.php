@@ -106,7 +106,7 @@ class LokasiController extends Controller
         return $this->index($request);
     }
 
-    public function details($slug, $id)
+    public function details(Request $request, $slug, $id)
     {
         $misc = new MiscellaneousController();
         $language = $misc->getLanguage();
@@ -158,12 +158,45 @@ class LokasiController extends Controller
         $information['reviews'] = $reviews;
         $information['numOfReview'] = $reviews->count();
 
-        $information['rooms'] = RoomContent::join('rooms', 'rooms.id', '=', 'room_contents.room_id')
+        // ---------------------------------------------------------------------
+        // FILTER LOGIC FOR BOATS (ROOMS)
+        // ---------------------------------------------------------------------
+        $checkin = $request->input('checkin');
+        $checkout = $request->input('checkout');
+        $guests = $request->input('guests', 1);
+
+        $roomsQuery = RoomContent::join('rooms', 'rooms.id', '=', 'room_contents.room_id')
             ->leftJoin('room_categories', 'room_contents.room_category', '=', 'room_categories.id')
             ->where('rooms.hotel_id', $id)
             ->where('room_contents.language_id', $language->id)
-            ->where('rooms.status', 1)
-            ->select(
+            ->where('rooms.status', 1);
+
+        if ($request->filled('guests')) {
+            $roomsQuery->where('rooms.adult', '>=', $guests);
+        }
+
+        // Availability Filtering Logic
+        if ($checkin && $checkout) {
+            $checkInDateTime = Carbon::parse($checkin . ' 00:00:00');
+            $checkOutDateTime = Carbon::parse($checkout . ' 23:59:59');
+
+            $roomsQuery->whereRaw('rooms.number_of_rooms_of_this_same_type > (
+                SELECT COUNT(*) FROM bookings 
+                WHERE bookings.room_id = rooms.id 
+                AND bookings.payment_status != 2
+                AND (
+                    (bookings.check_in_date_time BETWEEN ? AND ?)
+                    OR (bookings.check_out_date_time BETWEEN ? AND ?)
+                    OR (bookings.check_in_date_time <= ? AND bookings.check_out_date_time >= ?)
+                )
+            )', [
+                $checkInDateTime, $checkOutDateTime,
+                $checkInDateTime, $checkOutDateTime,
+                $checkInDateTime, $checkOutDateTime
+            ]);
+        }
+
+        $information['rooms'] = $roomsQuery->select(
                 'rooms.*',
                 'room_contents.title',
                 'room_contents.slug',

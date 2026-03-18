@@ -45,7 +45,7 @@
   
   // Use relationship method for room content
   $roomContent = $room->room_content()->where('language_id', $langId)->first();
-  $categoryLabel = $roomContent ? $roomContent->room_category_name : 'Boat';
+  $categoryLabel = ($roomContent && $roomContent->category) ? $roomContent->category->name : 'Boat';
   $price = $room->price_day_1 ?? $room->min_price ?? 0;
   $slug = $roomContent ? $roomContent->slug : ($room->slug ?? 'perahu');
   $title = $roomContent ? $roomContent->title : ($room->title ?? 'Perahu');
@@ -111,30 +111,34 @@
     </div>
 
     {{-- Listing Info --}}
-    <div class="space-y-1">
+    <div class="space-y-0.5 pt-1">
+        {{-- Row 1: Location & Rating --}}
         <div class="flex items-center justify-between">
-            <h3 class="font-semibold text-gray-900 truncate">
+            <h3 class="font-bold text-[15px] text-gray-900 truncate">
                 {{ $locationLabel }}
             </h3>
-            <div class="flex items-center space-x-1">
+            <div class="flex items-center space-x-1 shrink-0">
                 <i data-lucide="star" class="w-3 h-3 text-black fill-current"></i>
-                <span class="text-sm font-medium">
+                <span class="text-[14px] font-light text-gray-900">
                     {{ $rating > 0 ? number_format($rating, 1) : '4.5' }}
                 </span>
             </div>
         </div>
 
-        <p class="text-sm text-airbnb-gray truncate capitalize">
-            KM {{ $room->nama_km ?? $title }} · {{ $room->boat_length ?? '16' }}m {{ __('panjang') }}
+        {{-- Row 2: Boat Name --}}
+        <p class="text-[15px] text-gray-500 font-light truncate">
+            KM {{ $room->nama_km ?? $title }} · {{ $room->boat_length ?? '16' }}m
         </p>
 
-        <p class="text-sm text-airbnb-gray">
-            {{ $room->adult }} {{ __('tamu') }} · {{ $room->crew_count ?? '3' }} {{ __('kru') }} · {{ $room->toilet_count }} {{ __('toilet') }}
+        {{-- Row 3: Technical Specs --}}
+        <p class="text-[15px] text-gray-500 font-light truncate">
+            {{ $room->adult }} {{ __('tamu') }} · {{ $room->crew_count ?? '3' }} {{ __('kru') }}
         </p>
 
-        <div class="pt-1">
-            <span class="font-semibold text-gray-900">{{ symbolPrice($price) }}</span>
-            <span class="text-[15px] font-light text-gray-700"> hari</span>
+        {{-- Row 4: Price --}}
+        <div class="pt-1.5 flex items-baseline space-x-1">
+            <span class="font-bold text-[15px] text-gray-900">{{ symbolPrice($price) }}</span>
+            <span class="text-[15px] font-light text-gray-900"> / trip</span>
         </div>
     </div>
 </div>

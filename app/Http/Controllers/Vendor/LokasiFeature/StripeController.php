@@ -143,19 +143,19 @@ class StripeController extends Controller
                     return redirect()->route('success.page');
                 } else {
                     Session::flash('warning', __('Something Went Wrong') . '!');
-                    return redirect()->route('vendor.lokasi_management.lokasis');
+                    return redirect()->route('vendor.lokasi_management.lokasi');
                 }
             } catch (CardErrorException $e) {
                 Session::flash('error', $e->getMessage());
 
                 Session::flash('warning', __('Something Went Wrong') . '!');
-                return redirect()->route('vendor.lokasi_management.lokasis');
+                return redirect()->route('vendor.lokasi_management.lokasi');
             }
         } catch (UnauthorizedException $e) {
             Session::flash('error', $e->getMessage());
 
             Session::flash('warning', __('Something Went Wrong') . '!');
-            return redirect()->route('vendor.lokasi_management.lokasis');
+            return redirect()->route('vendor.lokasi_management.lokasi');
         }
     }
 }

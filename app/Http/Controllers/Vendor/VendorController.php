@@ -353,6 +353,20 @@ class VendorController extends Controller
         return Response::json(['status' => 'success'], 200);
     }
 
+    public function subscriptionLog(Request $request)
+    {
+        $vendor = Auth::guard('vendor')->user();
+        $memberships = Membership::where('vendor_id', $vendor->id)
+            ->when($request->search, function ($query, $search) {
+                return $query->where('transaction_id', 'like', '%' . $search . '%');
+            })
+            ->orderByDesc('id')
+            ->paginate(10);
+        
+        $information['memberships'] = $memberships;
+        return view('vendors.subscription-log', $information);
+    }
+
     public function transcation(Request $request)
     {
         $info['transcations'] = Transaction::where('vendor_id', Auth::guard('vendor')->user()->id)

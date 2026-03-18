@@ -69,7 +69,7 @@ class PayPalController extends Controller
 
         $title = 'Activation Feature';
         $notifyURL = route('vendor.lokasi_management.lokasi.purchase_feature.paypal.notify');
-        $cancelURL = route('vendor.lokasi_management.lokasis');
+        $cancelURL = route('vendor.lokasi_management.lokasi');
 
         $payer = new Payer();
         $payer->setPaymentMethod('paypal');

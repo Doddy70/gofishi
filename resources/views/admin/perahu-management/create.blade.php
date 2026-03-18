@@ -119,7 +119,7 @@
               </div>
               <div class="col-lg-12">
                 <label for="" class="mb-2"><strong>{{ __('Gallery Images') . '*' }}</strong></label>
-                <form action="{{ route('admin.perahu_management.room.imagesstore') }}" id="my-dropzone"
+                <form action="{{ route('admin.perahu_management.perahu.imagesstore') }}" id="my-dropzone"
                   enctype="multipart/formdata" class="dropzone create">
                   @csrf
                   <div class="fallback">
@@ -139,7 +139,7 @@
                 @endif
               </div>
 
-              <form id="roomForm" action="{{ route('admin.perahu_management.store_room') }}" method="POST"
+              <form id="roomForm" action="{{ route('admin.perahu_management.store_perahu') }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="row">
@@ -497,8 +497,8 @@
 @section('script')
   <script>
     'use strict';
-    var storeUrl = "{{ route('admin.perahu_management.room.imagesstore') }}";
-    var removeUrl = "{{ route('admin.perahu_management.room.imagermv') }}";
+    var storeUrl = "{{ route('admin.perahu_management.perahu.imagesstore') }}";
+    var removeUrl = "{{ route('admin.perahu_management.perahu.imagermv') }}";
     var galleryImages = {{ $numberoffImages }};
     var languages = {!! json_encode($languages) !!};
 

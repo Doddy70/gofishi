@@ -90,6 +90,16 @@ class AppServiceProvider extends ServiceProvider
                   $menuBuilder = DB::table('menu_builders')->where('language_id', $defaultLang->id)->first();
                   if ($menuBuilder && !empty($menuBuilder->menus)) {
                       $menuData = json_decode($menuBuilder->menus, true);
+                      
+                      // Process URLs through get_href if href is empty (dynamic menus)
+                      foreach ($menuData as &$m) {
+                          if (empty($m['href'])) $m['href'] = get_href($m);
+                          if (!empty($m['children'])) {
+                              foreach ($m['children'] as &$c) {
+                                  if (empty($c['href'])) $c['href'] = get_href($c);
+                              }
+                          }
+                      }
                   }
               } catch (\Exception $e) {}
           }

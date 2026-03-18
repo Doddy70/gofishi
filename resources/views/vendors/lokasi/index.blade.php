@@ -100,7 +100,7 @@
             <div class="col-xl-3">
               <div class="d-flex flex-wrap gap-10 mt-2 justify-content-xl-end">
                 <a href="{{ route('vendor.lokasi_management.create_lokasi') }}" class="btn btn-primary float-right btn-sm"><i
-                    class="fas fa-plus"></i> {{ __('Add Lokasi') }}</a>
+                    class="fas fa-plus"></i> {{ __('Tambah Lokasi Dermaga') }}</a>
                 <button class="btn btn-danger d-none btn-sm float-right bulk-delete"
                   data-href="{{ route('vendor.lokasi_management.bulk_delete.lokasi') }}"><i class="flaticon-interface-5"></i>
                   {{ __('Delete') }}</button>
@@ -128,7 +128,7 @@
                         @if (count($charges) > 0)
                           <th scope="col">{{ __('Featured Status') }}</th>
                         @endif
-                        <th scope="col">{{ __('Counter') }}</th>
+                        <th scope="col">{{ __('Spesifikasi') }}</th>
                         <th scope="col">{{ __('Category') }}</th>
                         <th scope="col">{{ __('Status') }}</th>
                         <th scope="col">{{ __('Actions') }}</th>
@@ -222,7 +222,7 @@
                           <td>
                             <a
                               href="{{ route('vendor.lokasi_management.manage_counter_section', ['id' => $hotel->id]) }}">
-                              <button class="btn btn-primary btn-sm">{{ __('Manage') }}</button>
+                              <button class="btn btn-primary btn-sm">{{ __('Kelola Spek') }}</button>
                             </a>
 
                           </td>

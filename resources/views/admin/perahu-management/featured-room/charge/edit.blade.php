@@ -10,7 +10,7 @@
       </div>
 
       <div class="modal-body">
-        <form id="ajaxEditForm" class="modal-form" action="{{ route('admin.perahu_management.featured_room.update') }}" method="post">
+        <form id="ajaxEditForm" class="modal-form" action="{{ route('admin.perahu_management.featured_perahu.update') }}" method="post">
           @csrf
           <input type="hidden" name="id" id="in_id">
 

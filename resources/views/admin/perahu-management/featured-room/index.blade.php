@@ -42,7 +42,7 @@
         <div class="card-header">
           <div class="row">
             <div class="col-lg-10">
-              <form id="searchForm" action="{{ route('admin.perahu_management.featured_room.all_request') }}"
+              <form id="searchForm" action="{{ route('admin.perahu_management.featured_perahu.all_request') }}"
                 method="GET">
                 <div class="row">
                   <div class="col-lg-3">
@@ -112,7 +112,7 @@
 
             <div class="col-lg-2">
               <button class="btn btn-danger btn-sm d-none bulk-delete float-lg-right"
-                data-href="{{ route('admin.perahu_management.featured_room.bulk_delete_order') }}"
+                data-href="{{ route('admin.perahu_management.featured_perahu.bulk_delete_order') }}"
                 class="card-header-button">
                 <i class="flaticon-interface-5"></i> {{ __('Delete') }}
               </button>
@@ -179,7 +179,7 @@
                             @else
                               @if ($order->payment_status == 'pending')
                                 <form id="paymentStatusForm-{{ $order->id }}" class="d-inline-block"
-                                  action="{{ route('admin.perahu_management.featured_room.update_payment_status', ['id' => $order->id]) }}"
+                                  action="{{ route('admin.perahu_management.featured_perahu.update_payment_status', ['id' => $order->id]) }}"
                                   method="post">
                                   @csrf
                                   <select
@@ -209,7 +209,7 @@
                           <td>
                             @if ($order->order_status == 'pending')
                               <form id="orderStatusForm-{{ $order->id }}" class="d-inline-block"
-                                action="{{ route('admin.perahu_management.featured_room.update_order_status', ['id' => $order->id]) }}"
+                                action="{{ route('admin.perahu_management.featured_perahu.update_order_status', ['id' => $order->id]) }}"
                                 method="post">
                                 @csrf
                                 <select
@@ -269,7 +269,7 @@
 
 
                                 <form class="deleteForm d-block"
-                                  action="{{ route('admin.perahu_management.featured_room.delete', ['id' => $order->id]) }}"
+                                  action="{{ route('admin.perahu_management.featured_perahu.delete', ['id' => $order->id]) }}"
                                   method="post">
                                   @csrf
                                   <button type="submit" class="deleteBtn">

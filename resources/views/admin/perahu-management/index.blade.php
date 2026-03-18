@@ -294,7 +294,7 @@
 
                           <td>
                             <form id="StatusForm{{ $room->id }}" class="d-inline-block"
-                              action="{{ route('admin.perahu_management.update_room_status') }}" method="post">
+                              action="{{ route('admin.perahu_management.update_perahu_status') }}" method="post">
                               @csrf
                               <input type="hidden" name="roomId" value="{{ $room->id }}">
                               <select
@@ -315,7 +315,7 @@
                           <td>
                             @if ($current_package == '[]')
                               <form class="deleteForm d-block"
-                                action="{{ route('admin.perahu_management.delete_room', ['id' => $room->id]) }}"
+                                action="{{ route('admin.perahu_management.delete_perahu', ['id' => $room->id]) }}"
                                 method="post">
                                 @csrf
                                 <button type="submit" class="btn btn-danger  mt-1 btn-sm deleteBtn">
@@ -334,12 +334,12 @@
 
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                                  <a href="{{ route('admin.perahu_management.edit_room', ['id' => $room->id]) }}"
+                                  <a href="{{ route('admin.perahu_management.edit_perahu', ['id' => $room->id]) }}"
                                     class="dropdown-item">
                                     {{ __('Edit') }}
                                   </a>
                                   <form class="deleteForm d-block"
-                                    action="{{ route('admin.perahu_management.delete_room', ['id' => $room->id]) }}"
+                                    action="{{ route('admin.perahu_management.delete_perahu', ['id' => $room->id]) }}"
                                     method="post">
                                     @csrf
                                     <button type="submit" class="deleteBtn">

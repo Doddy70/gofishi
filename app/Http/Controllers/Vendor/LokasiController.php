@@ -184,8 +184,12 @@ class LokasiController extends Controller
 
         $information['anetClientKey'] = $anetInfo->public_key;
         $information['anetLoginId'] = $anetInfo->login_id;
-        $midtrans = OnlineGateway::whereKeyword('midtrans')->first();
-        $midtrans = json_decode($midtrans->information, true);
+        $midtransGateway = OnlineGateway::whereKeyword('midtrans')->first();
+        $midtrans = $midtransGateway ? json_decode($midtransGateway->information, true) : [];
+        // Normalize key: midtrans_mode (1=sandbox, 0=production) mapped from is_production/sandbox_check
+        if (!isset($midtrans['midtrans_mode'])) {
+            $midtrans['midtrans_mode'] = isset($midtrans['sandbox_check']) ? (int)$midtrans['sandbox_check'] : 1;
+        }
         $information['midtrans'] = $midtrans;
 
         $charges = FeaturedHotelCharge::orderBy('days')->get();
@@ -218,7 +222,7 @@ class LokasiController extends Controller
         } else {
 
             Session::flash('success', __('Please Buy a plan to manage Hide/Show') . '!');
-            return redirect()->route('vendor.lokasi_management.lokasis');
+            return redirect()->route('vendor.lokasi_management.lokasi');
         }
     }
 
@@ -398,7 +402,7 @@ class LokasiController extends Controller
         } else {
 
             Session::flash('success', __('Please Buy a plan to manage counter') . '!');
-            return redirect()->route('vendor.lokasi_management.lokasis');
+            return redirect()->route('vendor.lokasi_management.lokasi');
         }
     }
 
@@ -475,7 +479,7 @@ class LokasiController extends Controller
         } else {
 
             Session::flash('success', __('Please Buy a plan to edit lokasi') . '!');
-            return redirect()->route('vendor.lokasi_management.lokasis');
+            return redirect()->route('vendor.lokasi_management.lokasi');
         }
     }
 

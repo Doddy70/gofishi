@@ -24,7 +24,12 @@
   }
 
   $rating = round($room->average_rating ?? 4.8, 1);
-  $price = $room->price_day_1 ?? $room->min_price ?? 0;
+  
+  // Real Packages from Backend
+  $packages = $room->packages()->where('status', 1)->get();
+  $defaultPackage = $packages->first();
+  $price = $defaultPackage ? $defaultPackage->price : ($room->price_day_1 ?? $room->min_price ?? 0);
+  
   $amenities = $amenities ?? collect([]);
   $reviews = $room_reviews['reviews'] ?? collect([]);
   
@@ -43,11 +48,18 @@
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-6" 
      x-data="{ 
-        checkIn: '', 
+        checkIn: '{{ date('Y-m-d') }}', 
         openPhotos: false,
+        packages: {{ $packages->toJson() }},
+        selectedPackageId: {{ $defaultPackage ? $defaultPackage->id : 'null' }},
         price: {{ $price }},
         guests: 1,
-        maxGuests: {{ $room->adult ?? 10 }}
+        maxGuests: {{ $room->adult ?? 10 }},
+        updatePackage(id) {
+            this.selectedPackageId = id;
+            const pkg = this.packages.find(p => p.id == id);
+            if (pkg) this.price = pkg.price;
+        }
      }">
     
     {{-- Breadcrumbs & Top Actions --}}
@@ -146,6 +158,27 @@
             <div class="py-8 border-b border-gray-200">
                 <h3 class="text-[22px] font-semibold mb-6">{{ __('Spesifikasi Kapal') }}</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-y-6 gap-x-4">
+                    <div class="flex flex-col">
+                        <span class="text-gray-500 text-sm">{{ __('Nama KM') }}</span>
+                        <div class="flex items-center gap-2 mt-1">
+                            <i data-lucide="ship" class="w-4 h-4 text-gray-900"></i>
+                            <span class="font-medium underline">{{ $room->nama_km ?? '--' }}</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-gray-500 text-sm">{{ __('Kapten') }}</span>
+                        <div class="flex items-center gap-2 mt-1">
+                            <i data-lucide="user" class="w-4 h-4 text-gray-900"></i>
+                            <span class="font-medium underline">{{ $room->captain_name ?? '--' }}</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-gray-500 text-sm">{{ __('Kru') }}</span>
+                        <div class="flex items-center gap-2 mt-1">
+                            <i data-lucide="users" class="w-4 h-4 text-gray-900"></i>
+                            <span class="font-medium">{{ $room->crew_count ?? '0' }} {{ __('orang') }}</span>
+                        </div>
+                    </div>
                     <div class="flex flex-col">
                         <span class="text-gray-500 text-sm">{{ __('Mesin Utama') }}</span>
                         <div class="flex items-center gap-2 mt-1">
@@ -247,83 +280,120 @@
         <div class="lg:col-span-4 relative">
             <div class="sticky top-24">
                 <div class="border border-gray-200 rounded-2xl p-6 shadow-xl bg-white">
-                    <div class="flex justify-between items-end mb-6">
-                        <div>
-                            <span class="text-[22px] font-bold">{{ symbolPrice($price) }}</span>
-                            <span class="text-gray-500 text-[16px] ml-1">/ hari</span>
+                    <form action="{{ route('frontend.perahu.go.checkout') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="room_id" value="{{ $room->id }}">
+                        <input type="hidden" name="package_id" :value="selectedPackageId">
+                        
+                        <div class="flex justify-between items-end mb-6">
+                            <div>
+                                <span class="text-[22px] font-bold" x-text="'Rp ' + price.toLocaleString('id-ID')"></span>
+                                <span class="text-gray-500 text-[16px] ml-1">/ paket</span>
+                            </div>
+                            <div class="flex items-center text-sm font-semibold mb-1">
+                                <i data-lucide="star" class="w-3.5 h-3.5 fill-current text-black mr-1"></i>
+                                <span>{{ $rating }}</span>
+                                <span class="text-gray-400 font-normal ml-1">· {{ count($reviews) }} ulasan</span>
+                            </div>
                         </div>
-                        <div class="flex items-center text-sm font-semibold mb-1">
-                            <i data-lucide="star" class="w-3.5 h-3.5 fill-current text-black mr-1"></i>
-                            <span>{{ $rating }}</span>
-                            <span class="text-gray-400 font-normal ml-1">· {{ count($reviews) }} ulasan</span>
-                        </div>
-                    </div>
 
-                    {{-- Form Booking Mockup --}}
-                    <div class="border border-gray-400 rounded-xl overflow-hidden mb-4">
-                        <div class="grid grid-cols-2 border-b border-gray-400">
-                            <div class="p-3 border-r border-gray-400 cursor-pointer hover:bg-gray-50 transition" id="checkin-btn">
-                                <label class="text-[10px] uppercase font-extrabold text-gray-900">CHECK-IN</label>
-                                <div class="text-[14px] text-gray-600">Pilih tanggal</div>
-                            </div>
-                            <div class="p-3 cursor-pointer hover:bg-gray-50 transition">
-                                <label class="text-[10px] uppercase font-extrabold text-gray-900">CHECK-OUT</label>
-                                <div class="text-[14px] text-gray-600">Hanya 1 Hari</div>
-                            </div>
-                        </div>
-                        <div class="p-3 cursor-pointer hover:bg-gray-50 transition relative" x-data="{ guestMenu: false }">
-                            <label class="text-[10px] uppercase font-extrabold text-gray-900">GUESTS</label>
-                            <div class="text-[14px] text-gray-600 flex justify-between items-center" @click="guestMenu = !guestMenu">
-                                <span x-text="guests + ' tamu'">1 tamu</span>
-                                <i data-lucide="chevron-down" class="w-4 h-4 transform transition" :class="guestMenu ? 'rotate-180' : ''"></i>
+                        {{-- Form Booking Real Integration --}}
+                        <div class="border border-gray-400 rounded-xl overflow-hidden mb-4">
+                            <div class="p-3 border-b border-gray-400 cursor-pointer hover:bg-gray-50 transition relative" id="checkin-btn">
+                                <label class="text-[10px] uppercase font-extrabold text-gray-900">TANGGAL KEBERANGKATAN</label>
+                                <div class="text-[14px] text-gray-600 flex justify-between items-center">
+                                    <span x-text="checkIn || 'Pilih tanggal'">Pilih tanggal</span>
+                                    <i data-lucide="calendar" class="w-4 h-4 text-gray-400"></i>
+                                </div>
+                                <input type="hidden" name="checkInDate" x-model="checkIn">
                             </div>
                             
-                            {{-- Guest Dropdown --}}
-                            <div x-show="guestMenu" @click.away="guestMenu = false" class="absolute top-full left-0 right-0 bg-white border border-gray-200 z-50 p-4 shadow-lg rounded-b-xl mt-1">
-                                <div class="flex justify-between items-center">
-                                    <div class="text-sm font-bold">Tamu</div>
-                                    <div class="flex items-center gap-3">
-                                        <button @click="if(guests > 1) guests--" class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-900">-</button>
-                                        <span x-text="guests">1</span>
-                                        <button @click="if(guests < maxGuests) guests++" class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-900">+</button>
+                            <div class="p-3 border-b border-gray-400 cursor-pointer hover:bg-gray-50 transition relative" x-data="{ pkgMenu: false }">
+                                <label class="text-[10px] uppercase font-extrabold text-gray-900">PILIH PAKET</label>
+                                <div class="text-[14px] text-gray-600 flex justify-between items-center" @click="pkgMenu = !pkgMenu">
+                                    <span x-text="packages.find(p => p.id == selectedPackageId)?.name || 'Pilih Paket'">Pilih Paket</span>
+                                    <i data-lucide="chevron-down" class="w-4 h-4 transform transition" :class="pkgMenu ? 'rotate-180' : ''"></i>
+                                </div>
+                                
+                                {{-- Package Dropdown --}}
+                                <div x-show="pkgMenu" @click.away="pkgMenu = false" class="absolute top-full left-0 right-0 bg-white border border-gray-200 z-50 shadow-lg rounded-b-xl mt-1 max-h-60 overflow-y-auto">
+                                    @forelse($packages as $pkg)
+                                    <div @click="updatePackage({{ $pkg->id }}); pkgMenu = false" 
+                                         class="p-4 hover:bg-gray-50 border-b border-gray-100 last:border-0 cursor-pointer transition">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-bold text-gray-900">{{ $pkg->name }}</span>
+                                            <span class="text-sm font-bold text-airbnb-red">{{ symbolPrice($pkg->price) }}</span>
+                                        </div>
+                                        <div class="text-xs text-gray-500 font-light line-clamp-1 italic">
+                                            Durasi: {{ $pkg->duration_days }} Hari · {{ $pkg->meeting_time }} - {{ $pkg->return_time }}
+                                        </div>
+                                    </div>
+                                    @empty
+                                    <div class="p-4 text-center text-gray-500 text-sm">
+                                        {{ __('Belum ada paket tersedia') }}
+                                    </div>
+                                    @endforelse
+                                </div>
+                            </div>
+
+                            <div class="p-3 cursor-pointer hover:bg-gray-50 transition relative" x-data="{ guestMenu: false }">
+                                <label class="text-[10px] uppercase font-extrabold text-gray-900">JUMLAH PENUMPANG</label>
+                                <div class="text-[14px] text-gray-600 flex justify-between items-center" @click="guestMenu = !guestMenu">
+                                    <span x-text="guests + ' orang'">1 orang</span>
+                                    <i data-lucide="users" class="w-4 h-4 text-gray-400"></i>
+                                </div>
+                                <input type="hidden" name="adult" :value="guests">
+                                
+                                {{-- Guest Dropdown --}}
+                                <div x-show="guestMenu" @click.away="guestMenu = false" class="absolute top-full left-0 right-0 bg-white border border-gray-200 z-50 p-4 shadow-lg rounded-b-xl mt-1">
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex flex-col">
+                                            <span class="text-sm font-bold">Total Penumpang</span>
+                                            <span class="text-[12px] text-gray-500">Maks. {{ $room->adult }} orang</span>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <button type="button" @click="if(guests > 1) guests--" class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-900">-</button>
+                                            <span x-text="guests" class="w-4 text-center font-bold">1</span>
+                                            <button type="button" @click="if(guests < maxGuests) guests++" class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-900">+</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <button class="w-full bg-airbnb-red text-white py-3.5 rounded-xl font-bold text-[16px] shadow-sm hover:brightness-95 transition mt-2">
-                        Pesan Sekarang
-                    </button>
+                        <button type="submit" class="w-full bg-airbnb-red text-white py-3.5 rounded-xl font-bold text-[16px] shadow-sm hover:brightness-95 transition mt-2">
+                            {{ __('Booking Sekarang') }}
+                        </button>
 
-                    <div class="text-center mt-4 text-[14px] text-gray-500">
-                        Anda belum akan dikenakan biaya
-                    </div>
-
-                    {{-- Price Breakdown --}}
-                    <div class="mt-6 space-y-3 pb-6 border-b border-gray-200">
-                        <div class="flex justify-between text-[16px] text-gray-800">
-                            <span class="underline">{{ symbolPrice($price) }} x 1 hari</span>
-                            <span>{{ symbolPrice($price) }}</span>
+                        <div class="text-center mt-4 text-[14px] text-gray-500">
+                            {{ __('Anda akan diarahkan ke konfirmasi pembayaran') }}
                         </div>
-                        <div class="flex justify-between text-[16px] text-gray-800">
-                            <span class="underline">Biaya Layanan Go Fishi</span>
-                            <span>Rp 0</span>
+
+                        {{-- Price Breakdown --}}
+                        <div class="mt-6 space-y-3 pb-6 border-b border-gray-200">
+                            <div class="flex justify-between text-[16px] text-gray-800">
+                                <span class="underline">Harga Paket</span>
+                                <span x-text="'Rp ' + price.toLocaleString('id-ID')"></span>
+                            </div>
+                            <div class="flex justify-between text-[16px] text-gray-800">
+                                <span class="underline">Layanan Keamanan</span>
+                                <span>Terproteksi</span>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="flex justify-between text-[18px] font-bold mt-6">
-                        <span>Total</span>
-                        <span>{{ symbolPrice($price) }}</span>
-                    </div>
+                        
+                        <div class="flex justify-between text-[18px] font-bold mt-6">
+                            <span>Total</span>
+                            <span x-text="'Rp ' + price.toLocaleString('id-ID')"></span>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="mt-8 border border-gray-200 rounded-xl p-6 flex flex-col items-center gap-4 text-center">
                     <div class="text-[18px] font-semibold">Tanya Kapten?</div>
                     <p class="text-[14px] text-gray-500">Punya pertanyaan khusus tentang spot pancing atau rute perjalanan?</p>
-                    <button class="w-full border border-gray-900 py-2.5 rounded-xl font-semibold hover:bg-gray-100 transition">
-                        Hubungi Vendor
-                    </button>
+                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $room->vendor->phone ?? '08123456789') }}" target="_blank" class="w-full border border-gray-900 py-2.5 rounded-xl font-semibold hover:bg-gray-100 transition flex items-center justify-center gap-2">
+                        <i class="fab fa-whatsapp"></i> Chat via WhatsApp
+                    </a>
                 </div>
             </div>
         </div>
@@ -349,11 +419,18 @@
 @section('script')
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Flatpickr simple initialization
+        // Flatpickr initialization
         flatpickr("#checkin-btn", {
             dateFormat: "Y-m-d",
             minDate: "today",
-            defaultDate: "today"
+            defaultDate: "{{ date('Y-m-d') }}",
+            onChange: function(selectedDates, dateStr, instance) {
+                // Manually trigger Alpine update if needed
+                const el = document.querySelector('[x-data]');
+                if (el && el.__x && el.__x.$data) {
+                    el.__x.$data.checkIn = dateStr;
+                }
+            }
         });
     });
 </script>

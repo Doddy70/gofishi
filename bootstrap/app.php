@@ -28,7 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->is('admin') || $request->is('admin/*')) {
                 return route('admin.login');
             } elseif ($request->is('vendor') || $request->is('vendor/*')) {
-                return route('user.login');
+                return route('vendor.login');
             }
             return route('user.login');
         });
@@ -41,6 +41,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'Demo' => \App\Http\Middleware\Demo::class,
             'permission' => \App\Http\Middleware\HasPermission::class,
             'user.email.verify' => \App\Http\Middleware\userEmailVerified::class,
+            'email.verify' => \App\Http\Middleware\emailVerified::class,
+            'document.verified' => \App\Http\Middleware\DocumentVerified::class,
+            'packageLimitsCheck' => \App\Http\Middleware\CheckPackageLimits::class,
+            'sanitize.html' => \App\Http\Middleware\SanitizeHtml::class,
             'Deactive' => \App\Http\Middleware\Deactive::class,
         ]);
         

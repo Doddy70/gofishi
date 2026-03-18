@@ -4,7 +4,7 @@
     $isAuthenticated = Auth::guard('web')->check();
 @endphp
 
-<header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm" x-data="{ showUserMenu: false }">
+<header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm" x-data="{ showUserMenu: false, showMobileMenu: false }">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-20">
       {{-- Logo --}}
@@ -19,7 +19,7 @@
         <span class="ml-2 text-xl font-bold text-airbnb-red">{{ $websiteInfo->website_title ?? 'Go Fishi' }}</span>
       </a>
 
-      {{-- Center Navigation Menus --}}
+      {{-- Center Navigation Menus - Desktop --}}
       <nav class="hidden lg:flex items-center space-x-2">
         @if (!empty($menuData))
             @foreach ($menuData as $menu)
@@ -55,7 +55,7 @@
         @endif
       </nav>
 
-      {{-- User Menu --}}
+      {{-- Right Side: Become a Host & User Menu & Mobile Toggle --}}
       <div class="flex items-center space-x-4">
         <a
           href="{{ route('vendor.dashboard') }}"
@@ -64,7 +64,8 @@
           {{ __('Become a Host') }}
         </a>
 
-        <div class="relative">
+        {{-- Desktop User Menu --}}
+        <div class="hidden md:block relative">
           <button
             @click="showUserMenu = !showUserMenu"
             @click.away="showUserMenu = false"
@@ -82,7 +83,7 @@
             @endif
           </button>
 
-          {{-- Dropdown Menu --}}
+          {{-- User Dropdown --}}
           <div 
             x-show="showUserMenu"
             x-transition:enter="transition ease-out duration-100"
@@ -95,47 +96,78 @@
             class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 border border-gray-200 z-50"
           >
             @if($isAuthenticated)
-                <a
-                    href="{{ route('user.dashboard') }}"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                    {{ __('Profile') }}
-                </a>
-                <a
-                    href="{{ route('user.perahu_bookings') }}"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                    {{ __('My Bookings') }}
-                </a>
-                <a
-                    href="{{ route('user.wishlist.perahu') }}"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                    {{ __('Favorites') }}
-                </a>
+                <a href="{{ route('user.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{ __('Profile') }}</a>
+                <a href="{{ route('user.perahu_bookings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{ __('My Bookings') }}</a>
+                <a href="{{ route('user.wishlist.perahu') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{ __('Favorites') }}</a>
                 <hr class="my-2" />
-                <a
-                    href="{{ route('user.logout') }}"
-                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                    {{ __('Logout') }}
-                </a>
+                <a href="{{ route('user.logout') }}" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{ __('Logout') }}</a>
             @else
-                <a
-                    href="{{ route('user.login') }}"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-semibold"
-                >
-                    {{ __('Log in') }}
-                </a>
-                <a
-                    href="{{ route('user.signup') }}"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-semibold"
-                >
-                    {{ __('Sign up') }}
-                </a>
+                <a href="{{ route('user.login') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-semibold">{{ __('Log in') }}</a>
+                <a href="{{ route('user.signup') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-semibold">{{ __('Sign up') }}</a>
             @endif
           </div>
         </div>
+
+        {{-- Mobile Hamburger Toggle --}}
+        <button 
+          @click="showMobileMenu = !showMobileMenu"
+          class="md:hidden p-2 rounded-full hover:bg-gray-100 transition"
+        >
+          <i data-lucide="menu" class="w-6 h-6 text-gray-700" x-show="!showMobileMenu"></i>
+          <i data-lucide="x" class="w-6 h-6 text-gray-700" x-show="showMobileMenu" x-cloak></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {{-- Mobile Navigation Panel --}}
+  <div 
+    x-show="showMobileMenu" 
+    x-cloak
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 -translate-y-4"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    class="md:hidden bg-white border-t border-gray-100 shadow-xl overflow-hidden"
+  >
+    <div class="px-4 py-6 space-y-4">
+      {{-- Mobile Main Links --}}
+      @if (!empty($menuData))
+        <div class="space-y-2 pb-6 border-b border-gray-100">
+          @foreach ($menuData as $menu)
+            @if (isset($menu['children']) && count($menu['children']) > 0)
+              <div x-data="{ open: false }">
+                <button @click="open = !open" class="flex items-center justify-between w-full py-2 px-3 text-lg font-medium text-gray-800 hover:bg-gray-50 rounded-lg transition text-left">
+                  {{ $menu['text'] }}
+                  <i data-lucide="chevron-down" class="w-5 h-5 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+                <div x-show="open" class="pl-6 mt-2 space-y-2">
+                  @foreach ($menu['children'] as $child)
+                    <a href="{{ $child['href'] }}" class="block py-2 text-gray-600 hover:text-airbnb-red transition">{{ $child['text'] }}</a>
+                  @endforeach
+                </div>
+              </div>
+            @else
+              <a href="{{ $menu['href'] }}" class="block py-2 px-3 text-lg font-medium text-gray-800 hover:bg-gray-50 rounded-lg transition">{{ $menu['text'] }}</a>
+            @endif
+          @endforeach
+        </div>
+      @endif
+
+      {{-- Mobile User Links --}}
+      <div class="space-y-4 pt-2">
+        <a href="{{ route('vendor.dashboard') }}" class="block py-2 px-3 text-lg font-medium text-gray-800 hover:bg-gray-50 rounded-lg transition">{{ __('Become a Host') }}</a>
+        
+        @if($isAuthenticated)
+            <a href="{{ route('user.dashboard') }}" class="block py-2 px-3 text-gray-600 font-light transition">{{ __('Profile') }}</a>
+            <a href="{{ route('user.perahu_bookings') }}" class="block py-2 px-3 text-gray-600 font-light transition">{{ __('My Bookings') }}</a>
+            <hr class="my-2 border-gray-100" />
+            <a href="{{ route('user.logout') }}" class="block py-2 px-3 text-red-600 font-medium transition">{{ __('Logout') }}</a>
+        @else
+            <div class="grid grid-cols-2 gap-4 pt-2">
+                <a href="{{ route('user.login') }}" class="py-3 px-4 text-center rounded-xl border border-gray-300 font-semibold text-gray-700 hover:bg-gray-50 transition">{{ __('Log in') }}</a>
+                <a href="{{ route('user.signup') }}" class="py-3 px-4 text-center rounded-xl bg-airbnb-red font-semibold text-white hover:bg-red-600 transition">{{ __('Sign up') }}</a>
+            </div>
+        @endif
       </div>
     </div>
   </div>

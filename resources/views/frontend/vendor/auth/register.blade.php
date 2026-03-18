@@ -8,6 +8,18 @@
   @endif
 @endsection
 
+@section('metaKeywords')
+  @if (!empty($seoInfo))
+    {{ $seoInfo->meta_keywords_vendor_signup }}
+  @endif
+@endsection
+
+@section('metaDescription')
+  @if (!empty($seoInfo))
+    {{ $seoInfo->meta_description_vendor_signup }}
+  @endif
+@endsection
+
 @section('content')
 <div class="min-h-screen bg-gray-50 py-12" x-data="{ step: 1 }">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

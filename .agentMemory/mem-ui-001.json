@@ -1,0 +1,18 @@
+{
+  "id": "mem-ui-001",
+  "projectId": "airbnb-project",
+  "key": "css-append-only",
+  "type": "pattern",
+  "content": "# CSS Pattern: Append Only\n\nAlways append new CSS to the end of `public/assets/front/css/style.css`. Never insert in the middle.\n\n## Rationale\nExisting CSS has fragile ordering; inserting mid-file risks specificity overrides.",
+  "tags": ["css", "frontend", "ui"],
+  "relationships": {
+    "dependsOn": [],
+    "implements": []
+  },
+  "metadata": {
+    "accessCount": 1,
+    "createdBy": "antigravity"
+  },
+  "createdAt": 1703779200000,
+  "updatedAt": 1703779200000
+}

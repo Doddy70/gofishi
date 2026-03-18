@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Agent registry — defines capabilities, responsibilities, and specializations for each agent role in this project",
+  "last_updated": "2026-03-11T21:47:48+07:00",
+
+  "agents": {
+    "ui-designer": {
+      "id": "ui-designer",
+      "role": "UI/UX Design Agent",
+      "specialization": "Frontend design, CSS, Blade templates, Airbnb design system replication",
+      "skills_required": [
+        "baseline-ui",
+        "design-spells",
+        "ui-ux-designer"
+      ],
+      "owns": [
+        "resources/views/frontend/**/*.blade.php",
+        "public/assets/front/css/style.css"
+      ],
+      "reads": [
+        ".agent/state/shared-state.json",
+        ".agent/context/MASTER_CONTEXT.md",
+        ".agent/context/DESIGN_DECISIONS.md"
+      ],
+      "writes": [
+        ".agent/state/shared-state.json (ui_state, pages sections)",
+        ".agent/memory/ui-decisions.json"
+      ],
+      "handoff_protocol": "When design changes affect backend variables or routes, create a handoff in .agent/handoffs/"
+    },
+
+    "backend-architect": {
+      "id": "backend-architect",
+      "role": "Backend Architecture Agent",
+      "specialization": "Laravel controllers, models, services, database queries, API design",
+      "skills_required": [
+        "backend-architect"
+      ],
+      "owns": [
+        "app/Http/Controllers/**/*.php",
+        "app/Services/**/*.php",
+        "app/Models/**/*.php",
+        "routes/web.php",
+        "database/migrations/**"
+      ],
+      "reads": [
+        ".agent/state/shared-state.json",
+        ".agent/context/MASTER_CONTEXT.md",
+        ".agent/handoffs/*.handoff.json"
+      ],
+      "writes": [
+        ".agent/state/shared-state.json (services, bugs, models_map)",
+        ".agent/memory/api-contracts.json"
+      ],
+      "handoff_protocol": "When new controller variables are added/removed, update shared-state.json pages[].controller_variables"
+    },
+
+    "qa-validator": {
+      "id": "qa-validator",
+      "role": "Quality Assurance Agent",
+      "specialization": "Testing, visual verification, browser screenshots, bug detection",
+      "skills_required": [],
+      "owns": [],
+      "reads": [
+        ".agent/state/shared-state.json",
+        ".agent/state/task-queue.json",
+        ".agent/context/TASK_LOG.md"
+      ],
+      "writes": [
+        ".agent/state/shared-state.json (bugs section)",
+        ".agent/state/task-queue.json (mark tasks verified)",
+        ".agent/memory/test-results.json"
+      ],
+      "handoff_protocol": "After verifying a task, update task status in task-queue.json and add bug entries to shared-state.json if found"
+    },
+
+    "context-manager": {
+      "id": "context-manager",
+      "role": "Context Management Agent",
+      "specialization": "State preservation, documentation, cross-agent coordination",
+      "skills_required": [
+        "context-management-context-save",
+        "multi-agent-patterns"
+      ],
+      "owns": [
+        ".agent/context/**",
+        ".agent/state/**",
+        ".agent/registry/**",
+        ".agent/queue/**",
+        ".agent/handoffs/**",
+        ".agent/memory/**"
+      ],
+      "reads": ["*"],
+      "writes": ["*"],
+      "handoff_protocol": "Periodically sync all agent memory into .agent/context/ master files"
+    }
+  },
+
+  "communication_protocol": {
+    "state_sync": "All agents read .agent/state/shared-state.json at session start",
+    "task_assignment": "Tasks are defined in .agent/state/task-queue.json, claimed by setting status='in_progress' + claimed_by",
+    "handoff": "Agent A writes to .agent/handoffs/{from}-to-{to}-{timestamp}.handoff.json, Agent B reads and processes",
+    "memory": "Each agent writes specialized memory to .agent/memory/{agent-id}-memory.json",
+    "conflict_resolution": "Last-write-wins per JSON key, except for 'bugs' array which is append-only"
+  }
+}

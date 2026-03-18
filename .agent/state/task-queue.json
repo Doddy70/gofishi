@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Task queue for multi-agent coordination. Agents claim tasks by setting status='in_progress' and claimed_by='{agent_id}'",
+  "last_updated": "2026-03-15T12:00:00+07:00",
+
+  "tasks": [],
+
+  "completed_tasks": [
+    {
+      "id": "TASK-001", "title": "Homepage Search Widget Redesign",
+      "completed_at": "2026-03-11", "completed_by": "antigravity-session-ab910e07", "verified": true
+    },
+    {
+      "id": "TASK-002", "title": "Fix Z-Index on Search Bar",
+      "completed_at": "2026-03-11", "completed_by": "antigravity-session-ab910e07", "verified": true
+    },
+    {
+      "id": "TASK-003", "title": "Fix 500 Error on /lokasi-dermaga",
+      "completed_at": "2026-03-11", "completed_by": "antigravity-session-ab910e07", "verified": true
+    },
+    {
+      "id": "TASK-004", "title": "Split View Layout /lokasi-dermaga",
+      "completed_at": "2026-03-11", "completed_by": "antigravity-session-ab910e07", "verified": true
+    },
+    {
+      "id": "TASK-005", "title": "Airbnb Property Cards on hotel-map",
+      "completed_at": "2026-03-11", "completed_by": "antigravity-session-ab910e07", "verified": true
+    },
+    {
+      "id": "TASK-006", "title": "Room Detail Single Product Page Redesign",
+      "completed_at": "2026-03-11", "completed_by": "antigravity-session-ab910e07", "verified": true
+    },
+    {
+      "id": "TASK-007", "title": "Backend Query Optimization + RoomService",
+      "completed_at": "2026-03-11", "completed_by": "antigravity-session-ab910e07", "verified": true
+    },
+    {
+      "id": "TASK-008", "title": "Fix HostController Missing Class",
+      "completed_at": "2026-03-15", "completed_by": "user", "verified": true
+    },
+    {
+      "id": "TASK-009", "title": "Hotel Details Page Airbnb Redesign",
+      "completed_at": "2026-03-15", "completed_by": "user", "verified": true
+    },
+    {
+      "id": "TASK-010", "title": "Room Grid Page Card Consistency",
+      "completed_at": "2026-03-15", "completed_by": "user", "verified": true
+    },
+    {
+      "id": "TASK-011", "title": "Horizontal Pill Filters on /lokasi-dermaga",
+      "completed_at": "2026-03-15", "completed_by": "user", "verified": true
+    },
+    {
+      "id": "TASK-012", "title": "Verify Fancybox Gallery on Room Details",
+      "completed_at": "2026-03-15", "completed_by": "user", "verified": true
+    },
+    {
+      "id": "TASK-013", "title": "Mobile Responsiveness Audit",
+      "completed_at": "2026-03-15", "completed_by": "user", "verified": true
+    },
+    {
+      "id": "TASK-014", "title": "SEO Schema Markup on Room Detail",
+      "completed_at": "2026-03-15", "completed_by": "user", "verified": true
+    }
+  ]
+}

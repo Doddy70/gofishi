@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0.0",
+  "agent_id": "antigravity-session-ab910e07",
+  "agent_type": "ui-designer + backend-architect",
+  "session_start": "2026-03-11T10:30:00+07:00",
+  "session_end": "2026-03-11T21:47:48+07:00",
+
+  "decisions": [
+    {
+      "id": "MEM-UI-001",
+      "type": "css-pattern",
+      "decision": "Always append to end of style.css — never insert in the middle",
+      "rationale": "Existing CSS has fragile ordering; inserting mid-file risks specificity overrides",
+      "command": "cat >> public/assets/front/css/style.css << 'CSSEOF'\n/* new CSS */\nCSSOF"
+    },
+    {
+      "id": "MEM-UI-002",
+      "type": "component-reuse",
+      "decision": "Split-view CSS classes are already defined: .split-view-container, .list-panel, .map-panel",
+      "location": "style.css ~line 6264+",
+      "warning": "map-panel MUST be a direct child of split-view-container div. No intermediate </div> allowed."
+    },
+    {
+      "id": "MEM-UI-003",
+      "type": "design-token",
+      "decision": "Airbnb-style booking button uses coral gradient, NOT flat color",
+      "css": "background: linear-gradient(to right, #E61E4D, #E31C5F, #D70466)",
+      "class": ".btn-reserve-main"
+    },
+    {
+      "id": "MEM-UI-004",
+      "type": "component-reuse",
+      "decision": "Single product page CSS classes are all defined at end of style.css",
+      "classes": [
+        ".airbnb-detail-page",
+        ".detail-sticky-nav", ".detail-sticky-nav.visible",
+        ".airbnb-listing-title",
+        ".airbnb-host-title", ".airbnb-specs-row", ".airbnb-host-avatar",
+        ".highlight-icon", ".highlight-title", ".highlight-desc",
+        ".section-heading",
+        ".amenities-grid", ".amenity-item", ".amenity-icon",
+        ".btn-show-all-amenities",
+        ".reviews-grid", ".review-card-airbnb", ".review-avatar",
+        ".booking-card-airbnb",
+        ".booking-inputs-wrapper", ".booking-input-group", ".booking-label", ".booking-input-field",
+        ".btn-reserve-main", ".btn-reserve-nav",
+        ".mobile-reserve-bar"
+      ]
+    },
+    {
+      "id": "MEM-BE-001",
+      "type": "data-access",
+      "decision": "$roomContent->categoryName is a direct field from SQL join, NOT a relationship accessor",
+      "source": "app/Services/RoomService.php line 51: 'room_categories.name as categoryName'",
+      "anti_pattern": "$roomContent->hotel->categoryName (WRONG - relationship not loaded)"
+    },
+    {
+      "id": "MEM-BE-002",
+      "type": "service-pattern",
+      "decision": "All complex room queries go through RoomService. Do not duplicate join logic in controllers.",
+      "service_file": "app/Services/RoomService.php",
+      "methods": ["getRoomDetails", "getHostInfo", "getAvailabilityDates", "getRoomReviews", "getRelatedRooms"]
+    },
+    {
+      "id": "MEM-BE-003",
+      "type": "pagination",
+      "decision": "Always use paginate() not get() on hotel-map listings",
+      "why": "The blade template calls $currentPageData->lastPage() and currentPage() which require a paginator object"
+    },
+    {
+      "id": "MEM-BE-004",
+      "type": "map-init",
+      "decision": "Map JS variables must be set inline in @section('script') before the map JS files",
+      "hotel_map_vars": "var featured_contents = {!! json_encode($featured_contents) !!}; var hotel_contentss = {!! json_encode($currentPageData->items()) !!};",
+      "room_detail_vars": "var latitude = \"{{ $roomContent->latitude }}\"; var longitude = \"{{ $roomContent->longitude }}\";"
+    }
+  ],
+
+  "tools_used": {
+    "browser_subagent": "Used extensively for visual verification. Rate-limited frequently — schedule verification at end of session blocks.",
+    "read_url_content": "Effective alternative to browser screenshots for checking page loads without errors.",
+    "run_command_curl": "curl -s http://127.0.0.1:8000/{path} | grep 'pattern' -- fast verification of rendered HTML elements"
+  },
+
+  "gotchas": [
+    "Browser subagent hits rate limits (429) frequently — batch visual checks",
+    "php artisan route:list fails due to HostController — use php artisan route:cache or skip artisan routes check",
+    "style.css has no build step — changes are immediate, no compilation needed",
+    "Blade template cache — if changes don't show, run: php artisan view:clear",
+    "Map initialization depends on Leaflet being loaded in layout.blade.php"
+  ]
+}

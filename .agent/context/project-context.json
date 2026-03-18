@@ -1,0 +1,241 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "project_name": "Airbnb Clone - Marketplace Sewa Perahu",
+  "version": "2.0.0",
+  "context_fingerprint": "airbnb-redesign-session-2026-03-11",
+  "captured_at": "2026-03-11T21:39:22+07:00",
+  "project_root": "/Users/doddykapisha/Documents/GitHub/Airbnb/project",
+  "framework": "Laravel",
+  "local_dev_url": "http://127.0.0.1:8000",
+  "dev_server_command": "php artisan serve",
+
+  "architectural_decisions": [
+    {
+      "decision_type": "Frontend Design System",
+      "rationale": "Adopting Airbnb's visual design language: typography, spacing, color tokens (#E31C5F coral red, #222222 dark, #717171 muted grey), and component patterns",
+      "impact_score": 10,
+      "files_affected": ["public/assets/front/css/style.css"]
+    },
+    {
+      "decision_type": "Homepage Search Bar",
+      "rationale": "Full Airbnb-style search widget with location, date, guest pickers and inline dropdown panels. Z-index stack: header=1000, search-container=1001, dropdowns=1050+",
+      "impact_score": 9,
+      "files_affected": [
+        "resources/views/frontend/home/index.blade.php",
+        "public/assets/front/css/style.css"
+      ]
+    },
+    {
+      "decision_type": "Lokasi-Dermaga Split View",
+      "rationale": "Airbnb-style /lokasi-dermaga page: 55% left panel (scrollable card list) + 45% right panel (sticky Leaflet map). Root cause of previous stacking bug: extra closing </div> that excluded map-panel from flex container.",
+      "impact_score": 9,
+      "files_affected": [
+        "resources/views/frontend/hotel/hotel-map.blade.php",
+        "public/assets/front/css/style.css"
+      ]
+    },
+    {
+      "decision_type": "Room Details Single Product Page",
+      "rationale": "Full Airbnb clone of single product page: sticky detail nav, 5-photo grid gallery, 2-col layout (67% details + 33% sticky booking card), host section, amenities, reviews, location map.",
+      "impact_score": 10,
+      "files_affected": [
+        "resources/views/frontend/room/room-details.blade.php",
+        "public/assets/front/css/style.css"
+      ]
+    },
+    {
+      "decision_type": "Backend Service Layer",
+      "rationale": "RoomService.php created to encapsulate room query logic with proper joins (room_contents -> rooms -> hotels -> hotel_contents -> hotel_categories). categoryName, latitude/longitude available directly on $roomContent.",
+      "impact_score": 8,
+      "files_affected": [
+        "app/Services/RoomService.php",
+        "app/Http/Controllers/FrontEnd/RoomController.php"
+      ]
+    },
+    {
+      "decision_type": "Hotel Map Controller - Haversine Distance",
+      "rationale": "Distance-based filtering using SQL Haversine formula. Fixed undefined variables: $radius, $bs, $locationIds. Used paginate() and simplePaginate() for pagination.",
+      "impact_score": 7,
+      "files_affected": [
+        "app/Http/Controllers/FrontEnd/HotelController.php"
+      ]
+    }
+  ],
+
+  "key_files": {
+    "css_main": "public/assets/front/css/style.css",
+    "room_details_view": "resources/views/frontend/room/room-details.blade.php",
+    "hotel_map_view": "resources/views/frontend/hotel/hotel-map.blade.php",
+    "hotel_details_view": "resources/views/frontend/hotel/hotel-details.blade.php",
+    "home_view": "resources/views/frontend/home/index.blade.php",
+    "room_service": "app/Services/RoomService.php",
+    "hotel_controller": "app/Http/Controllers/FrontEnd/HotelController.php",
+    "room_controller": "app/Http/Controllers/FrontEnd/RoomController.php",
+    "layout": "resources/views/frontend/layout.blade.php",
+    "partials_dir": "resources/views/frontend/partials/"
+  },
+
+  "design_tokens": {
+    "primary_color": "#E31C5F",
+    "primary_gradient": "linear-gradient(to right, #E61E4D, #E31C5F, #D70466)",
+    "dark": "#222222",
+    "muted": "#717171",
+    "border": "#dddddd",
+    "background_light": "#F7F7F7",
+    "border_radius_card": "12px",
+    "border_radius_button": "8px",
+    "font_stack": "'Circular', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    "shadow_card": "0 6px 20px rgba(0,0,0,0.12)"
+  },
+
+  "routes": {
+    "home": "/",
+    "lokasi_dermaga": "/lokasi-dermaga",
+    "perahu_list": "/perahu",
+    "room_detail": "/room/{slug}/{id}",
+    "hotel_detail": "/hotel/{slug}/{id}",
+    "checkout": "POST /room/checkout",
+    "wishlist_room_add": "/room/room-addto/wishlist/{id}",
+    "wishlist_hotel_add": "/hotel/hotel-addto/wishlist/{id}"
+  },
+
+  "controller_view_data": {
+    "room_details": {
+      "controller": "FrontEnd/RoomController@details",
+      "view": "frontend.room.room-details",
+      "variables": [
+        "language", "bgImg", "pageHeading", "roomContent",
+        "vendor", "userName", "roomImages", "holidayDates",
+        "checkinDate", "reviews", "numOfReview", "hourlyPrices",
+        "rooms", "rateStar", "currentLanguageInfo", "allLanguageInfos"
+      ],
+      "roomContent_fields": [
+        "title", "slug", "amenities", "room_category", "meta_keyword",
+        "meta_description", "address", "hoteltitle", "hotelSlug",
+        "description", "hotelId", "hotellogo", "stars", "latitude",
+        "longitude", "categoryName", "categorySlug",
+        "max_guest", "bed", "bathroom", "area",
+        "price_day_1", "price_day_2", "price_day_3",
+        "meet_time_day_1", "meet_time_day_2", "meet_time_day_3",
+        "vendor_id", "availability_mode", "average_rating", "id"
+      ]
+    },
+    "hotel_map": {
+      "controller": "FrontEnd/HotelController@hotelMap",
+      "view": "frontend.hotel.hotel-map",
+      "variables": [
+        "featured_contents", "currentPageData",
+        "basicInfo", "websiteInfo", "pageHeading", "seoInfo"
+      ]
+    },
+    "hotel_details": {
+      "controller": "FrontEnd/HotelController@details",
+      "view": "frontend.hotel.hotel-details",
+      "variables": [
+        "hotel", "vendor", "userName", "rooms", "totalRooms",
+        "reviews", "numOfReview", "hotelCounters",
+        "rateStar", "currentLanguageInfo"
+      ]
+    }
+  },
+
+  "known_issues_resolved": [
+    {
+      "issue": "Split view stacking on /lokasi-dermaga",
+      "root_cause": "Extra closing </div> at line 242 of hotel-map.blade.php prematurely closed the split-view-container flex parent before the map-panel div.",
+      "fix": "Removed extra </div> so map-panel is a direct child of split-view-container.",
+      "status": "RESOLVED"
+    },
+    {
+      "issue": "Z-index chaos on homepage search bar",
+      "root_cause": "Multiple elements competing for z-index without a fixed scale. Header, search bar, and dropdown panels were at conflicting layers.",
+      "fix": "Established fixed z-index scale: header=1000, search-container=1001, dropdowns=1050+.",
+      "status": "RESOLVED"
+    },
+    {
+      "issue": "500 Internal Server Error on /lokasi-dermaga",
+      "root_cause": "Undefined variables $radius, $bs, $locationIds in HotelController and unbalanced braces causing ParseError.",
+      "fix": "Fixed variable definitions and brace balancing in HotelController.",
+      "status": "RESOLVED"
+    },
+    {
+      "issue": "map_debug_1773238434333.png shows empty/tiny map panel",
+      "root_cause": "Subagent attempted to inspect map panel before the split view fix was applied.",
+      "fix": "Fixed by the split-view div nesting correction.",
+      "status": "RESOLVED"
+    }
+  ],
+
+  "known_issues_pending": [
+    {
+      "issue": "HostController class does not exist",
+      "description": "Running php artisan route:list shows ReflectionException: Class HostController does not exist. There is a route registered pointing to a non-existent controller.",
+      "severity": "medium",
+      "recommendation": "Search routes/web.php for HostController reference and remove or implement it."
+    },
+    {
+      "issue": "room-details breadcrumb removed",
+      "description": "The breadcrumb section was intentionally removed from room-details.blade.php to match Airbnb's clean design, which has no breadcrumb on product pages.",
+      "severity": "low",
+      "recommendation": "No action needed unless client requires breadcrumbs for SEO."
+    }
+  ],
+
+  "css_sections_in_style_css": {
+    "airbnb_search_widget": "~line 50-460",
+    "booking_widget": "~line 468-480",
+    "airbnb_image_grid": "~line 482-535",
+    "airbnb_buttons": "~line 537-574",
+    "split_view_container": "~line 6264+",
+    "airbnb_single_product_page": "end of file (appended via cat >>)"
+  },
+
+  "models": {
+    "Room": "app/Models/Room.php",
+    "RoomContent": "app/Models/RoomContent.php",
+    "RoomImage": "app/Models/RoomImage.php",
+    "RoomReview": "app/Models/RoomReview.php",
+    "Hotel": "app/Models/Hotel.php",
+    "Amenitie": "app/Models/Amenitie.php",
+    "Booking": "app/Models/Booking.php",
+    "HourlyRoomPrice": "app/Models/HourlyRoomPrice.php",
+    "Holiday": "app/Models/Holiday.php",
+    "Vendor": "app/Models/Vendor.php",
+    "Admin": "app/Models/Admin.php",
+    "Location_City": "app/Models/Location/City.php",
+    "Location_State": "app/Models/Location/State.php",
+    "Location_Country": "app/Models/Location/Country.php"
+  },
+
+  "services": {
+    "RoomService": {
+      "path": "app/Services/RoomService.php",
+      "methods": [
+        "getRoomDetails(int $id, int $languageId): RoomContent",
+        "getHostInfo(int $vendorId): array",
+        "getAvailabilityDates(int $roomId, int $hotelId): array",
+        "getRoomReviews(int $roomId): array",
+        "getRelatedRooms(int $roomId, int $categoryId, int $languageId): Collection"
+      ]
+    }
+  },
+
+  "maps": {
+    "provider": "Leaflet.js (default) + Google Maps API (optional, toggled by basicInfo.google_map_api_key_status)",
+    "hotel_map_init_script": "public/assets/front/js/map-hotel.js",
+    "hotel_single_map_script": "public/assets/front/js/hotel-single-map.js",
+    "api_search_script": "public/assets/front/js/api-search-2.js"
+  },
+
+  "localization": {
+    "language": "Indonesian (Bahasa)",
+    "framework": "Laravel __() helper",
+    "key_translations": {
+      "Lokasi": "Location/Dock",
+      "Perahu": "Boat",
+      "Dermaga": "Marina/Dock",
+      "Tamu": "Guests",
+      "Pesan Sekarang": "Reserve Now"
+    }
+  }
+}

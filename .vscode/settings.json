@@ -1,0 +1,8 @@
+{
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "geminicodeassist.chat.changeView": "Inline suggestions",
+    "geminicodeassist.codeGenerationPaneViewEnabled": true,
+    "gemini-cli.debug.logging.enabled": true,
+    "workbench.editor.alwaysShowEditorActions": true,
+    "workbench.editor.enablePreviewFromCodeNavigation": false
+}

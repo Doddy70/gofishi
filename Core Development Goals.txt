@@ -1,0 +1,83 @@
+
+Gofishi.com
+
+
+
+Nama Bisnis : Go Fishi  Website : gofishi.com
+Jenis usaha :  Saltwater Angler 
+
+File Logo : Logo PNG : /Users/doddykapisha/Documents/GitHub/Airbnb/project/docs/logo.png
+Logo SVG :  /Users/doddykapisha/Documents/GitHub/Airbnb/project/docs/Logo.svg
+
+
+
+Spesialisasi: Fokus pada Marketplace penyewaan perahu dan Saltwater Angler.
+* Jasa Pemandu: Bermitra dengan lebih dari 30 kapten berlisensi untuk memandu perjalanan memancing (charter).
+* Produk: Menjual berbagai perlengkapan seperti joran, gulungan (reels), pakaian, topi, tas, dan aksesori dari merek-merek ternama.
+* Lokasi: Usaha Beroperasi di Jakarta Utara
+
+
+Basic Requirement : 1. Pembuatan website AirBnB Clone dengan produce penyewaan perahu dan destines wisata
+
+2. Level User: Admin, Host/Vendor, User
+
+3. Fungsi User : cari dan booking, cancel booking, bayar online, beri ulasan dan bintang, lihat riwayat booking
+
+4. Fungsi User Host/Vendor: upload foto maks 10 buah, atur harga dan kalendar, tolak dan terima booking, alamat dan lokasi (google map), fasilitas, jumlah orang, jumlah kamar, info lain.
+
+5. Fungsi User Admin: kelola user dan listing, Approve/Reject/Suspend User Host/Pemilik, monitoring transaksi, moderasi konten, ddan memiliki wewenang merubah user menjadi Vendor/Host
+
+6. User Admin dibagi berjenjang menjadi Admin 1, Admin 2, Admin 3 berjenjang sesuai kebutuhan dan tingkat kewenangan yang diberikan. 
+7. Akan ada laporan jadwal, booking, confirmed, canceled, reject, payment, jumlah user, custom sesuai yang diiput oleh user. (daily, weekly, monthly, serta custom).
+
+8. Ada fitur search filter untuk lokasi, harga, tanggal, tamu. 
+9. Proses registrasi user diatas 17 tahun, email dan password, no telpon, lupa password, captcha. 
+10. Ada notifikasi : booking masuk, booking diterima, booking ditolak, pembayaran berhasil ke dashboard admin atau push notification
+
+
+Lanjutan :  1. Pengurusan ke Payment Gateway menggunakan metode Qrish (Utama), Transfer Bank, dll (Midtrans)
+
+2. Terdapat chekbox yang menyatakan bawa User harus berusia diatas 17 tahun saat order / booking perahu pada checkout
+
+3 Akan ada notifikasi email atau WhatsApp kepada User, Host dan Admin untuk kondisi:
+a. Booking masuk
+b. Booking diterima
+c. Booking ditolak
+d. Pembayaran diterima
+
+4 Ada fitur chat bagi User dan Host untuk setiap postingan Host.
+
+5. Ada fitur untuk pemberian rating dan ulasan. User, Host dapat memberikan ulasan dan tanggapan atas chat yang disampaikan. User Admin berwenang melakukan penghapusan atas ulasan yang tidak sesuai dengan etika dan peraturan website. 
+
+6. Fitur untuk USER GUEST: 
+a. Search by Tanggal
+b. Search by Lokasi
+c. Search by jumlah Tamu
+d. Memberikan Ulasan dan Bintang setelah selesai transaksi terjadi
+e. Chat ke Host
+f. Melihat Postingan dan Ulasan Host
+g. User Guest tidak perlu login dulu untuk melihat lihat postingan, login saat akan melakukan pembayaran
+
+7 Fitur untuk USER HOST / VENDOR
+a. Upload Foto maksimal 10 foto (pembatasan besar file per foto maks 1 Mb) b. Atur tanggal ketersediaan
+c. Atur harga sewa
+d. Atur titik lokasi perahu by google map
+e. Mengisi TEMPLATE Deskripsi Objek yaitu: Ukuran Kapal (Panjang x Lebar), Fasilitas, Kapasitas/Jumlah orang, Waktu berangkat, Waktu tiba, Jumlah awak kapal, Umpan, Peralatan Pancing, Baju Pelampung, Makan pagi, Makan siang, Makan malam, Air Minum, Mesin Kapal 1, Mesin Kapal 2, AC, Kamar Tidur, Toilet, Wifi, Listrik, Kompor, Kulkas, Lain-lain.
+f. Memberikan tanggapan atas review User
+g. Menjawab chat dari User
+
+
+
+Adjustmwnt Produk Sewa Perahu (Charter Boat) Host/Vendor yang hares ditampilkan untuk user (penyewa):  1. Model data perahu (atribut wajib) : 
+- Nama KM (kapal motor) : (contoh: KM Pesona Laut)
+- Nama Kapten : (contoh: Kapten Bona)
+- Mesin kapal 1:  (contoh: mesin Dongfeng) Mesin kapal 2 : (contoh: mesin Dongfeng)
+- Kapasitas Orang / Penumpang : (contoh: 6 orang)
+- Fasilitas: Kapal : (contoh: sarapan pagi, teh/kopi, makan siang)
+- Lokasi: : (contoh: Dermaga Ancol)
+- Harga sewa per hari (sesuai keterangan di Alur Sewa)
+
+
+1. Alur Sewa: harian, harus booking hari dan tanggal sesuai jam kumpul dan jam kembali di dermaga, tanda jadi/deposit, Pembatalan hari minus (h-) tertentu akan hangus, Pelunasan saat H- tertentu. Pembatalan dapat dilakukan bila cuaca/kondisi alam tidak mendukung dan akan diganti dengan hari dan jadwal kosong yang tersedia pada Host.  Contoh :   - 1 hari: Rp. : (contoh: Rp 1.500.000,-) - Keterangan :                           Kumpul di dermaga : (contoh jam 02.00)                          Kembali di dermaga : (contoh jam 17.00) - Area : (contoh seputar pulau Matahari)  - 2 hari: Rp. : (contoh: Rp 2.000.000,-) - Keterangan :                         Kumpul di dermaga : (contoh jam 12.00)                        Kembali di dermagal : (contoh jam 17.00) - Area : (contoh seputar Karang Tandes)  - 3 hari: Rp. : (contoh: Rp 3.000.000,-) - Keterangan:                          Kumpul di dermaga : (contoh jam 12.00)                         Kembali di dermaga : (contoh jam 17.00) - Area : (contoh seputar pulau Bulan) 
+2. Lokasii (dermaga/pelabuhan/area tertentu) : contoh: nama Kota, nama area, nama dermaga/pelabuhan/area tertentu diperlukan titik koordinat (google map) agar user saat pilih dapat mengetahui area lokasi perahu berada 
+3. Status ketersediaan: : - Real-Time  - di approve oleh Host (ada kondisi dimana signal host tidak baik saat berada di laut)

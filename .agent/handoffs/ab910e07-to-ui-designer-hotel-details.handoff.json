@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0.0",
+  "handoff_id": "ab910e07-to-next-ui-designer-001",
+  "from_agent": "antigravity-session-ab910e07",
+  "to_agent": "ui-designer",
+  "created_at": "2026-03-11T21:47:48+07:00",
+  "status": "pending",
+  "priority": "P1",
+  "subject": "Hotel Details Page Needs Airbnb Redesign (TASK-009)",
+
+  "context_summary": "The room detail page (/room/{slug}/{id}) has been fully redesigned to Airbnb-style in this session. The hotel detail page (/hotel/{slug}/{id}) still uses the OLD layout and needs the same treatment.",
+
+  "current_state": {
+    "file": "resources/views/frontend/hotel/hotel-details.blade.php",
+    "problems": [
+      "Has old @includeIf breadcrumb at top",
+      "Uses circular <figure class='hotel_img'> logo instead of large gallery",
+      "Shows counter boxes (ul.hotel-info_list) instead of clean specs row",
+      "Room carousel uses old product-default card style",
+      "Review section uses old progress bars format"
+    ]
+  },
+
+  "target_state": {
+    "design_reference": "room-details.blade.php (just redesigned)",
+    "required_sections": [
+      "Title row with Share/Save buttons (same as room-details)",
+      "5-photo hotel gallery or single large hero image",
+      "Two-column layout: details (col-lg-8) + stats/info (col-lg-4)",
+      "Host/vendor info section",
+      "Hotel description",
+      "Available Perahu (rooms) carousel — keep existing swiper but restyle cards",
+      "Reviews in 2-col grid (same pattern as room-details)",
+      "Location map at bottom"
+    ],
+    "remove": [
+      "@includeIf('frontend.partials.breadcrumb', [...])",
+      "ul.hotel-info_list counter boxes",
+      "circular figure.hotel_img"
+    ]
+  },
+
+  "controller_variables": {
+    "view": "frontend.hotel.hotel-details",
+    "available": [
+      "$hotel (with: title, description, stars, latitude, longitude, logo, average_rating, address)",
+      "$vendor (vendor info)",
+      "$userName (string)",
+      "$rooms (Collection, for carousel)",
+      "$totalRooms (int)",
+      "$reviews (Collection)",
+      "$numOfReview (int)",
+      "$hotelCounters (Collection)",
+      "$rateStar",
+      "$currentLanguageInfo",
+      "$checkWishList (bool)"
+    ],
+    "important_notes": [
+      "$hotel->categoryName and $hotel->categorySlug are available from HotelController joins",
+      "city/state/country require manual lookup: App\\Models\\Location\\City::find($hotel->city_id)->name",
+      "Use optional() wrapper: optional(App\\Models\\Location\\City::find($hotel->city_id))->name"
+    ]
+  },
+
+  "css_instructions": {
+    "approach": "Append new classes to end of style.css",
+    "reuse": [
+      ".airbnb-listing-title — already defined",
+      ".airbnb-action-btn — already defined",
+      ".airbnb-image-grid — already defined",
+      ".section-heading — already defined",
+      ".reviews-grid, .review-card-airbnb — already defined",
+      ".btn-show-all-amenities — already defined"
+    ],
+    "create_new": [
+      ".hotel-detail-page — page wrapper",
+      ".hotel-specs-grid — grid showing rooms/ratings/stars/category stats",
+      ".room-carousel-airbnb — styled swiper wrapper"
+    ]
+  },
+
+  "design_tokens": {
+    "primary_color": "#E31C5F",
+    "dark": "#222222",
+    "muted": "#717171",
+    "border": "#dddddd",
+    "card_radius": "12px"
+  },
+
+  "verification_steps": [
+    "curl -sf http://127.0.0.1:8000/hotel/{any-slug}/{id} | head -5 (check no 500 errors)",
+    "Open browser at http://127.0.0.1:8000/hotel/{any-slug}/{id}",
+    "Verify: no breadcrumb, large image/gallery, 2-col layout, reviews in grid"
+  ]
+}

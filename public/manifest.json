@@ -1,0 +1,22 @@
+{
+  "short_name": "Go Fishi",
+  "name": "Go Fishi - Boat Rental Marketplace",
+  "description": "Premium boat rental marketplace for anglers and travelers.",
+  "background_color": "#ffffff",
+  "theme_color": "#FF385C",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/img/6775123ebcb9e.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/img/6775123ebcb9e.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

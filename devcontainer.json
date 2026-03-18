@@ -1,0 +1,44 @@
+{
+  "name": "Project",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "forwardPorts": [8000, 5173],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/zsh",
+        "php.validate.executablePath": "/usr/local/bin/php",
+        "[php]": {
+          "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+        },
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        },
+        "typescript.tsdk": "node_modules/typescript/lib"
+      },
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "xdebug.php-debug",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-typescript-next",
+        "github.copilot",
+        "github.vscode-pull-request-github",
+        "eamodio.gitlens",
+        "mutantdino.resourcemonitor"
+      ]
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
+  "postCreateCommand": "npm install && composer install",
+  "remoteUser": "vscode",
+  "mounts": [
+    "source=project-node-modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+  ]
+}

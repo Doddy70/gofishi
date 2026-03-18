@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('rooms', function (Blueprint $table) {
+            $table->enum('booking_type', ['direct', 'approval'])->default('direct')->after('status');
+            $table->enum('deposit_type', ['full', 'percentage', 'fixed'])->default('full')->after('booking_type');
+            $table->decimal('deposit_amount', 10, 2)->default(0)->after('deposit_type');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('rooms', function (Blueprint $table) {
+            $table->dropColumn(['booking_type', 'deposit_type', 'deposit_amount']);
+        });
+    }
+};

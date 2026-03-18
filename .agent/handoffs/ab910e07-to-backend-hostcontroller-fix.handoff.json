@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0.0",
+  "handoff_id": "ab910e07-to-backend-architect-001",
+  "from_agent": "antigravity-session-ab910e07",
+  "to_agent": "backend-architect",
+  "created_at": "2026-03-11T21:47:48+07:00",
+  "status": "pending",
+  "priority": "P0",
+  "subject": "Fix HostController Missing Class (TASK-008) + SEO Schema Markup (TASK-014)",
+
+  "task_008": {
+    "title": "Fix HostController Missing Class",
+    "error_message": "ReflectionException: Class 'HostController' does not exist",
+    "error_occurs_when": "Running php artisan route:list",
+    "action": {
+      "step_1": "Run: grep -rn 'HostController' routes/ to find the route",
+      "step_2": "Decide: is this route intentional or a leftover?",
+      "step_3a": "If leftover: remove the route from routes/web.php",
+      "step_3b": "If needed: create app/Http/Controllers/FrontEnd/HostController.php with appropriate methods"
+    },
+    "verification": "php artisan route:list --path=frontend should run without exceptions"
+  },
+
+  "task_014": {
+    "title": "Add JSON-LD Schema Markup to Room Details",
+    "file": "resources/views/frontend/room/room-details.blade.php",
+    "where_to_add": "In @section('content') before closing </div> of airbnb-detail-page, or in layout head section",
+    "template": {
+      "product_schema": {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "{{ $roomContent->title }}",
+        "description": "[strip_tags description]",
+        "image": "[first room image URL]",
+        "brand": {
+          "@type": "Brand",
+          "name": "{{ $userName }}"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "{{ $roomContent->average_rating }}",
+          "reviewCount": "{{ $numOfReview }}"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "{{ $roomContent->price_day_1 }}",
+          "priceCurrency": "IDR",
+          "availability": "https://schema.org/InStock",
+          "url": "{{ url()->current() }}"
+        }
+      }
+    },
+    "blade_implementation": "Add <script type='application/ld+json'>{{ json_encode($schemaData, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT) }}</script> in @section('script'). Build $schemaData in controller or inline @php block."
+  },
+
+  "context_refs": [
+    ".agent/state/shared-state.json",
+    ".agent/state/task-queue.json#TASK-008",
+    ".agent/state/task-queue.json#TASK-014",
+    ".agent/context/MASTER_CONTEXT.md"
+  ]
+}

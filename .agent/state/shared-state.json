@@ -1,0 +1,175 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "schema_version": "1.0.0",
+  "description": "Shared state store for all agents working on this project. Agents MUST read this file at session start and write updates on significant changes.",
+  "last_updated": "2026-03-11T21:47:48+07:00",
+  "updated_by": "antigravity-agent-session-ab910e07",
+
+  "project": {
+    "name": "Marketplace Sewa Perahu",
+    "type": "Laravel Airbnb Clone",
+    "root": "/Users/doddykapisha/Documents/GitHub/Airbnb/project",
+    "dev_url": "http://127.0.0.1:8000",
+    "dev_command": "php artisan serve",
+    "php_version": ">=8.1",
+    "laravel_version": "^10.0",
+    "locale": "id_ID",
+    "currency": "IDR"
+  },
+
+  "ui_state": {
+    "design_system": "airbnb-clone",
+    "primary_color": "#E31C5F",
+    "primary_gradient": "linear-gradient(to right, #E61E4D, #E31C5F, #D70466)",
+    "dark": "#222222",
+    "muted": "#717171",
+    "border": "#dddddd",
+    "bg_light": "#F7F7F7",
+    "card_radius": "12px",
+    "button_radius": "8px",
+    "css_file": "public/assets/front/css/style.css",
+    "css_total_lines": "~6450",
+    "z_index_scale": {
+      "header": 1000,
+      "search_container": 1001,
+      "dropdowns": 1050,
+      "sticky_nav": 200,
+      "mobile_bar": 100,
+      "modals": 1055
+    }
+  },
+
+  "pages": {
+    "home": {
+      "url": "/",
+      "view": "resources/views/frontend/home/index.blade.php",
+      "controller": "FrontEnd/HomeController",
+      "status": "completed",
+      "features": ["airbnb-search-widget", "animated-hero", "category-grid", "featured-rooms"],
+      "known_issues": []
+    },
+    "lokasi_dermaga": {
+      "url": "/lokasi-dermaga",
+      "view": "resources/views/frontend/hotel/hotel-map.blade.php",
+      "controller": "FrontEnd/HotelController@hotelMap",
+      "status": "completed",
+      "features": ["split-view-55-45", "leaflet-map", "airbnb-property-cards", "pagination"],
+      "known_issues": [],
+      "critical_note": "map-panel MUST be a direct child of split-view-container. Any stray </div> between list-panel content and map-panel will break flex layout."
+    },
+    "room_detail": {
+      "url": "/room/{slug}/{id}",
+      "view": "resources/views/frontend/room/room-details.blade.php",
+      "controller": "FrontEnd/RoomController@details",
+      "status": "completed",
+      "features": [
+        "sticky-detail-nav", "5-photo-grid", "two-column-layout",
+        "host-section", "3-highlights", "collapsible-description",
+        "amenities-grid", "amenities-modal", "reviews-2col",
+        "location-map", "sticky-booking-card", "package-price-updater",
+        "mobile-reserve-bar", "mobile-booking-modal"
+      ],
+      "known_issues": []
+    },
+    "hotel_detail": {
+      "url": "/hotel/{slug}/{id}",
+      "view": "resources/views/frontend/hotel/hotel-details.blade.php",
+      "controller": "FrontEnd/HotelController@details",
+      "status": "needs_redesign",
+      "features": ["old-breadcrumb", "circular-logo", "counter-boxes", "room-carousel", "reviews"],
+      "known_issues": ["old design not matching airbnb style", "breadcrumb should be removed"],
+      "priority": "P1"
+    },
+    "room_grid": {
+      "url": "/perahu",
+      "view": "resources/views/frontend/room/room-gird.blade.php",
+      "controller": "FrontEnd/RoomController@roomGrid",
+      "status": "partially_done",
+      "known_issues": ["card design inconsistency with hotel-map cards"],
+      "priority": "P2"
+    }
+  },
+
+  "bugs": {
+    "CRITICAL": [
+      {
+        "id": "BUG-001",
+        "title": "HostController class does not exist",
+        "file": "routes/web.php",
+        "description": "A route references Class 'HostController' which does not exist. php artisan route:list fails.",
+        "error": "ReflectionException: Class HostController does not exist",
+        "action": "Find and remove or implement HostController in routes/web.php",
+        "status": "open"
+      }
+    ],
+    "RESOLVED": [
+      {
+        "id": "BUG-002",
+        "title": "Split view stacking on /lokasi-dermaga",
+        "root_cause": "Extra </div> at line 242 of hotel-map.blade.php closed flex container before map-panel",
+        "fixed_in": "session-ab910e07",
+        "status": "resolved"
+      },
+      {
+        "id": "BUG-003",
+        "title": "500 error on /lokasi-dermaga",
+        "root_cause": "Undefined $radius, $bs, $locationIds in HotelController + unbalanced braces",
+        "fixed_in": "session-ab910e07",
+        "status": "resolved"
+      },
+      {
+        "id": "BUG-004",
+        "title": "Z-index chaos on homepage search",
+        "root_cause": "No consistent z-index scale",
+        "fixed_in": "session-ab910e07",
+        "status": "resolved"
+      }
+    ]
+  },
+
+  "services": {
+    "RoomService": {
+      "path": "app/Services/RoomService.php",
+      "created_in": "session-ab910e07",
+      "methods": [
+        "getRoomDetails(int $id, int $languageId): RoomContent+joins",
+        "getHostInfo(int $vendorId): ['vendor', 'userName']",
+        "getAvailabilityDates(int $roomId, int $hotelId): ['holidayDates', 'convertedHolidays', 'checkinDate']",
+        "getRoomReviews(int $roomId): ['reviews', 'numOfReview']",
+        "getRelatedRooms(int $roomId, int $categoryId, int $languageId): Collection"
+      ]
+    }
+  },
+
+  "models_map": {
+    "Room": "app/Models/Room.php",
+    "RoomContent": "app/Models/RoomContent.php",
+    "RoomImage": "app/Models/RoomImage.php",
+    "RoomReview": "app/Models/RoomReview.php",
+    "Hotel": "app/Models/Hotel.php",
+    "Amenitie": "app/Models/Amenitie.php",
+    "Booking": "app/Models/Booking.php",
+    "HourlyRoomPrice": "app/Models/HourlyRoomPrice.php",
+    "Holiday": "app/Models/Holiday.php",
+    "Vendor": "app/Models/Vendor.php",
+    "Admin": "app/Models/Admin.php"
+  },
+
+  "global_helpers": [
+    "symbolPrice($amount)",
+    "totalHotelRoom($hotelId)",
+    "totalHotelReview($hotelId)",
+    "totalRoomReview($roomId)",
+    "checkHotelWishList($hotelId, $userId)",
+    "checkroomWishList($roomId, $userId)",
+    "showAd($position)"
+  ],
+
+  "assets": {
+    "css": "public/assets/front/css/style.css",
+    "js_map_hotel": "public/assets/front/js/map-hotel.js",
+    "js_map_single": "public/assets/front/js/hotel-single-map.js",
+    "js_search": "public/assets/front/js/hotel-search.js",
+    "js_api_search": "public/assets/front/js/api-search-2.js"
+  }
+}

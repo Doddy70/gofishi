@@ -1,62 +1,53 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Go Fishi Development Project
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<div align="center">
+  <img src="public/images/logo.png" alt="Go Fishi Logo" width="200" onerror="this.src='https://placehold.co/200x200?text=Go+Fishi'">
+  
+  **Boat Rental Marketplace untuk Pemancingan & Wisata**
+  <br>
+  *Akses laut menjadi lebih mudah dan terpercaya bersama Go Fishi.*
 
-## About Laravel
+  [![Status](https://img.shields.io/badge/status-active_development-success.svg)]()
+  [![Laravel](https://img.shields.io/badge/laravel-framework-red.svg)](https://laravel.com)
+</div>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🌊 Tentang Project
+**Go Fishi** (gofishi.com) adalah platform business-to-consumer (B2C) skala menengah hingga besar yang dirancang khusus sebagai *Boat Rental Marketplace*. Sistem ini dibangun untuk mempermudah pelanggan dalam mencari, membooking, dan mengamankan perjalanan penyewaan kapal laut (untuk memancing maupun pariwisata), dengan manajemen inventaris (kapal/lokasi) di sisi admin dan vendor.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Di balik platform yang dinamis ini, kami mementingkan **stabilitas sistem backend**, **integritas database**, dan **kelancaran bisnis proses**.
 
-## Learning Laravel
+## 🎯 Goals & Objektif Bisnis
+Tujuan utama pengembangan platform Go Fishi meliputi:
+1. **Digitalisasi Penyewaan Kapal**: Menghadirkan portal tunggal untuk menghubungkan para nahkoda/pemilik kapal dengan pelanggan.
+2. **Validasi & Keamanan Transaksi (Legalitas 17+)**: Menerapkan validasi umur yang ketat pada saat registrasi maupun checkout, memastikan bahwa penyewaan kapal mematuhi regulasi keamanan.
+3. **Standarisasi Operasional Laut**: Mewajibkan kelengkapan data administratif kapal seperti *Nama KM, Nama Kapten, Deskripsi Mesin,* dan *Daftar Kru* pada setiap listing untuk keamanan penumpang.
+4. **Komunikasi Cepat dan Andal (WhatsApp First)**: Memprioritaskan jalur komunikasi melalui WhatsApp Notifications dan Email untuk semua *trigger* transaksi, menjamin notifikasi realtime yang tepercaya.
+5. **Akses Terdesentralisasi dengan Tier-Admin**: Menerapkan kontrol akses berjenjang (Super Admin, Manager, Staff) tanpa hardcode logic ID, memastikan pembagian wewenang yang aman dan mudah di-maintain.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 👨‍💻 Identitas Developer & Pengembangan
+Proyek pengembangan Go Fishi di-maintained dan di-lead oleh instruksi arsitektur pengembangan yang sangat ketat untuk menjamin ketersediaan jangka panjang:
 
-## Laravel Sponsors
+**Lead Developer**: Doddy Kapisha (`Doddy70`)  
+**Repository Repo**: [https://github.com/Doddy70/gofishi.git](https://github.com/Doddy70/gofishi.git)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Core Mandates & Rules Development
+Setiap kolaborator dan proses pengembangan dalam project ini harus secara ketat mematuhi *Core Mandates (v1.1)*:
+- **Baseline Skema**: Skema database dasar merujuk pada `public/installer/database.sql`. Pendekatan *migration* digunakan untuk *patching*, bukan untuk build-from-scratch.
+- **Role-Based Security**: Pengecekan otorisasi ketat berbasis nama role (*Admin 1, Admin 2, Admin 3*), tanpa melibatkan *hardcoded* ID.
+- **Workflow Stabil**: Mengutamakan stabilitas fungsional backend dan integrasi database terlebih dahulu sebelum mempercantik antarmuka (frontend).
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+## 🛠️ Stack Teknologi Indikatif
+- **Backend**: Laravel Ecosystem (PHP)
+- **Frontend**: Blade Templating, Tailwind CSS, Alpine.js / Frontend Frameworks
+- **Database**: MySQL / PostgreSQL (Merujuk pada baseline DB `database.sql`)
+- **Notifikasi**: Integrasi WhatsApp API Service, SMTP Email Service
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+*Informasi lebih lanjut mengenai status terkini dapat dilihat pada file `PROJECT_STATUS.md`.*

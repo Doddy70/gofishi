@@ -15,12 +15,23 @@ class RoomReview extends Model
         'rating',
         'review',
     ];
-    public function userInfo()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-    public function listingInfo()
+
+    public function userInfo()
     {
-        return $this->belongsTo(Room::class);
+        return $this->user();
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class, 'room_id', 'id');
+    }
+
+    public function hotelRoom()
+    {
+        return $this->room();
     }
 }

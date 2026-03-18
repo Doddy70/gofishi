@@ -80,10 +80,6 @@
                     <div class="flex flex-col gap-6 pb-10 border-b border-neutral-200">
                         <div class="flex justify-between items-center">
                             <h2 class="text-2xl font-semibold text-neutral-900">{{ __('Pilih cara pembayaran') }}</h2>
-                            <div class="flex gap-2">
-                                <img src="https://a0.muscache.com/airbnb/static/packages/assets/frontend/legacy-shared/images/payments/v2/visa.939b0099.svg" class="h-3">
-                                <img src="https://a0.muscache.com/airbnb/static/packages/assets/frontend/legacy-shared/images/payments/v2/mastercard.675713a1.svg" class="h-3">
-                            </div>
                         </div>
 
                         @if($room->availability_mode == 2)
@@ -92,33 +88,87 @@
                             </div>
                             <input type="hidden" name="gateway" value="approval">
                         @else
-                            <div class="flex flex-col gap-4">
-                                <select name="gateway" id="gateway" class="w-full p-4 rounded-xl border border-neutral-300 focus:border-black outline-none appearance-none bg-white font-light">
-                                    <option value="" disabled selected>{{ __('Pilih metode pembayaran') }}</option>
-                                    @foreach ($onlineGateways as $og)
-                                        <option value="{{ $og->keyword }}" @selected(old('gateway') == $og->keyword)>{{ __($og->name) }}</option>
-                                    @endforeach
-                                    @foreach ($offline_gateways as $fg)
-                                        <option value="{{ $fg->id }}" @selected(old('gateway') == $fg->id)>{{ __($fg->name) }}</option>
-                                    @endforeach
-                                </select>
-                                
-                                {{-- Offline Instructions --}}
-                                @foreach ($offline_gateways as $fg)
-                                    <div class="hidden offline-info mt-4 p-6 bg-neutral-50 rounded-2xl border border-neutral-200" id="offline-{{ $fg->id }}">
-                                        <p class="font-semibold mb-2">{{ __('Instruksi Pembayaran:') }}</p>
-                                        <div class="text-sm text-neutral-600 font-light mb-4">{!! $fg->instructions !!}</div>
-                                        @if($fg->has_attachment == 1)
-                                            <div class="flex flex-col gap-2">
-                                                <label class="text-xs font-bold">{{ __('Upload Bukti Transfer') }}*</label>
-                                                <input type="file" name="attachment" class="text-sm">
+                            <div class="flex flex-col gap-3">
+
+                                {{-- Online Gateways (Cards) --}}
+                                @foreach ($onlineGateways as $og)
+                                <label class="flex items-center gap-4 p-4 border-2 rounded-xl cursor-pointer transition-all has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50 border-neutral-200 hover:border-neutral-400 group">
+                                    <input type="radio" name="gateway" value="{{ $og->keyword }}"
+                                        class="w-4 h-4 accent-rose-500"
+                                        {{ ($loop->first && count($onlineGateways) == 1) || old('gateway') == $og->keyword ? 'checked' : '' }}>
+                                    <div class="flex items-center gap-3 flex-1">
+                                        @if($og->keyword == 'midtrans')
+                                            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
+                                                <span class="text-white font-bold text-xs">QRIS</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold text-neutral-900">QRIS / Transfer Bank</p>
+                                                <p class="text-xs text-neutral-500 font-light">Bayar via QRIS, Virtual Account, atau Kartu Kredit</p>
+                                            </div>
+                                        @elseif($og->keyword == 'xendit')
+                                            <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center shrink-0">
+                                                <span class="text-white font-bold text-xs">QRIS</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold text-neutral-900">QRIS / E-Wallet</p>
+                                                <p class="text-xs text-neutral-500 font-light">Bayar via QRIS, OVO, GoPay, atau Dana</p>
+                                            </div>
+                                        @else
+                                            <div class="w-10 h-10 bg-neutral-100 rounded-lg flex items-center justify-center shrink-0">
+                                                <i class="fas fa-credit-card text-neutral-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold text-neutral-900">{{ $og->name }}</p>
+                                                <p class="text-xs text-neutral-500 font-light">Pembayaran online</p>
                                             </div>
                                         @endif
                                     </div>
+                                    <div class="flex gap-1 shrink-0">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo_QRIS.svg/120px-Logo_QRIS.svg.png" alt="QRIS" class="h-5 object-contain opacity-70">
+                                    </div>
+                                </label>
                                 @endforeach
+
+                                {{-- Offline Gateways --}}
+                                @foreach ($offline_gateways as $fg)
+                                <label class="flex items-center gap-4 p-4 border-2 rounded-xl cursor-pointer transition-all has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50 border-neutral-200 hover:border-neutral-400">
+                                    <input type="radio" name="gateway" value="{{ $fg->id }}"
+                                        class="w-4 h-4 accent-rose-500"
+                                        {{ old('gateway') == $fg->id ? 'checked' : '' }}>
+                                    <div class="flex items-center gap-3 flex-1">
+                                        <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center shrink-0">
+                                            <i class="fas fa-university text-green-600"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-neutral-900">{{ $fg->name }}</p>
+                                            <p class="text-xs text-neutral-500 font-light">Transfer manual, konfirmasi setelah pembayaran</p>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                {{-- Instructions for this offline gateway --}}
+                                <div class="hidden offline-info px-4 py-3 bg-neutral-50 rounded-xl border border-neutral-200 text-sm" id="offline-{{ $fg->id }}">
+                                    <p class="font-semibold mb-2">{{ __('Instruksi Pembayaran:') }}</p>
+                                    <div class="text-neutral-600 font-light mb-3">{!! $fg->instructions !!}</div>
+                                    @if($fg->has_attachment == 1)
+                                        <div class="flex flex-col gap-1">
+                                            <label class="text-xs font-bold">{{ __('Upload Bukti Transfer') }} *</label>
+                                            <input type="file" name="attachment" class="text-sm">
+                                        </div>
+                                    @endif
+                                </div>
+                                @endforeach
+
+                                @if($onlineGateways->isEmpty() && $offline_gateways->isEmpty())
+                                <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-xl text-yellow-800 text-sm">
+                                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                                    Belum ada metode pembayaran yang aktif. Hubungi admin.
+                                </div>
+                                @endif
                             </div>
                         @endif
                     </div>
+
 
                     {{-- Section 4: Mandatory Policies --}}
                     <div class="flex flex-col gap-6">

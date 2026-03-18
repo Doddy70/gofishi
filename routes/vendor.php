@@ -328,5 +328,5 @@ Route::prefix('vendor')->middleware('auth:vendor', 'Demo', 'Deactive', 'email.ve
     Route::post('/chat/send-message/{chat_id}', 'Vendor\VendorChatController@sendMessage')->name('vendor.chat.send_message');
 
     // User Review Routes for Vendor
-    Route::post('/review/user/store', 'Vendor\PerahuBookingController@storeUserReview')->name('vendor.review.user.store');
+    Route::post('/review/user/store', 'Vendor\ReviewController@storeUserReview')->name('vendor.review.user.store');
   });

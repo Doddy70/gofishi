@@ -48,7 +48,7 @@ class PerahuController extends Controller
         $information['midtrans'] = $midtrans;
 
 
-        $language = Language::query()->where('code', '=', (string)$request->language)->firstOrFail();
+        $language = Language::where('code', (string)$request->language)->firstOrFail();
         $information['language'] = $language;
 
 
@@ -373,7 +373,7 @@ class PerahuController extends Controller
         $current_package = VendorPermissionHelper::packagePermission($vendorId);
         $defaultLang = Language::query()->where('is_default', 1)->first();
 
-        if ($current_package && (is_object($current_package) || $current_package->isNotEmpty())) {
+        if ($current_package && (is_object($current_package) || (is_array($current_package) ? count($current_package) > 0 : $current_package->isNotEmpty()))) {
             $information['room'] = Perahu::with('room_galleries')->where('vendor_id', '=', $vendorId)->findOrFail($id);
             $information['languages'] = Language::all();
 

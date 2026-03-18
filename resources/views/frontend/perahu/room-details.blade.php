@@ -358,23 +358,43 @@
                                 <label class="text-[10px] uppercase font-extrabold text-gray-900">JUMLAH PENUMPANG</label>
                                 <div class="text-[14px] text-gray-600 flex justify-between items-center" @click="guestMenu = !guestMenu">
                                     <span x-text="guests + ' orang'">1 orang</span>
-                                    <i data-lucide="users" class="w-4 h-4 text-gray-400"></i>
+                                    <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 transform transition-transform duration-200" :class="guestMenu ? 'rotate-180' : ''"></i>
                                 </div>
                                 <input type="hidden" name="adult" :value="guests">
-                                
+
                                 {{-- Guest Dropdown --}}
-                                <div x-show="guestMenu" @click.away="guestMenu = false" class="absolute top-full left-0 right-0 bg-white border border-gray-200 z-50 p-4 shadow-lg rounded-b-xl mt-1">
+                                <div
+                                    x-show="guestMenu"
+                                    x-cloak
+                                    x-transition:enter="transition ease-out duration-150"
+                                    x-transition:enter-start="opacity-0 -translate-y-1"
+                                    x-transition:enter-end="opacity-100 translate-y-0"
+                                    @click.away="guestMenu = false"
+                                    style="position: absolute; top: 100%; left: 0; right: 0; z-index: 9999;"
+                                    class="bg-white border border-gray-200 shadow-2xl rounded-xl mt-1 p-4"
+                                >
                                     <div class="flex justify-between items-center">
                                         <div class="flex flex-col">
-                                            <span class="text-sm font-bold">Total Penumpang</span>
-                                            <span class="text-[12px] text-gray-500">Maks. {{ $room->adult }} orang</span>
+                                            <span class="text-sm font-bold text-gray-900">Total Penumpang</span>
+                                            <span class="text-[12px] text-gray-400">Maks. {{ $room->adult }} orang</span>
                                         </div>
                                         <div class="flex items-center gap-3">
-                                            <button type="button" @click="if(guests > 1) guests--" class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-900">-</button>
-                                            <span x-text="guests" class="w-4 text-center font-bold">1</span>
-                                            <button type="button" @click="if(guests < maxGuests) guests++" class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-900">+</button>
+                                            <button type="button"
+                                                @click.stop="if(guests > 1) guests--"
+                                                class="w-9 h-9 rounded-full border-2 border-gray-300 flex items-center justify-center text-lg font-bold hover:border-gray-800 transition-colors"
+                                                :class="guests <= 1 ? 'opacity-30 cursor-not-allowed' : ''"
+                                            >−</button>
+                                            <span x-text="guests" class="w-6 text-center font-bold text-gray-900 text-[15px]">1</span>
+                                            <button type="button"
+                                                @click.stop="if(guests < maxGuests) guests++"
+                                                class="w-9 h-9 rounded-full border-2 border-gray-300 flex items-center justify-center text-lg font-bold hover:border-gray-800 transition-colors"
+                                                :class="guests >= maxGuests ? 'opacity-30 cursor-not-allowed' : ''"
+                                            >+</button>
                                         </div>
                                     </div>
+                                    <p class="text-[11px] text-gray-400 mt-3 leading-relaxed">
+                                        Pilih jumlah penumpang yang akan ikut trip ini. Harga sudah termasuk semua penumpang dalam paket.
+                                    </p>
                                 </div>
                             </div>
                         </div>

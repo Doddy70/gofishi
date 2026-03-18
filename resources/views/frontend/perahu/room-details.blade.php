@@ -298,7 +298,7 @@
                         </div>
 
                         {{-- Form Booking Real Integration --}}
-                        <div class="border border-gray-400 rounded-xl overflow-hidden mb-4">
+                        <div class="border border-gray-400 rounded-xl mb-4" style="overflow: visible;">
                             <div class="p-3 border-b border-gray-400 cursor-pointer hover:bg-gray-50 transition relative" id="checkin-btn">
                                 <label class="text-[10px] uppercase font-extrabold text-gray-900">TANGGAL KEBERANGKATAN</label>
                                 <div class="text-[14px] text-gray-600 flex justify-between items-center">
@@ -308,31 +308,49 @@
                                 <input type="hidden" name="checkInDate" x-model="checkIn">
                             </div>
                             
-                            <div class="p-3 border-b border-gray-400 cursor-pointer hover:bg-gray-50 transition relative" x-data="{ pkgMenu: false }">
+                            <div class="p-3 border-b border-gray-400 cursor-pointer hover:bg-gray-50 transition relative" 
+                                 x-data="{ pkgMenu: false }"
+                                 x-id="['pkg-dropdown']">
                                 <label class="text-[10px] uppercase font-extrabold text-gray-900">PILIH PAKET</label>
                                 <div class="text-[14px] text-gray-600 flex justify-between items-center" @click="pkgMenu = !pkgMenu">
                                     <span x-text="packages.find(p => p.id == selectedPackageId)?.name || 'Pilih Paket'">Pilih Paket</span>
-                                    <i data-lucide="chevron-down" class="w-4 h-4 transform transition" :class="pkgMenu ? 'rotate-180' : ''"></i>
+                                    <i data-lucide="chevron-down" class="w-4 h-4 transform transition-transform duration-200" :class="pkgMenu ? 'rotate-180' : ''"></i>
                                 </div>
-                                
-                                {{-- Package Dropdown --}}
-                                <div x-show="pkgMenu" @click.away="pkgMenu = false" class="absolute top-full left-0 right-0 bg-white border border-gray-200 z-50 shadow-lg rounded-b-xl mt-1 max-h-60 overflow-y-auto">
-                                    @forelse($packages as $pkg)
-                                    <div @click="updatePackage({{ $pkg->id }}); pkgMenu = false" 
-                                         class="p-4 hover:bg-gray-50 border-b border-gray-100 last:border-0 cursor-pointer transition">
-                                        <div class="flex justify-between items-center mb-1">
-                                            <span class="font-bold text-gray-900">{{ $pkg->name }}</span>
-                                            <span class="text-sm font-bold text-airbnb-red">{{ symbolPrice($pkg->price) }}</span>
+
+                                {{-- Package Dropdown — rendered inline, overflow visible --}}
+                                <div 
+                                    x-show="pkgMenu" 
+                                    x-cloak
+                                    x-transition:enter="transition ease-out duration-150"
+                                    x-transition:enter-start="opacity-0 -translate-y-1"
+                                    x-transition:enter-end="opacity-100 translate-y-0"
+                                    @click.away="pkgMenu = false"
+                                    style="position: absolute; top: 100%; left: 0; right: 0; z-index: 9999;"
+                                    class="bg-white border border-gray-200 shadow-2xl rounded-xl mt-1 overflow-hidden"
+                                >
+                                    <div class="overflow-y-auto" style="max-height: 280px;">
+                                        @forelse($packages as $pkg)
+                                        <div @click="updatePackage({{ $pkg->id }}); pkgMenu = false" 
+                                             class="flex items-center justify-between gap-3 px-4 py-3 hover:bg-rose-50 border-b border-gray-100 last:border-0 cursor-pointer transition-colors group">
+                                            <div class="flex flex-col flex-1 min-w-0">
+                                                <span class="font-semibold text-gray-900 group-hover:text-airbnb-red transition-colors text-[14px]">{{ $pkg->name }}</span>
+                                                <span class="text-[11px] text-gray-400 mt-0.5">
+                                                    {{ $pkg->duration_days }} Hari &middot; Kumpul {{ \Carbon\Carbon::parse($pkg->meeting_time)->format('H:i') }} &middot; Kembali {{ \Carbon\Carbon::parse($pkg->return_time)->format('H:i') }}
+                                                </span>
+                                                @if($pkg->area)
+                                                <span class="text-[11px] text-gray-400">📍 {{ $pkg->area }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="shrink-0 text-right">
+                                                <span class="text-[13px] font-bold text-airbnb-red whitespace-nowrap">{{ symbolPrice($pkg->price) }}</span>
+                                            </div>
                                         </div>
-                                        <div class="text-xs text-gray-500 font-light line-clamp-1 italic">
-                                            Durasi: {{ $pkg->duration_days }} Hari · {{ $pkg->meeting_time }} - {{ $pkg->return_time }}
+                                        @empty
+                                        <div class="p-5 text-center text-gray-500 text-sm">
+                                            Belum ada paket tersedia
                                         </div>
+                                        @endforelse
                                     </div>
-                                    @empty
-                                    <div class="p-4 text-center text-gray-500 text-sm">
-                                        {{ __('Belum ada paket tersedia') }}
-                                    </div>
-                                    @endforelse
                                 </div>
                             </div>
 

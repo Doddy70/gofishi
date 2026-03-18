@@ -52,13 +52,13 @@
                             <div class="flex flex-col gap-2">
                                 <label class="text-[12px] font-bold uppercase text-neutral-500">{{ __('Nama Lengkap') }}</label>
                                 <input type="text" name="booking_name" class="border-b border-neutral-300 focus:border-black transition-all py-2 outline-none font-light" 
-                                       placeholder="{{ __('Masukkan Nama') }}" value="{{ !empty($authUser) ? $authUser->name : old('booking_name') }}">
+                                       placeholder="{{ __('Masukkan Nama') }}" value="{{ !empty($authUser) ? $authUser->username : old('booking_name') }}">
                                 @error('booking_name') <p class="text-rose-500 text-xs mt-1">{{ $message }}</p> @enderror
                             </div>
                             <div class="flex flex-col gap-2">
                                 <label class="text-[12px] font-bold uppercase text-neutral-500">{{ __('Nomor Telepon') }}</label>
                                 <input type="text" name="booking_phone" class="border-b border-neutral-300 focus:border-black transition-all py-2 outline-none font-light" 
-                                       placeholder="{{ __('Contoh: 0812...') }}" value="{{ !empty($authUser) ? $authUser->phone : old('booking_phone') }}">
+                                       placeholder="{{ __('Contoh: 0812...') }}" value="{{ old('booking_phone') }}">
                                 @error('booking_phone') <p class="text-rose-500 text-xs mt-1">{{ $message }}</p> @enderror
                             </div>
                             <div class="flex flex-col gap-2">
@@ -70,7 +70,7 @@
                             <div class="flex flex-col gap-2">
                                 <label class="text-[12px] font-bold uppercase text-neutral-500">{{ __('Alamat') }}</label>
                                 <input type="text" name="booking_address" class="border-b border-neutral-300 focus:border-black transition-all py-2 outline-none font-light" 
-                                       placeholder="{{ __('Alamat Lengkap') }}" value="{{ !empty($authUser) ? $authUser->address : old('booking_address') }}">
+                                       placeholder="{{ __('Alamat Lengkap') }}" value="{{ old('booking_address') }}">
                                 @error('booking_address') <p class="text-rose-500 text-xs mt-1">{{ $message }}</p> @enderror
                             </div>
                         </div>

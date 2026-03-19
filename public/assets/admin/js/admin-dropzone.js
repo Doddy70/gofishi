@@ -9,8 +9,6 @@
   // Dropzone initialization
   Dropzone.options.myDropzone = {
     acceptedFiles: '.png, .jpg, .jpeg, .webp',
-    maxFilesize: 1,
-    url: storeUrl,
     maxFiles: galleryImages > 10 ? 10 : galleryImages,
     success: function (file, response) {
       if (response.status == "success") {

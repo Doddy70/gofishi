@@ -23,6 +23,10 @@ class Hotel extends Model
     {
         return $this->hasMany(HotelContent::class, 'hotel_id', 'id');
     }
+    public function faqs()
+    {
+        return $this->hasMany(HotelFaq::class, 'hotel_id', 'id');
+    }
     public function holidays()
     {
         return $this->hasMany(Holiday::class, 'hotel_id', 'id');

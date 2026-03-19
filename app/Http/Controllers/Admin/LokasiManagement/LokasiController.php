@@ -244,14 +244,13 @@ class LokasiController extends Controller
         $information = [];
         $languages = Language::get();
         $information['languages'] = $languages;
-        $information['vendors'] = Vendor::join('memberships', 'vendors.id', '=', 'memberships.vendor_id')
-            ->where([
-                ['memberships.status', '=', 1],
-                ['memberships.start_date', '<=', Carbon::now()->format('Y-m-d')],
-                ['memberships.expire_date', '>=', Carbon::now()->format('Y-m-d')]
-            ])
-            ->select('vendors.id', 'vendors.username')
+        
+        // Simplified query to get all verified vendors regardless of membership status for Admin
+        $information['vendors'] = Vendor::where('email_verified_at', '!=', null)
+            ->select('id', 'username')
+            ->orderBy('username', 'asc')
             ->get();
+            
         return view('admin.lokasi-management.select-vendor', $information);
     }
     public function findVendor(Request $request)
@@ -406,7 +405,26 @@ class LokasiController extends Controller
                     $hotelContent->meta_keyword = $request[$code . '_meta_keyword'];
                     $hotelContent->meta_description = $request[$code . '_meta_description'];
 
+                    $hotelContent->meta_description = $request[$code . '_meta_description'];
+
                     $hotelContent->save();
+                }
+                
+                // Save FAQs
+                if ($request->has($code . '_faq_q')) {
+                    $faqQs = $request[$code . '_faq_q'];
+                    $faqAs = $request[$code . '_faq_a'];
+                    foreach ($faqQs as $idx => $question) {
+                        if (!empty($question) && !empty($faqAs[$idx])) {
+                            \App\Models\HotelFaq::create([
+                                'hotel_id' => $hotel->id,
+                                'language_id' => $language->id,
+                                'question' => $question,
+                                'answer' => $faqAs[$idx],
+                                'serial_number' => $idx
+                            ]);
+                        }
+                    }
                 }
             }
             Session::flash('success', __('New Lokasi added successfully') . '!');
@@ -677,6 +695,26 @@ class LokasiController extends Controller
                 $hotelContent->meta_keyword = $request[$code . '_meta_keyword'];
                 $hotelContent->meta_description = $request[$code . '_meta_description'];
                 $hotelContent->save();
+            }
+
+            // Save FAQs
+            if ($request->has($code . '_faq_q')) {
+                \App\Models\HotelFaq::where('hotel_id', $request->hotel_id)->where('language_id', $language->id)->delete();
+                $faqQs = $request[$code . '_faq_q'];
+                $faqAs = $request[$code . '_faq_a'];
+                foreach ($faqQs as $idx => $question) {
+                    if (!empty($question) && !empty($faqAs[$idx])) {
+                        \App\Models\HotelFaq::create([
+                            'hotel_id' => $request->hotel_id,
+                            'language_id' => $language->id,
+                            'question' => $question,
+                            'answer' => $faqAs[$idx],
+                            'serial_number' => $idx
+                        ]);
+                    }
+                }
+            } else {
+                \App\Models\HotelFaq::where('hotel_id', $request->hotel_id)->where('language_id', $language->id)->delete();
             }
         }
 

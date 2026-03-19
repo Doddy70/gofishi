@@ -340,7 +340,6 @@ if (!function_exists('vendorTotalBooking')) {
       $membershipId = $vendor_id != 0 ? ($currentPackage ? $currentPackage->id : null) : 0;
 
       $vendorTotalBooking = Booking::where('vendor_id', $vendor_id)
-        ->where('membership_id', $membershipId)
         ->where('payment_status', '!=', '2')
         ->count();
     } else {

@@ -17,6 +17,7 @@ Anda adalah Lead Developer untuk **Go Fishi** (gofishi.com). Setiap tindakan And
 - **WhatsApp First**: Notifikasi WhatsApp adalah prioritas utama bersama Email. Gunakan `NotificationService` untuk setiap trigger transaksi.
 
 ## 4. Prosedur Kerja
+- **MANDATORY STARTUP**: Periksa status command_status dan jika tidak ada _local server_ yang menyala, Anda WAJIB langsung menjalankan `php artisan serve --port=8000` di *background* sebelum memulai sesi atau bekerja.
 - Baca `PROJECT_STATUS.md` di awal sesi.
 - Update `PROJECT_STATUS.md` di akhir sesi.
 - Selalu prioritaskan stabilitas backend sebelum mempercantik frontend.

@@ -274,44 +274,16 @@
                             </form>
                           </td>
 
-                          <td>
-                            @if ($current_package == '[]')
-                              <form class="deleteForm d-block"
-                                action="{{ route('vendor.perahu_management.delete_perahu', ['id' => $room->id]) }}"
-                                method="post">
-                                @csrf
-                                <button type="submit" class="btn btn-danger  mt-1 btn-sm deleteBtn">
-                                  <span class="btn-label">
-                                    <i class="fas fa-trash"></i>
-                                  </span>
-                                </button>
-                              </form>
-                            @else
-                              <div class="dropdown">
-                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
-                                  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                  aria-expanded="false">
-                                  {{ __('Select') }}
-                                </button>
-
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <a href="{{ route('vendor.perahu.packages.index', ['perahu_id' => $room->id]) }}"
-                                    class="dropdown-item">
-                                    {{ __('Manage Packages') }}
-                                  </a>
-                                  <a href="{{ route('vendor.perahu_management.edit_perahu', ['id' => $room->id]) }}"
-                                    class="dropdown-item">
-                                    {{ __('Edit') }}
-                                  </a>
-                                  <form class="deleteForm d-block"
-                                    action="{{ route('vendor.perahu_management.delete_perahu', ['id' => $room->id]) }}"
-                                    method="post">
-                                    @csrf
-                                    <button type="submit" class="deleteBtn">
-                                      {{ __('Delete') }}
-                                    </button>
-                                  </form>
-                            @endif
+                          <td class="d-flex" style="gap: 5px;">
+                            <a href="{{ route('vendor.perahu_management.edit_perahu', ['id' => $room->id]) }}" class="btn btn-warning btn-sm">
+                              <i class="fas fa-edit"></i> {{ __('Edit') }}
+                            </a>
+                            <form class="deleteForm d-block" action="{{ route('vendor.perahu_management.delete_perahu', ['id' => $room->id]) }}" method="post">
+                              @csrf
+                              <button type="submit" class="btn btn-danger btn-sm deleteBtn">
+                                <i class="fas fa-trash"></i> {{ __('Delete') }}
+                              </button>
+                            </form>
                           </td>
                         </tr>
                       @endforeach

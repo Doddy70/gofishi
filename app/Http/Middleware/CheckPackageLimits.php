@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Http\Helpers\VendorPermissionHelper;
 use App\Models\Hotel;
-use App\Models\Perahu;
+use App\Models\Room;
 use App\Models\Vendor;
 use Closure;
 use Illuminate\Http\Request;

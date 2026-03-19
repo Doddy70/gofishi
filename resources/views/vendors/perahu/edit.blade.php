@@ -114,10 +114,7 @@
                 </form>
                 <p class="em text-danger mb-0" id="errslider_images"></p>
                 <p class="text-warning">
-                <p class="text-warning">
-                  {{ __('You can upload maximum') }}{{ __(' ') }}
-                  {{ min(10, $current_package->number_of_images_per_room) }}{{ __(' ') }}{{ __('images under one perahu') }}
-                </p>
+                  {{ __('Maksimal 10 foto') }}
                 </p>
               </div>
 

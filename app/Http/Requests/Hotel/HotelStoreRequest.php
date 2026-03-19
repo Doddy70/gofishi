@@ -38,7 +38,6 @@ class HotelStoreRequest extends FormRequest
                 'logo' => [
                     'required',
                     new ImageMimeTypeRule(),
-                    'dimensions:width=300,height=300'
                 ],
                 'status' => 'required',
                 'stars' => 'required',
@@ -99,7 +98,6 @@ class HotelStoreRequest extends FormRequest
                     $rules[$code . '_category_id'] = 'required';
                     $rules[$code . '_state_id'] = $State ? 'required' : '';
                     $rules[$code . '_country_id'] = $country ? 'required' : '';
-                    $rules[$code . '_city_id'] = 'required';
                     $rules[$code . '_address'] = 'required';
                     $rules[$code . '_description'] = 'required|min:15';
                     $rules[$code . '_aminities'] = ($amenitiesCount > 0 ? 'required' : 'sometimes') . '|array';
@@ -121,7 +119,6 @@ class HotelStoreRequest extends FormRequest
                     'logo' => [
                         'required',
                         new ImageMimeTypeRule(),
-                        'dimensions:width=300,height=300'
                     ],
                     'status' => 'required',
                     'stars' => 'required',
@@ -184,7 +181,6 @@ class HotelStoreRequest extends FormRequest
                         $rules[$code . '_category_id'] = 'required';
                         $rules[$code . '_state_id'] = $State ? 'required' : '';
                         $rules[$code . '_country_id'] = $country ? 'required' : '';
-                        $rules[$code . '_city_id'] = 'required';
                         $rules[$code . '_address'] = 'required';
                         $rules[$code . '_description'] = 'required|min:15';
                         $rules[$code . '_aminities'] = ($amenitiesCount > 0 ? 'required' : 'sometimes') . '|array|max:' . $amenitiesLimit;

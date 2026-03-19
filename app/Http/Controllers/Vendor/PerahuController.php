@@ -241,9 +241,9 @@ class PerahuController extends Controller
                 $q->where('language_id', $language_id);
             },
         ])
-            ->where('vendor_id', (int)Auth::guard('vendor')->user()->id)
+            ->where('status', 1) // Only show active locations
             ->orderBy('id', 'desc')
-            ->select('id')
+            ->select('id', 'vendor_id')
             ->get();
 
 
@@ -390,9 +390,9 @@ class PerahuController extends Controller
                     $q->where('language_id', $language_id);
                 },
             ])
-                ->where('vendor_id', $vendorId)
+                ->where('status', 1) // Only show active locations
                 ->orderBy('id', 'desc')
-                ->select('id')
+                ->select('id', 'vendor_id')
                 ->get();
             $information['categories'] = RoomCategory::where('language_id', $language_id)->get();
 

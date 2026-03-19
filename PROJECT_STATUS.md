@@ -129,17 +129,13 @@
     - **FAQ Page**: Memperbaiki pemetaan route yang salah (sebelumnya redirect ke home) sehingga sekarang menampilkan konten FAQ dengan layout accordion premium.
 - [x] **Database Schema Alignment**: Menambahkan kolom yang hilang (`language_id`, `name`, `slug`, `status`) pada tabel `blog_categories` melalui migrasi resmi dan melakukan *data patching* untuk blog yang tidak terkategori.
 
-### Terbaru (Language Consolidation & Admin Stability - 2026-03-19 Night):
-- [x] **Single-Language Consolidation (Indonesian)**: Menyederhanakan seluruh sistem dengan menghapus bahasa Inggris (ID 2). Seluruh data kategori, fasilitas, dan konten telah dimigrasikan ke ID 1 (Indonesian) untuk mencegah kebingungan input dan duplikasi data.
-- [x] **Admin Menu Recovery (Lokasi Management)**: Memperbaiki error 404 pada seluruh sub-menu Pengaturan Lokasi. Perbaikan dilakukan pada rute `fallback` di `web.php` agar mendukung middleware `web` (session), sehingga navigasi admin kembali normal.
-- [x] **Blog Detail SEO Recovery**: Menambahkan kolom `meta_keywords` dan `meta_description` yang hilang pada tabel `blog_informations` melalui migrasi `2026_03_18_175025`. Ini memperbaiki crash "Unknown column" saat membuka detail artikel blog.
-- [x] **Robust Category Management**: Melakukan pembersihan data "sampah" pada tabel `hotel_categories` dan menambahkan sistem logging/try-catch pada `CategoryController` untuk stabilitas saat penambahan data baru.
-
-### Strategic Plan (2026-03-19): Final Polish & Handover
-- [x] **UI Consistency Check**: Memastikan seluruh halaman (Dermaga, Perahu, Blog, FAQ, Vendor) menggunakan sistem ikon Lucide & FontAwesome yang sinkron.
-- [x] **Single Language Deployment**: Mengunci sistem pada bahasa tunggal (Indonesia) sebagai standarisasi operasional Go Fishi.
-- [x] **GitHub Final Synchronization**: Semua perubahan UI/UX dan konsolidasi bahasa telah disinkronkan ke repositori utama.
-- [ ] **Final User Walkthrough**: Menunggu feedback USER untuk visual akhir sebelum masuk ke tahap pemeliharaan (Maintenance).
+### Terbaru (Lokasi FAQ & Vendor Experience - 2026-03-19 Late Night):
+- [x] **Lokasi-Specific FAQ System**: Implementasi sistem Tanya Jawab (FAQ) yang unik untuk setiap Lokasi (Dermaga). Menggantikan FAQ global agar informasi lebih relevan bagi penyewa perahu.
+- [x] **Dynamic FAQ Management**: Menyediakan form input dinamis di panel **Vendor & Admin** (Buat/Edit Lokasi) untuk menambah/menghapus FAQ secara *on-the-fly* dengan dukungan sistem *multi-language*.
+- [x] **Image Upload Refinement**: Menghapus pembatasan resolusi gambar yang kaku dan instruksi "999,999 foto" yang membingungkan. Sekarang sistem mendukung hingga 10 foto per dermaga dengan penyesuaian otomatis via CSS.
+- [x] **Critical Controller Fixes**: Memperbaiki error `Attempt to read property "id" on true` pada proses update Lokasi di panel Admin & Vendor yang sempat menyebabkan munculnya notifikasi error meskipun data tersimpan.
+- [x] **Database Schema Extension**: Migrasi tabel `hotel_faqs` (hotel_id, language_id, question, answer, serial_number) berhasil dijalankan dan terintegrasi penuh dengan model `Hotel`.
+- [x] **Dropzone UI Polish**: Menghapus limit `maxFilesize` pada plugin Dropzone Admin untuk memudahkan vendor mengunggah foto dermaga berkualitas tinggi tanpa hambatan teknis.
 
 ---
-*(Ekosistem Go Fishi kini memiliki identitas visual yang kohesif, modern, dan premium di setiap sudut aplikasinya, dari pencarian cerdas berbasis AI hingga detail transaksi yang aman)*
+*(Ekosistem Go Fishi kini memiliki identitas visual yang kohesif, modern, dan premium di setiap sudut aplikasinya, dari pencarian cerdas berbasis AI hingga manajemen detail dermaga yang sangat fleksibel)*

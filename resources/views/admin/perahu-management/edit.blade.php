@@ -129,14 +129,9 @@
                   <input type="hidden" value="{{ $room->id }}" name="room_id">
                 </form>
                 <p class="em text-danger mb-0" id="errslider_images"></p>
-                @if ($vendorId != 0)
-                  <p class="text-warning">
-                  <p class="text-warning">
-                    {{ __('You can upload maximum') }}{{ __(' ') }}
-                    {{ $current_package->number_of_images_per_room }}{{ __(' ') }}{{ __('images under one perahu') }}
-                  </p>
-                  </p>
-                @endif
+                <p class="text-warning">
+                  {{ __('Maksimal 10 foto') }}
+                </p>
               </div>
 
               <form id="roomForm" action="{{ route('admin.perahu_management.update_perahu', $room->id) }}" method="POST"

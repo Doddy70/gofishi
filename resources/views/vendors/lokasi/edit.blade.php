@@ -78,7 +78,7 @@
                 <ul></ul>
               </div>
               <div class="col-lg-12">
-                <label for="" class="mb-2"><strong>{{ __('Gallery Images') . '*' }}</strong></label>
+                <label for="" class="mb-2"><strong>{{ __('Gallery Dermaga') . '*' }}</strong></label>
                 <div class="row">
                   <div class="col-12">
                     <table class="table table-striped" id="imgtable">
@@ -107,8 +107,7 @@
                 </form>
                 <p class="em text-danger mb-0" id="errslider_images"></p>
                 <p class="text-warning">
-                  {{ __('You can upload maximum') }}{{ __(' ') }}
-                  {{ $current_package->number_of_images_per_hotel }}{{ __(' ') }}{{ __('images under one lokasi') }}
+                  {{ __('Maksimal 10 foto') }}
                 </p>
               </div>
 
@@ -119,7 +118,7 @@
                 <div class="row">
                   <div class="col-lg-4">
                     <div class="form-group">
-                      <label for="">{{ __('Lokasi Logo') . '*' }}</label>
+                      <label for="">{{ __('Gambar Utama (Hero)') . '*' }}</label>
                       <br>
                       <div class="thumb-preview">
                         <img
@@ -132,7 +131,7 @@
                           <input type="file" class="img-input2" name="logo">
                         </div>
                       </div>
-                      <p class="mt-2 mb-0 text-warning">{{ __('Image Size 300X300') }}</p>
+
                     </div>
                   </div>
                   <div class="col-lg-4">
@@ -146,21 +145,11 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-lg-4">
+                  <div class="col-lg-4 d-none">
                     <div class="form-group">
                       <label>{{ __('Stars') . '*' }} </label>
                       <select name="stars" class="form-control">
-                        <option selected disabled>{{ __('Select a star') }}</option>
-                        <option @if ($hotel->stars == 1) selected @endif value="1">{{ __('1 ★') }}
-                        </option>
-                        <option @if ($hotel->stars == 2) selected @endif value="2">{{ __('2 ★★') }}
-                        </option>
-                        <option @if ($hotel->stars == 3) selected @endif value="3">{{ __('3 ★★★') }}
-                        </option>
-                        <option @if ($hotel->stars == 4) selected @endif value="4">{{ __('4 ★★★★') }}
-                        </option>
-                        <option @if ($hotel->stars == 5) selected @endif value="5">{{ __('5 ★★★★★') }}
-                        </option>
+                        <option value="5" selected>{{ __('5 ★★★★★') }}</option>
                       </select>
                     </div>
                   </div>
@@ -362,13 +351,13 @@
                                 <div class="form-group {{ $language->direction == 1 ? 'rtl text-right' : '' }}">
 
 
-                                  <label>{{ __('Select Amenities') . '*' }}</label>
+                                  <label>{{ __('Fasilitas Dermaga') . '*' }}</label>
                                   <div class="dropdown-content" id="checkboxes">
                                     @if ($hasaminitie)
                                       @foreach ($aminities as $aminitie)
                                         @if (in_array($aminitie->id, $hasaminitie))
                                           <input
-                                            @if ($hotelAmenitieDown) class="input-checkbox  {{ $language->code }}_input-checkbox" @endif
+                                            @if (!empty($hotelAmenitieDown)) class="input-checkbox  {{ $language->code }}_input-checkbox" @endif
                                             id="{{ $aminitie->id }}" type="checkbox"
                                             data-code ="{{ $language->code }}"
                                             data-listing_id ="{{ $hotel->id }}"
@@ -430,7 +419,32 @@
                               </div>
                             </div>
                           </div>
-                          <div class="row">
+
+                          {{-- Hotel FAQs --}}
+                          <div class="row mt-4">
+                            <div class="col-lg-12">
+                              <h4 class="mb-3">{{ __('FAQs (Tanya Jawab Lokasi)') }}</h4>
+                              <div id="faq-container-{{$language->code}}">
+                                @php $lokasiFaqs = $hotel->faqs()->where('language_id', $language->id)->orderBy('serial_number', 'asc')->get(); @endphp
+                                @foreach($lokasiFaqs as $idx => $lokasiFaq)
+                                <div class="faq-item border p-3 mt-3 bg-light rounded relative">
+                                    <div class="form-group mb-2 p-0">
+                                        <label>{{ __('Pertanyaan (Q)') }}</label>
+                                        <input type="text" name="{{$language->code}}_faq_q[]" class="form-control" value="{{$lokasiFaq->question}}">
+                                    </div>
+                                    <div class="form-group p-0 mb-3">
+                                        <label>{{ __('Jawaban (A)') }}</label>
+                                        <textarea name="{{$language->code}}_faq_a[]" class="form-control" rows="3">{{$lokasiFaq->answer}}</textarea>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-danger mt-2" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> {{ __('Hapus') }}</button>
+                                </div>
+                                @endforeach
+                              </div>
+                              <button type="button" class="btn btn-sm btn-primary mt-3" onclick="addFaq('{{$language->code}}')"><i class="fas fa-plus"></i> {{ __('Tambah FAQ') }}</button>
+                            </div>
+                          </div>
+                          
+                          <div class="row pt-4">
                             <div class="col">
                               @php $currLang = $language; @endphp
                               @foreach ($languages as $language)
@@ -501,6 +515,25 @@
   <script type="text/javascript" src="{{ asset('assets/admin/js/feature.js') }}"></script>
   <script type="text/javascript" src="{{ asset('assets/admin/js/admin-dropzone.js') }}"></script>
   <script type="text/javascript" src="{{ asset('assets/admin/js/admin-hotel.js') }}"></script>
+  <script>
+    function addFaq(langCode) {
+        var container = document.getElementById('faq-container-' + langCode);
+        var div = document.createElement('div');
+        div.className = 'faq-item border p-3 mt-3 bg-light rounded';
+        div.innerHTML = `
+            <div class="form-group mb-2 p-0">
+                <label>{{ __('Pertanyaan (Q)') }}</label>
+                <input type="text" name="${langCode}_faq_q[]" class="form-control" placeholder="{{ __('Misal: Apakah tersedia tempat parkir?') }}">
+            </div>
+            <div class="form-group p-0 mb-3">
+                <label>{{ __('Jawaban (A)') }}</label>
+                <textarea name="${langCode}_faq_a[]" class="form-control" rows="3" placeholder="{{ __('Misal: Ya, kami menyediakan parkir 24 jam.') }}"></textarea>
+            </div>
+            <button type="button" class="btn btn-sm btn-danger mt-2" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> {{ __('Hapus') }}</button>
+        `;
+        container.appendChild(div);
+    }
+  </script>
 @endsection
 
 @section('variables')

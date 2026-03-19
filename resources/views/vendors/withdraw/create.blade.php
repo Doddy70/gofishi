@@ -32,7 +32,7 @@
             <div class="card-title">{{ __('Make a Withdrawal Request') }}</div>
             <div class="card-title float-right">{{ __('Your Balance') }} :
               {{ $settings->base_currency_symbol_position == 'left' ? $settings->base_currency_symbol : '' }}
-              {{ Auth::guard('vendor')->user()->amount }}
+              {{ number_format(Auth::guard('vendor')->user()->amount, 0, ',', '.') }}
               {{ $settings->base_currency_symbol_position == 'right' ? $settings->base_currency_symbol : '' }}
             </div>
           </div>
@@ -68,7 +68,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>{{ __('Withdraw  Amount') . '*' }}</label>
+                  <label>{{ __('Withdraw Amount') . '*' }}</label>
                   <input type="number" class="form-control" id="withdraw_amount" name="withdraw_amount"
                     placeholder="{{ __('Enter Withdraw Amount') }}" min="" required>
                   <p id="err_withdraw_amount" class="mt-2 mb-0 text-danger em"></p>

@@ -366,9 +366,29 @@ class LokasiController extends Controller
                         $hotelContent->meta_keyword = $request[$code . '_meta_keyword'];
                         $hotelContent->meta_description = $request[$code . '_meta_description'];
 
+                        $hotelContent->meta_description = $request[$code . '_meta_description'];
+
                         $hotelContent->save();
                     }
+                    
+                    // Save FAQs
+                    if ($request->has($code . '_faq_q')) {
+                        $faqQs = $request[$code . '_faq_q'];
+                        $faqAs = $request[$code . '_faq_a'];
+                        foreach ($faqQs as $idx => $question) {
+                            if (!empty($question) && !empty($faqAs[$idx])) {
+                                \App\Models\HotelFaq::create([
+                                    'hotel_id' => $hotel->id,
+                                    'language_id' => $language->id,
+                                    'question' => $question,
+                                    'answer' => $faqAs[$idx],
+                                    'serial_number' => $idx
+                                ]);
+                            }
+                        }
+                    }
                 }
+
                 Session::flash('success', __('New Lokasi added successfully') . '!');
 
                 return Response::json(['status' => 'success'], 200);
@@ -555,6 +575,26 @@ class LokasiController extends Controller
                 $hotelContent->meta_keyword = $request[$code . '_meta_keyword'];
                 $hotelContent->meta_description = $request[$code . '_meta_description'];
                 $hotelContent->save();
+            }
+
+            // Save FAQs
+            if ($request->has($code . '_faq_q')) {
+                \App\Models\HotelFaq::where('hotel_id', $request->hotel_id)->where('language_id', $language->id)->delete();
+                $faqQs = $request[$code . '_faq_q'];
+                $faqAs = $request[$code . '_faq_a'];
+                foreach ($faqQs as $idx => $question) {
+                    if (!empty($question) && !empty($faqAs[$idx])) {
+                        \App\Models\HotelFaq::create([
+                            'hotel_id' => $request->hotel_id,
+                            'language_id' => $language->id,
+                            'question' => $question,
+                            'answer' => $faqAs[$idx],
+                            'serial_number' => $idx
+                        ]);
+                    }
+                }
+            } else {
+                \App\Models\HotelFaq::where('hotel_id', $request->hotel_id)->where('language_id', $language->id)->delete();
             }
         }
 

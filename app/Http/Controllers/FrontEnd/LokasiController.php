@@ -19,8 +19,11 @@ use App\Models\Location\City;
 use App\Models\Location\Country;
 use App\Models\Location\State;
 use App\Models\Perahu;
+use App\Models\Room;
 use App\Models\RoomContent;
 use App\Models\RoomReview;
+use App\Models\Amenitie;
+use App\Models\FAQ;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -108,7 +111,7 @@ class LokasiController extends Controller
 
     public function details(Request $request, $slug, $id)
     {
-        $misc = new MiscellaneousController();
+        $misc = app(MiscellaneousController::class);
         $language = $misc->getLanguage();
         $information['bgImg'] = $misc->getBreadcrumb();
         $information['pageHeading'] = $misc->getPageHeading($language);
@@ -147,8 +150,23 @@ class LokasiController extends Controller
         }
 
         $information['hotel'] = $hotel;
-        $information['hotelImages'] = HotelImage::Where('hotel_id', $id)->get();
+        $information['hotelImages'] = HotelImage::where('hotel_id', $id)->get();
         $information['language'] = $language;
+
+        // Fetch Actual Amenities Objects based on IDs stored in hotel_contents
+        $amenityIds = json_decode($hotel->amenities, true) ?? [];
+        $information['all_amenities'] = Amenitie::whereIn('id', $amenityIds)
+            ->where('language_id', $language->id)
+            ->get();
+
+        // FAQs for this location (safe check for language_id)
+        $faqsQuery = \App\Models\HotelFaq::where('hotel_id', $id);
+        if (\Illuminate\Support\Facades\Schema::hasColumn('hotel_faqs', 'language_id')) {
+            $faqsQuery->where('language_id', $language->id);
+        }
+        $information['faqs'] = $faqsQuery->orderBy('serial_number', 'asc')
+            ->take(6)
+            ->get();
 
         $information['hotelCounters'] = HotelCounter::join('hotel_counter_contents', 'hotel_counters.id', '=', 'hotel_counter_contents.hotel_counter_id')
             ->where('hotel_id', $id)
@@ -170,6 +188,12 @@ class LokasiController extends Controller
             ->where('rooms.hotel_id', $id)
             ->where('room_contents.language_id', $language->id)
             ->where('rooms.status', 1);
+
+        // Count unique vendors in this location
+        $information['total_vendors'] = Room::where('hotel_id', $id)
+            ->whereNotNull('vendor_id')
+            ->distinct('vendor_id')
+            ->count('vendor_id');
 
         if ($request->filled('guests')) {
             $roomsQuery->where('rooms.adult', '>=', $guests);

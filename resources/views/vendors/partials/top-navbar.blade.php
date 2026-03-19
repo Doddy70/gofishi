@@ -76,9 +76,9 @@
             }
           @endphp
           <li>
-            <button type="button" class="btn  btn-secondary mr-2  btn-sm btn-round" id="aa" data-toggle="modal"
+            <button type="button" class="btn btn-secondary mr-2 btn-sm btn-round" id="aa" data-toggle="modal"
               data-target="#checkLimitModal">
-              @if ($hotelImgDown || $hotelAmenitieDown || $roomAmenitieDown || $roomImgDown || $hotelCanAdd < 0 || $roomCanAdd < 0)
+              @if (($hotelImgDown ?? false) || ($hotelAmenitieDown ?? false) || ($roomAmenitieDown ?? false) || ($roomImgDown ?? false) || ($hotelCanAdd ?? 0) < 0 || ($roomCanAdd ?? 0) < 0)
                 <i class="fas fa-exclamation-triangle text-danger"></i>
               @endif
               {{ __('Check Limit') }}

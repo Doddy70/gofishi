@@ -52,7 +52,10 @@ class PerahuBookingController extends Controller
 
     public function index(Request $request)
     {
-        $language = Language::query()->where('code', '=', $request->language)->firstOrFail();
+        $language = Language::query()->where('code', '=', $request->language)->first();
+        if (!$language) {
+            $language = Language::query()->where('is_default', 1)->firstOrFail();
+        }
         $order_number = $title =  null;
 
         if ($request->filled('booking_no')) {
@@ -123,7 +126,10 @@ class PerahuBookingController extends Controller
         $roomInfo = $details->hotelRoom()->first();
         $information['additional_services']   = json_decode($details->service_details);
 
-        $language = Language::query()->where('code', '=', $request->language)->firstOrFail();
+        $language = Language::query()->where('code', '=', $request->language)->first();
+        if (!$language) {
+            $language = Language::query()->where('is_default', 1)->firstOrFail();
+        }
 
         $roomInfo = $details->hotelRoom()->first();
 
@@ -644,7 +650,10 @@ class PerahuBookingController extends Controller
         $details = Booking::where([['id', $id], ['vendor_id', Auth::guard('vendor')->user()->id]])->firstOrFail();
         $information['details'] = $details;
 
-        $language = Language::query()->where('code', '=', $request->language)->firstOrFail();
+        $language = Language::query()->where('code', '=', $request->language)->first();
+        if (!$language) {
+            $language = Language::query()->where('is_default', 1)->firstOrFail();
+        }
 
         $roomInfo = $details->hotelRoom()->first();
 

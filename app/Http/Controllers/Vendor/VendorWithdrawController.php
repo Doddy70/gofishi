@@ -49,7 +49,11 @@ class VendorWithdrawController extends Controller
         $receive_balance = $amount - $total_charge;
         $user_balance = Auth::guard('vendor')->user()->amount - $amount;
 
-        return ['total_charge' => round($total_charge, 2), 'receive_balance' => round($receive_balance, 2), 'user_balance' => round($user_balance, 2)];
+        return [
+            'total_charge' => number_format(round($total_charge, 2), 0, ',', '.'),
+            'receive_balance' => number_format(round($receive_balance, 2), 0, ',', '.'),
+            'user_balance' => number_format(round($user_balance, 2), 0, ',', '.')
+        ];
     }
 
     //send_request

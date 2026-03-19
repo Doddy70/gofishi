@@ -6,7 +6,16 @@
    } else {
        $permissions = null;
    }
-
+   
+   // Variable fallbacks to prevent ErrorException: Undefined variable
+   $hotelImgDown = $hotelImgDown ?? false;
+   $hotelAmenitieDown = $hotelAmenitieDown ?? false;
+   $roomAmenitieDown = $roomAmenitieDown ?? false;
+   $roomImgDown = $roomImgDown ?? false;
+   $hotelImgHotelContents = $hotelImgHotelContents ?? [];
+   $roomImgRoomContents = $roomImgRoomContents ?? [];
+   $hotelamenitiehotelContents = $hotelamenitiehotelContents ?? [];
+   $roomamenitiehotelContents = $roomamenitiehotelContents ?? [];
  @endphp
  @if ($current_package != '[]')
 

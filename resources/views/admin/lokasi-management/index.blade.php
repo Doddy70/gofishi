@@ -316,47 +316,35 @@
                           </td>
 
                           <td>
-                            @if ($current_package == '[]')
-                              <form class="deleteForm d-block"
-                                action="{{ route('admin.lokasi_management.delete_lokasi', ['id' => $hotel->id]) }}"
-                                method="post">
-                                @csrf
-                                <button type="submit" class="btn btn-danger  mt-1 btn-sm deleteBtn">
-                                  <span class="btn-label">
-                                    <i class="fas fa-trash"></i>
-                                  </span>
-                                </button>
-                              </form>
-                            @else
-                              <div class="dropdown">
-                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
-                                  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                  aria-expanded="false">
-                                  {{ __('Select') }}
-                                </button>
+                            <div class="dropdown">
+                              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
+                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                {{ __('Select') }}
+                              </button>
 
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                                  <a href="{{ route('admin.lokasi_management.edit_lokasi', ['id' => $hotel->id]) }}"
-                                    class="dropdown-item">
-                                    {{ __('Edit') }}
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a href="{{ route('admin.lokasi_management.edit_lokasi', ['id' => $hotel->id]) }}"
+                                  class="dropdown-item">
+                                  {{ __('Edit') }}
+                                </a>
+                                @if (!empty($hotel_content))
+                                  <a href="{{ route('frontend.lokasi.details', ['slug' => $hotel_content->slug, 'id' => $hotel->id]) }}"
+                                    class="dropdown-item" target="_blank">
+                                    {{ __('Preview') }}
                                   </a>
-                                  @if (!empty($hotel_content))
-                                    <a href="{{ route('frontend.lokasi.details', ['slug' => $hotel_content->slug, 'id' => $hotel->id]) }}"
-                                      class="dropdown-item"target="_blank">
-                                      {{ __('Preview') }}
-                                    </a>
-                                  @endif
+                                @endif
 
-                                  <form class="deleteForm d-block"
-                                    action="{{ route('admin.lokasi_management.delete_lokasi', ['id' => $hotel->id]) }}"
-                                    method="post">
-                                    @csrf
-                                    <button type="submit" class="deleteBtn">
-                                      {{ __('Delete') }}
-                                    </button>
-                                  </form>
-                            @endif
+                                <form class="deleteForm d-block"
+                                  action="{{ route('admin.lokasi_management.delete_lokasi', ['id' => $hotel->id]) }}"
+                                  method="post">
+                                  @csrf
+                                  <button type="submit" class="deleteBtn">
+                                    {{ __('Delete') }}
+                                  </button>
+                                </form>
+                              </div>
+                            </div>
                           </td>
                         </tr>
                         @include('admin.lokasi-management.feature-payment')

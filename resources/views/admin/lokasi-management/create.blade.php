@@ -124,7 +124,7 @@
                 <ul></ul>
               </div>
               <div class="col-lg-12">
-                <label for="" class="mb-2"><strong>{{ __('Gallery Images') . '*' }}</strong></label>
+                <label for="" class="mb-2"><strong>{{ __('Gallery Dermaga') . '*' }}</strong></label>
                 <form action="{{ route('admin.lokasi_management.lokasi.imagesstore') }}" id="my-dropzone"
                   enctype="multipart/formdata" class="dropzone create">
                   @csrf
@@ -133,16 +133,9 @@
                   </div>
                 </form>
                 <p class="em text-danger mb-0" id="errslider_images"></p>
-                @if ($vendorId != 0)
-                  @if ($current_package != '[]')
-                    @if (vendorTotalAddedHotel($vendorId) <= $current_package->number_of_hotel)
-                      <p class="text-warning">
-                        {{ __('You can upload maximum') }}{{ __(' ') }}
-                        {{ $current_package->number_of_images_per_hotel }}{{ __(' ') }}{{ __('images under one lokasi') }}
-                      </p>
-                    @endif
-                  @endif
-                @endif
+                <p class="text-warning">
+                  {{ __('Maksimal 10 foto') }}
+                </p>
               </div>
 
               <form id="hotelForm" action="{{ route('admin.lokasi_management.store_lokasi') }}" method="POST"
@@ -151,7 +144,7 @@
                 <div class="row">
                   <div class="col-lg-4">
                     <div class="form-group">
-                      <label for="">{{ __('Lokasi Logo') . '*' }}</label>
+                      <label for="">{{ __('Gambar Utama (Hero)') . '*' }}</label>
                       <br>
                       <div class="thumb-preview">
                         <img src="{{ asset('assets/img/noimage.jpg') }}" alt="..." class="uploaded-img2">
@@ -163,7 +156,7 @@
                           <input type="file" class="img-input2" name="logo">
                         </div>
                       </div>
-                      <p class="mt-2 mb-0 text-warning">{{ __('Image Size 300X300') }}</p>
+
                     </div>
                   </div>
                   <div class="col-lg-4">
@@ -175,16 +168,11 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-lg-4">
+                  <div class="col-lg-4 d-none">
                     <div class="form-group">
                       <label>{{ __('Stars') . '*' }} </label>
                       <select name="stars" class="form-control">
-                        <option selected disabled>{{ __('Select a star') }}</option>
-                        <option value="1">{{ __('1 ★') }}</option>
-                        <option value="2">{{ __('2 ★★') }}</option>
-                        <option value="3">{{ __('3 ★★★') }}</option>
-                        <option value="4">{{ __('4 ★★★★') }}</option>
-                        <option value="5">{{ __('5 ★★★★★') }}</option>
+                        <option value="5" selected>{{ __('5 ★★★★★') }}</option>
                       </select>
                     </div>
                   </div>
@@ -371,7 +359,7 @@
                               <div class="col-lg-12">
                                 <div class="form-group {{ $language->direction == 1 ? 'rtl text-right' : '' }}">
 
-                                  <label>{{ __('Select Amenities') . '*' }} </label>
+                                  <label>{{ __('Fasilitas Dermaga') . '*' }} </label>
                                   <div class="dropdown-content" id="checkboxes">
                                     @foreach ($aminities as $amenity)
                                       <input type="checkbox" id="{{ $amenity->id }}"
@@ -417,7 +405,18 @@
                             </div>
                           </div>
 
-                          <div class="row">
+                          {{-- Hotel FAQs --}}
+                          <div class="row mt-4">
+                            <div class="col-lg-12">
+                              <h4 class="mb-3">{{ __('FAQs (Tanya Jawab Lokasi)') }}</h4>
+                              <div id="faq-container-{{$language->code}}">
+                                <!-- FAQ items will be injected here -->
+                              </div>
+                              <button type="button" class="btn btn-sm btn-primary mt-3" onclick="addFaq('{{$language->code}}')"><i class="fas fa-plus"></i> {{ __('Tambah FAQ') }}</button>
+                            </div>
+                          </div>
+
+                          <div class="row pt-4">
                             <div class="col">
                               @php $currLang = $language; @endphp
 
@@ -502,4 +501,23 @@
 
   <script type="text/javascript" src="{{ asset('assets/admin/js/admin-hotel.js') }}"></script>
   <script type="text/javascript" src="{{ asset('assets/admin/js/admin-dropzone.js') }}"></script>
+  <script>
+    function addFaq(langCode) {
+        var container = document.getElementById('faq-container-' + langCode);
+        var div = document.createElement('div');
+        div.className = 'faq-item border p-3 mt-3 bg-light rounded';
+        div.innerHTML = `
+            <div class="form-group mb-2 p-0">
+                <label>{{ __('Pertanyaan (Q)') }}</label>
+                <input type="text" name="${langCode}_faq_q[]" class="form-control" placeholder="{{ __('Misal: Apakah tersedia tempat parkir?') }}">
+            </div>
+            <div class="form-group p-0 mb-3">
+                <label>{{ __('Jawaban (A)') }}</label>
+                <textarea name="${langCode}_faq_a[]" class="form-control" rows="3" placeholder="{{ __('Misal: Ya, kami menyediakan parkir 24 jam.') }}"></textarea>
+            </div>
+            <button type="button" class="btn btn-sm btn-danger mt-2" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i> {{ __('Hapus') }}</button>
+        `;
+        container.appendChild(div);
+    }
+  </script>
 @endsection

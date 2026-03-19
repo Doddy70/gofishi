@@ -127,16 +127,9 @@
                   </div>
                 </form>
                 <p class="em text-danger mb-0" id="errslider_images"></p>
-                @if ($vendorId != 0)
-                  @if ($current_package != '[]')
-                    @if (vendorTotalAddedRoom($vendorId) <= $current_package->number_of_room)
-                      <p class="text-warning">
-                        {{ __('You can upload maximum') }}{{ __(' ') }}
-                        {{ $current_package->number_of_images_per_room }}{{ __(' ') }}{{ __('images under one perahu') }}
-                      </p>
-                    @endif
-                  @endif
-                @endif
+                <p class="text-warning">
+                  {{ __('Maksimal 10 foto') }}
+                </p>
               </div>
 
               <form id="roomForm" action="{{ route('admin.perahu_management.store_perahu') }}" method="POST"

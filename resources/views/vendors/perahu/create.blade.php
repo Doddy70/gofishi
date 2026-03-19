@@ -46,7 +46,7 @@
               <div class="col-lg-12">
                 <label for="" class="mb-2"><strong>{{ __('Gallery Images') . '*' }}</strong></label>
                 <form action="{{ route('vendor.perahu_management.perahu.imagesstore') }}" id="my-dropzone"
-                  enctype="multipart/formdata" class="dropzone create">
+                  enctype="multipart/form-data" class="dropzone create">
                   @csrf
                   <div class="fallback">
                     <input name="file" type="file" multiple />

@@ -235,4 +235,11 @@ class HotelUpdateRequest extends FormRequest
             return  packageTotalHotelAmenities($vendorId);
         }
     }
+
+    public function attributes()
+    {
+        return [
+            'logo' => __('Gambar Utama (Hero)'),
+        ];
+    }
 }

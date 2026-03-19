@@ -366,26 +366,7 @@ class LokasiController extends Controller
                         $hotelContent->meta_keyword = $request[$code . '_meta_keyword'];
                         $hotelContent->meta_description = $request[$code . '_meta_description'];
 
-                        $hotelContent->meta_description = $request[$code . '_meta_description'];
-
                         $hotelContent->save();
-                    }
-                    
-                    // Save FAQs
-                    if ($request->has($code . '_faq_q')) {
-                        $faqQs = $request[$code . '_faq_q'];
-                        $faqAs = $request[$code . '_faq_a'];
-                        foreach ($faqQs as $idx => $question) {
-                            if (!empty($question) && !empty($faqAs[$idx])) {
-                                \App\Models\HotelFaq::create([
-                                    'hotel_id' => $hotel->id,
-                                    'language_id' => $language->id,
-                                    'question' => $question,
-                                    'answer' => $faqAs[$idx],
-                                    'serial_number' => $idx
-                                ]);
-                            }
-                        }
                     }
                 }
 
@@ -510,67 +491,61 @@ class LokasiController extends Controller
 
     public function update(HotelUpdateRequest $request, $id)
     {
-        $logoImgURL = $request->logo;
-
         $languages = Language::all();
-
         $in = $request->all();
         $hotel = Hotel::findOrFail($request->hotel_id);
 
         if ($request->hasFile('logo')) {
-            $logoImgExt = $logoImgURL->getClientOriginalExtension();
-
-            $logoImgName = time() . '.' . $logoImgExt;
-            $logoDir = public_path('assets/img/hotel/logo/');
-
-            if (!file_exists($logoDir)) {
-                mkdir($logoDir, 0777, true);
+            $logoImg = $request->file('logo');
+            $logoImgName = time() . '.' . $logoImg->getClientOriginalExtension();
+            $directory = public_path('assets/img/hotel/logo/');
+            if (!file_exists($directory)) {
+                mkdir($directory, 0777, true);
             }
-            copy($logoImgURL, $logoDir . $logoImgName);
-            @unlink(public_path('assets/img/hotel/logo/') . $hotel->logo);
-
+            $logoImg->move($directory, $logoImgName);
             $in['logo'] = $logoImgName;
+            
+            // Delete old image
+            if ($hotel->logo) {
+                @unlink(public_path('assets/img/hotel/logo/' . $hotel->logo));
+            }
+        } else {
+            unset($in['logo']);
         }
 
         $in['min_price'] = hotelMinPrice($request->hotel_id);
         $in['max_price'] = hotelMaxPrice($request->hotel_id);
 
-
-        $hotel = $hotel->update($in);
+        $hotel->update($in);
 
         $slders = $request->slider_images;
         if ($slders) {
-            $pis = HotelImage::findOrFail($slders);
-            foreach ($pis as $key => $pi) {
-                $pi->hotel_id = $request->hotel_id;
+            $pis = HotelImage::whereIn('id', $slders)->get();
+            foreach ($pis as $pi) {
+                $pi->hotel_id = $hotel->id;
                 $pi->save();
             }
         }
 
         foreach ($languages as $language) {
             $code = $language->code;
-
-            $hotelContent =  HotelContent::where('hotel_id', $request->hotel_id)->where('language_id', $language->id)->first();
+            $hotelContent = HotelContent::where('hotel_id', $hotel->id)->where('language_id', $language->id)->first();
 
             if (empty($hotelContent)) {
                 $hotelContent = new HotelContent();
+                $hotelContent->hotel_id = $hotel->id;
+                $hotelContent->language_id = $language->id;
             }
 
-            if (
-                $language->is_default == 1 ||
-                $request->filled($code . '_title')
-            ) {
-                $hotelContent->language_id = $language->id;
-                $hotelContent->hotel_id = $request->hotel_id;
+            if ($language->is_default == 1 || $request->filled($code . '_title')) {
                 $hotelContent->title = $request[$code . '_title'];
                 $hotelContent->slug = createSlug($request[$code . '_title']);
                 $hotelContent->category_id = $request[$code . '_category_id'];
-                $hotelContent->country_id = $request[$code . '_country_id'];
-                $hotelContent->state_id = $request[$code . '_state_id'];
                 $hotelContent->city_id = $request[$code . '_city_id'];
+                $hotelContent->state_id = $request[$code . '_state_id'];
+                $hotelContent->country_id = $request[$code . '_country_id'];
                 $hotelContent->address = $request[$code . '_address'];
-                $amenities = $request->input($code . '_aminities', []);
-                $hotelContent->amenities = json_encode($amenities);
+                $hotelContent->amenities = json_encode($request->input($code . '_aminities', []));
                 $hotelContent->description = Purifier::clean($request[$code . '_description'], 'youtube');
                 $hotelContent->meta_keyword = $request[$code . '_meta_keyword'];
                 $hotelContent->meta_description = $request[$code . '_meta_description'];
@@ -578,14 +553,17 @@ class LokasiController extends Controller
             }
 
             // Save FAQs
-            if ($request->has($code . '_faq_q')) {
-                \App\Models\HotelFaq::where('hotel_id', $request->hotel_id)->where('language_id', $language->id)->delete();
-                $faqQs = $request[$code . '_faq_q'];
-                $faqAs = $request[$code . '_faq_a'];
+            $faqQs = $request->input($code . '_faq_q', []);
+            $faqAs = $request->input($code . '_faq_a', []);
+            
+            // Delete existing FAQs for this language and location
+            \App\Models\HotelFaq::where('hotel_id', $hotel->id)->where('language_id', $language->id)->delete();
+            
+            if (!empty($faqQs)) {
                 foreach ($faqQs as $idx => $question) {
                     if (!empty($question) && !empty($faqAs[$idx])) {
                         \App\Models\HotelFaq::create([
-                            'hotel_id' => $request->hotel_id,
+                            'hotel_id' => $hotel->id,
                             'language_id' => $language->id,
                             'question' => $question,
                             'answer' => $faqAs[$idx],
@@ -593,13 +571,10 @@ class LokasiController extends Controller
                         ]);
                     }
                 }
-            } else {
-                \App\Models\HotelFaq::where('hotel_id', $request->hotel_id)->where('language_id', $language->id)->delete();
             }
         }
 
         Session::flash('success', __('Lokasi Updated successfully') . '!');
-
         return Response::json(['status' => 'success'], 200);
     }
 

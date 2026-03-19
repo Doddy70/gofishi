@@ -263,7 +263,8 @@ class LokasiController extends Controller
         $languages = Language::get();
         $information['languages'] = $languages;
         $information['vendor_id'] = $id;
-        $information['defaultLang'] = Language::query()->where('is_default', 1)->first();
+        $defaultLang = Language::where('is_default', 1)->first();
+        $information['defaultLang'] = $defaultLang;
 
         // Admin can always create regardless of vendor membership status
         return view('admin.lokasi-management.create', $information);
@@ -335,6 +336,7 @@ class LokasiController extends Controller
     }
     public function store(HotelStoreRequest $request)
     {
+        try {
         $vendorId = $request->vendor_id;
 
         $current_package = VendorPermissionHelper::packagePermission($vendorId);
@@ -366,7 +368,7 @@ class LokasiController extends Controller
                     @mkdir($logoDir, 0777, true);
                 }
 
-                copy($logoImgURL, $logoDir . $logoImgName);
+                $logoImgURL->move($logoDir, $logoImgName);
                 $in['logo'] = $logoImgName;
             }
 
@@ -434,6 +436,10 @@ class LokasiController extends Controller
             Session::flash('warning', __('Lokasi limit reached or exceeded') . '!');
 
             return Response::json(['status' => 'success'], 200);
+        }
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Lokasi store failed: ' . $e->getMessage());
+            return response()->json(['status' => 'error', 'errors' => ['exception' => [$e->getMessage()]]], 422);
         }
     }
 
@@ -613,12 +619,12 @@ class LokasiController extends Controller
     public function edit($id)
     {
         $information['hotel'] = Hotel::with('hotel_galleries')->findOrFail($id);
-        $defaultLang = Language::query()->where('is_default', 1)->first();
+        $defaultLang = Language::where('is_default', 1)->first();
         
-        $information['hotelAddress'] = HotelContent::where([
+        $information['hotelAddress'] = $defaultLang ? HotelContent::where([
             ['language_id', $defaultLang->id],
             ['hotel_id', $id]
-        ])->pluck('address')->first();
+        ])->pluck('address')->first() : '';
 
         $information['languages'] = Language::all();
         $information['defaultLang'] = $defaultLang;
@@ -629,37 +635,36 @@ class LokasiController extends Controller
 
     public function update(HotelUpdateRequest $request, $id)
     {
-        $logoImgURL = $request->logo;
-
+        try {
         $languages = Language::all();
-
         $in = $request->all();
         $hotel = Hotel::findOrFail($request->hotel_id);
 
-
         if ($request->hasFile('logo')) {
+            $logoImgURL = $request->logo;
             $logoImgExt = $logoImgURL->getClientOriginalExtension();
-
             $logoImgName = time() . '.' . $logoImgExt;
             $logoDir = public_path('assets/img/hotel/logo/');
 
             if (!file_exists($logoDir)) {
                 mkdir($logoDir, 0777, true);
             }
-            copy($logoImgURL, $logoDir . $logoImgName);
+            $logoImgURL->move($logoDir, $logoImgName);
             @unlink(public_path('assets/img/hotel/logo/') . $hotel->logo);
 
             $in['logo'] = $logoImgName;
+        } else {
+            unset($in['logo']);
         }
 
         $in['min_price'] = hotelMinPrice($request->hotel_id);
         $in['max_price'] = hotelMaxPrice($request->hotel_id);
 
-        $hotel = $hotel->update($in);
+        $hotel->update($in);
 
         $slders = $request->slider_images;
         if ($slders) {
-            $pis = HotelImage::findOrFail($slders);
+            $pis = HotelImage::whereIn('id', $slders)->get();
             foreach ($pis as $key => $pi) {
                 $pi->hotel_id = $request->hotel_id;
                 $pi->save();
@@ -685,9 +690,9 @@ class LokasiController extends Controller
                 $hotelContent->title = $request[$code . '_title'];
                 $hotelContent->slug = createSlug($request[$code . '_title']);
                 $hotelContent->category_id = $request[$code . '_category_id'];
-                $hotelContent->country_id = $request[$code . '_country_id'];
-                $hotelContent->state_id = $request[$code . '_state_id'];
-                $hotelContent->city_id = $request[$code . '_city_id'];
+                $hotelContent->country_id = $request[$code . '_country_id'] ?? null;
+                $hotelContent->state_id = $request[$code . '_state_id'] ?? null;
+                $hotelContent->city_id = $request[$code . '_city_id'] ?? null;
                 $hotelContent->address = $request[$code . '_address'];
                 $amenities = $request->input($code . '_aminities', []);
                 $hotelContent->amenities = json_encode($amenities);
@@ -698,11 +703,12 @@ class LokasiController extends Controller
             }
 
             // Save FAQs
-            if ($request->has($code . '_faq_q')) {
+            $questions = $request->input($code . '_faq_q');
+            $faqAs = $request->input($code . '_faq_a');
+
+            if ($questions && is_array($questions)) {
                 \App\Models\HotelFaq::where('hotel_id', $request->hotel_id)->where('language_id', $language->id)->delete();
-                $faqQs = $request[$code . '_faq_q'];
-                $faqAs = $request[$code . '_faq_a'];
-                foreach ($faqQs as $idx => $question) {
+                foreach ($questions as $idx => $question) {
                     if (!empty($question) && !empty($faqAs[$idx])) {
                         \App\Models\HotelFaq::create([
                             'hotel_id' => $request->hotel_id,
@@ -714,13 +720,17 @@ class LokasiController extends Controller
                     }
                 }
             } else {
-                \App\Models\HotelFaq::where('hotel_id', $request->hotel_id)->where('language_id', $language->id)->delete();
+                 \App\Models\HotelFaq::where('hotel_id', $request->hotel_id)->where('language_id', $language->id)->delete();
             }
         }
 
         Session::flash('success', __('Lokasi Updated successfully') . '!');
 
-        return Response::json(['status' => 'success'], 200);
+            return Response::json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Lokasi update failed: ' . $e->getMessage());
+            return response()->json(['status' => 'error', 'errors' => ['exception' => [$e->getMessage()]]], 422);
+        }
     }
 
     public function delete($id)

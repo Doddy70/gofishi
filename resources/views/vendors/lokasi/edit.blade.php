@@ -98,7 +98,7 @@
                     </table>
                   </div>
                 </div>
-                <form action="#" id="my-dropzone" enctype="multipart/formdata" class="dropzone create">
+                <form action="#" id="my-dropzone" enctype="multipart/form-data" class="dropzone create">
                   @csrf
                   <div class="fallback">
                     <input name="file" type="file" multiple />
@@ -506,6 +506,19 @@
 @endsection
 
 @section('script')
+  <script>
+    "use strict";
+    var address = "{{ $hotelAddress }}";
+    var storeUrl = "{{ route('vendor.lokasi_management.lokasi.imagesstore') }}";
+    var removeUrl = "{{ route('vendor.lokasi_management.lokasi.imagermv') }}";
+    var getStateUrl = "{{ route('vendor.lokasi_management.get-state') }}";
+    var getCityUrl = "{{ route('vendor.lokasi_management.get-city') }}";
+    var rmvdbUrl = "{{ route('vendor.lokasi_management.lokasi.imgdbrmv') }}";
+    var videoId = {{ $hotel->id }};
+    var updateAminitie = "{{ route('vendor.lokasi_management.update_amenities') }}"
+    var galleryImages = {{ $current_package->number_of_images_per_hotel - count($hotel->hotel_galleries) }};
+    var languages = {!! json_encode($languages) !!};
+  </script>
   @if ($settings->google_map_api_key_status == 1)
     <script
       src="https://maps.googleapis.com/maps/api/js?key={{ config('google.maps_api_key') }}&libraries=places&callback=initMap"
@@ -513,8 +526,8 @@
     <script src="{{ asset('assets/admin/js/edit-map-init.js') }}"></script>
   @endif
   <script type="text/javascript" src="{{ asset('assets/admin/js/feature.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('assets/admin/js/admin-dropzone.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('assets/admin/js/admin-hotel.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('assets/admin/js/admin-dropzone.js?v=' . time()) }}"></script>
+  <script type="text/javascript" src="{{ asset('assets/admin/js/admin-hotel.js?v=' . time()) }}"></script>
   <script>
     function addFaq(langCode) {
         var container = document.getElementById('faq-container-' + langCode);
@@ -533,21 +546,5 @@
         `;
         container.appendChild(div);
     }
-  </script>
-@endsection
-
-@section('variables')
-  <script>
-    "use strict";
-    var address = "{{ $hotelAddress }}";
-    var storeUrl = "{{ route('vendor.lokasi_management.lokasi.imagesstore') }}";
-    var removeUrl = "{{ route('vendor.lokasi_management.lokasi.imagermv') }}";
-    var getStateUrl = "{{ route('vendor.lokasi_management.get-state') }}";
-    var getCityUrl = "{{ route('vendor.lokasi_management.get-city') }}";
-    var rmvdbUrl = "{{ route('vendor.lokasi_management.lokasi.imgdbrmv') }}";
-    var videoId = {{ $hotel->id }};
-    var updateAminitie = "{{ route('vendor.lokasi_management.update_amenities') }}"
-    var galleryImages = {{ $current_package->number_of_images_per_hotel - count($hotel->hotel_galleries) }};
-    var languages = {!! json_encode($languages) !!};
   </script>
 @endsection

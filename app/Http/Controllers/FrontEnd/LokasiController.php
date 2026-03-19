@@ -165,7 +165,6 @@ class LokasiController extends Controller
             $faqsQuery->where('language_id', $language->id);
         }
         $information['faqs'] = $faqsQuery->orderBy('serial_number', 'asc')
-            ->take(6)
             ->get();
 
         $information['hotelCounters'] = HotelCounter::join('hotel_counter_contents', 'hotel_counters.id', '=', 'hotel_counter_contents.hotel_counter_id')

@@ -283,7 +283,7 @@ $(document).ready(function () {
 
       if ($(this).hasClass('summernote')) {
         let tmcId = $toInput.attr('id');
-        let content = tinyMCE.get(tmcId).getContent();
+        let content = (typeof tinyMCE !== "undefined" && tinyMCE.get(tmcId)) ? tinyMCE.get(tmcId).getContent() : (typeof $(this).summernote !== "undefined" ? $(this).summernote("code") : "");
         fd.delete($(this).attr('name'));
         fd.append($(this).attr('name'), content);
       }
@@ -307,6 +307,10 @@ $(document).ready(function () {
 
         if (data.status == 'success') {
           location.reload();
+        } else if (data.status == 'error') {
+          $('.request-loader').removeClass('show');
+          $(e.target).attr('disabled', false);
+          bootnotify('Something went wrong!', 'Error', 'danger');
         }
         if (data.redirect) {
           window.location.href = data.redirect;
@@ -371,7 +375,7 @@ $(document).ready(function () {
 
       if ($(this).hasClass('summernote')) {
         let tmcId = $toInput.attr('id');
-        let content = tinyMCE.get(tmcId).getContent();
+        let content = (typeof tinyMCE !== "undefined" && tinyMCE.get(tmcId)) ? tinyMCE.get(tmcId).getContent() : (typeof $(this).summernote !== "undefined" ? $(this).summernote("code") : "");
         fd.delete($(this).attr('name'));
         fd.append($(this).attr('name'), content);
       }
@@ -456,7 +460,7 @@ $(document).ready(function () {
 
       if ($(this).hasClass('summernote')) {
         let tmcId = $toInput.attr('id');
-        let content = tinyMCE.get(tmcId).getContent();
+        let content = (typeof tinyMCE !== "undefined" && tinyMCE.get(tmcId)) ? tinyMCE.get(tmcId).getContent() : (typeof $(this).summernote !== "undefined" ? $(this).summernote("code") : "");
         fd.delete($(this).attr('name'));
         fd.append($(this).attr('name'), content);
       }
@@ -561,7 +565,7 @@ $('#commonForm').on('submit', function (e) {
 
     if ($(this).hasClass('summernote')) {
       let tmcId = $toInput.attr('id');
-      let content = tinyMCE.get(tmcId).getContent();
+      let content = (typeof tinyMCE !== "undefined" && tinyMCE.get(tmcId)) ? tinyMCE.get(tmcId).getContent() : (typeof $(this).summernote !== "undefined" ? $(this).summernote("code") : "");
       fd.delete($(this).attr('name'));
       fd.append($(this).attr('name'), content);
     }
@@ -582,8 +586,8 @@ $('#commonForm').on('submit', function (e) {
       if (data.status == 'success') {
         location.reload();
       } else if (data.status == 'error') {
-
-        location.reload();
+        $('.request-loader').removeClass('show');
+        bootnotify('Something went wrong!', 'Error', 'danger');
       }
       if (data == "downgrade") {
         $('.modal').modal('hide');
@@ -733,7 +737,7 @@ $("#updateBtn").on('click', function (e) {
 
     if ($(this).hasClass('summernote')) {
       let tmcId = $toInput.attr('id');
-      let content = tinyMCE.get(tmcId).getContent();
+      let content = (typeof tinyMCE !== "undefined" && tinyMCE.get(tmcId)) ? tinyMCE.get(tmcId).getContent() : (typeof $(this).summernote !== "undefined" ? $(this).summernote("code") : "");
       fd.delete($(this).attr('name'));
       fd.append($(this).attr('name'), content);
     }
@@ -755,6 +759,10 @@ $("#updateBtn").on('click', function (e) {
 
       if (data.status == 'success') {
         location.reload();
+      } else if (data.status == 'error') {
+        $('.request-loader').removeClass('show');
+        $(e.target).attr('disabled', false);
+        bootnotify('Something went wrong!', 'Error', 'danger');
       }
       if (data == "downgrade") {
         $('.modal').modal('hide');

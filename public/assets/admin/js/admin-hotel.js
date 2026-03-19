@@ -33,11 +33,8 @@ $('body').on('change', '.js-example-basic-single3', function () {
     },
     success: function (data) {
       if (data) {
-        console.log(data);
         if (data.states && data.states.length > 0) {
-
           $('.' + hh).removeClass('d-none');
-
           $('.' + added).append($('<option>', {
             value: '',
             text: 'Select State',
@@ -46,18 +43,20 @@ $('body').on('change', '.js-example-basic-single3', function () {
           }));
 
           $.each(data.states, function (key, value) {
-            $('.' + added).append($('<option></option>').val(value.id).html(value
-              .name));
+            $('.' + added).append($('<option></option>').val(value.id).html(value.name));
           });
+          
           $('.' + added2).append($('<option>', {
             value: '',
             text: 'Select City',
             disabled: true,
             selected: true
           }));
+          
+          $('.' + added).trigger('change');
+          $('.' + added2).trigger('change');
         } else {
           $('.' + hh).addClass('d-none');
-
           $('.' + added2).append($('<option>', {
             value: '',
             text: 'Select City',
@@ -65,13 +64,15 @@ $('body').on('change', '.js-example-basic-single3', function () {
             selected: true
           }));
           $.each(data.cities, function (key, value) {
-            $('.' + added2).append($('<option></option>').val(value.id).html(value
-              .name));
+            $('.' + added2).append($('<option></option>').val(value.id).html(value.name));
           });
+          $('.' + added2).trigger('change');
         }
-      } else {
-
       }
+    },
+    error: function(xhr) {
+        console.error('AJAX Error:', xhr);
+        bootnotify('Error loading states/cities', 'Error', 'danger');
     }
   });
 });
@@ -90,10 +91,7 @@ $('body').on('change', '.js-example-basic-single4', function () {
       lang: lang
     },
     success: function (data) {
-
       if (data && data.length > 0) {
-        console.log(data);
-
         $('.' + added).append($('<option>', {
           value: '',
           text: 'Select City',
@@ -102,9 +100,9 @@ $('body').on('change', '.js-example-basic-single4', function () {
         }));
 
         $.each(data, function (key, value) {
-          $('.' + added).append($('<option></option>').val(value.id).html(value
-            .name));
+          $('.' + added).append($('<option></option>').val(value.id).html(value.name));
         });
+        $('.' + added).trigger('change');
       } else {
         $('.' + added).append($('<option>', {
           value: '',
@@ -112,7 +110,11 @@ $('body').on('change', '.js-example-basic-single4', function () {
           disabled: true,
           selected: true
         }));
+        $('.' + added).trigger('change');
       }
+    },
+    error: function(xhr) {
+        console.error('AJAX Error:', xhr);
     }
   });
 });
@@ -190,9 +192,16 @@ $('#hotelForm').on('submit', function (e) {
 
     let $toInput = $('.form-control').eq(index);
 
-    if ($(this).hasClass('summernote')) {
-      let tmcId = $toInput.attr('id');
-      let content = tinyMCE.get(tmcId).getContent();
+    if ($(this).hasClass('summernote') || $(this).hasClass('tinymce')) {
+      let tmcId = $(this).attr('id');
+      let content = '';
+
+      if (typeof tinymce !== 'undefined' && tinymce.get(tmcId)) {
+        content = tinymce.get(tmcId).getContent();
+      } else if (typeof $(this).summernote !== 'undefined') {
+        content = $(this).summernote('code');
+      }
+
       fd.delete($(this).attr('name'));
       fd.append($(this).attr('name'), content);
     }
@@ -211,11 +220,14 @@ $('#hotelForm').on('submit', function (e) {
 
       $('.request-loader').removeClass('show');
 
+      console.log('Form Submit Response:', data);
+      $(e.target).attr('disabled', false);
+      $('.request-loader').removeClass('show');
+
       if (data.status == 'success') {
         location.reload();
       } else if (data.status == 'error') {
-
-        location.reload();
+        bootnotify(data.message || 'Something went wrong!', 'Error', 'danger');
       }
 
       if (data == "downgrade") {
@@ -240,23 +252,34 @@ $('#hotelForm').on('submit', function (e) {
       }
 
     },
-    error: function (error) {
+    error: function (error, status, err) {
+      $('.request-loader').removeClass('show');
+      $(e.target).attr('disabled', false);
+
+      $('.em').each(function () {
+        $(this).html('');
+      });
       let errors = ``;
 
-      for (let x in error.responseJSON.errors) {
-        errors += `<li>
-                <p class="text-danger mb-0">${error.responseJSON.errors[x][0]}</p>
-              </li>`;
+      if (error.responseJSON && error.responseJSON.errors) {
+        for (let x in error.responseJSON.errors) {
+          errors += `<li>
+                  <p class="text-danger mb-0">${error.responseJSON.errors[x][0]}</p>
+                </li>`;
+        }
+      } else {
+        errors = `<li><p class="text-danger mb-0">${status == 'timeout' ? 'Request Timeout' : 'Something went wrong!'}</p></li>`;
       }
 
-      $('#hotelErrors ul').html(errors);
-      $('#hotelErrors').show();
-
-      $('.request-loader').removeClass('show');
-
-      $('html, body').animate({
-        scrollTop: $('#hotelErrors').offset().top - 100
-      }, 1000);
+      if ($('#hotelErrors').length > 0) {
+        $('#hotelErrors ul').html(errors);
+        $('#hotelErrors').show();
+        $('html, body').animate({
+          scrollTop: $('#hotelErrors').offset().top - 100
+        }, 1000);
+      } else {
+        bootnotify('Something went wrong!', 'Error', 'danger');
+      }
     }
   });
 });

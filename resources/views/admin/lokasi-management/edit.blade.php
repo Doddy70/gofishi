@@ -116,7 +116,7 @@
                     </table>
                   </div>
                 </div>
-                <form action="#" id="my-dropzone" enctype="multipart/formdata" class="dropzone create">
+                <form action="#" id="my-dropzone" enctype="multipart/form-data" class="dropzone create">
                   @csrf
                   <div class="fallback">
                     <input name="file" type="file" multiple />
@@ -522,6 +522,17 @@
 @endsection
 
 @section('script')
+  <script>
+    "use strict";
+    var address = "{{ $hotelAddress }}";
+    var storeUrl = "{{ route('admin.lokasi_management.lokasi.imagesstore') }}";
+    var removeUrl = "{{ route('admin.lokasi_management.lokasi.imagermv') }}";
+    var getStateUrl = "{{ route('admin.lokasi_management.get-state') }}";
+    var getCityUrl = "{{ route('admin.lokasi_management.get-city') }}";
+    var rmvdbUrl = "{{ route('admin.lokasi_management.lokasi.imgdbrmv') }}";
+    var galleryImages = {{ $numberoffImages }};
+    var languages = {!! json_encode($languages) !!};
+  </script>
   @if ($settings->google_map_api_key_status == 1)
     <script src="{{ asset('assets/admin/js/edit-map-init.js') }}"></script>
     <script
@@ -549,19 +560,5 @@
         `;
         container.appendChild(div);
     }
-  </script>
-@endsection
-
-@section('variables')
-  <script>
-    "use strict";
-    var address = "{{ $hotelAddress }}";
-    var storeUrl = "{{ route('admin.lokasi_management.lokasi.imagesstore') }}";
-    var removeUrl = "{{ route('admin.lokasi_management.lokasi.imagermv') }}";
-    var getStateUrl = "{{ route('admin.lokasi_management.get-state') }}";
-    var getCityUrl = "{{ route('admin.lokasi_management.get-city') }}";
-    var rmvdbUrl = "{{ route('admin.lokasi_management.lokasi.imgdbrmv') }}";
-    var galleryImages = {{ $numberoffImages }};
-    var languages = {!! json_encode($languages) !!};
   </script>
 @endsection

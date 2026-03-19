@@ -77,6 +77,7 @@ class PerahuService
                 // Fallback to text search if no coordinates
                 $query->where(function($q) use ($location) {
                     $q->where('hotel_contents.title', 'like', '%' . $location . '%')
+                      ->orWhereRaw('? LIKE CONCAT("%", hotel_contents.title, "%")', [$location])
                       ->orWhere('room_contents.address', 'like', '%' . $location . '%')
                       ->orWhere('rooms.nama_km', 'like', '%' . $location . '%');
                 });

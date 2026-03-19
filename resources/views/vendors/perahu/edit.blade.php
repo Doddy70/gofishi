@@ -105,7 +105,7 @@
                     </table>
                   </div>
                 </div>
-                <form action="#" id="my-dropzone" enctype="multipart/formdata" class="dropzone create">
+                <form action="#" id="my-dropzone" enctype="multipart/form-data" class="dropzone create">
                   @csrf
                   <div class="fallback">
                     <input name="file" type="file" multiple />
@@ -208,29 +208,22 @@
                   </div>
                   <div class="col-lg-3">
                     <div class="form-group">
-                      <label>{{ __('Kapasitas Orang') . '*' }}</label>
+                      <label>{{ __('Kapasitas (Orang)') . '*' }}</label>
                       <input type="number" class="form-control" name="adult" value="{{ $room->adult }}"
                         placeholder="{{ __('Masukkan Kapasitas Orang') }}">
                     </div>
                   </div>
                   <div class="col-lg-3">
                     <div class="form-group">
-                      <label>{{ __('Kapasitas Tambahan') . '*' }}</label>
+                      <label>{{ __('Kapasitas Tambahan') }}</label>
                       <input type="number" class="form-control" name="children" value="{{ $room->children }}"
                         placeholder="{{ __('Masukkan Kapasitas Tambahan') }}">
                     </div>
                   </div>
                   <div class="col-lg-3">
                     <div class="form-group">
-                      <label>{{ __('Jumlah Mesin') . '*' }}</label>
-                      <input type="number" class="form-control" name="bed" value="{{ $room->bed }}"
-                        placeholder="{{ __('Masukkan Jumlah Mesin') }}">
-                    </div>
-                  </div>
-                  <div class="col-lg-3">
-                    <div class="form-group">
                       <label>{{ __('Jumlah Kru') . '*' }}</label>
-                      <input type="number" class="form-control" name="bathroom" value="{{ $room->bathroom }}"
+                      <input type="number" class="form-control" name="crew_count" value="{{ $room->crew_count }}"
                         placeholder="{{ __('Masukkan Jumlah Kru') }}">
                     </div>
                   </div>

@@ -104,7 +104,7 @@ class CityController extends Controller
             @mkdir($featuredDir, 0777, true);
         }
 
-        copy($featuredImgURL, $featuredDir . $featuredImgName);
+        $featuredImgURL->move($featuredDir, $featuredImgName);
 
         $state = new City();
 
@@ -116,7 +116,7 @@ class CityController extends Controller
 
         $state->save();
 
-        Session::flash('success', __('State stored successfully') . '!');
+        Session::flash('success', __('City stored successfully') . '!');
 
         return response()->json(['status' => 'success'], 200);
     }

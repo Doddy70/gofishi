@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     if (selectedLanguageId) {
       $.ajax({
-        url: baseUrl + 'admin/hotel-management/location/states/get-country/' + selectedLanguageId,
+        url: baseUrl + 'admin/lokasi-management/location/states/get-country/' + selectedLanguageId,
         type: 'GET',
         data: { language_id: selectedLanguageId },
         success: function (response) {
@@ -71,7 +71,7 @@ $(document).ready(function () {
     if (country) {
       // Make an AJAX request to fetch states for the selected country
       $.ajax({
-        url: baseUrl + 'admin/hotel-management/location/cities/get-state/' + country,
+        url: baseUrl + 'admin/lokasi-management/location/cities/get-state/' + country,
         type: 'GET',
         success: function (response) {
 
@@ -121,7 +121,7 @@ $(document).ready(function () {
     if (country) {
       // Make an AJAX request to fetch states for the selected country
       $.ajax({
-        url: baseUrl + 'admin/hotel-management/location/cities/get-state/' + country,
+        url: baseUrl + 'admin/lokasi-management/location/cities/get-state/' + country,
         type: 'GET',
         success: function (response) {
 

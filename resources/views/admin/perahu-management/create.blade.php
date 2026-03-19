@@ -120,7 +120,7 @@
               <div class="col-lg-12">
                 <label for="" class="mb-2"><strong>{{ __('Gallery Images') . '*' }}</strong></label>
                 <form action="{{ route('admin.perahu_management.perahu.imagesstore') }}" id="my-dropzone"
-                  enctype="multipart/formdata" class="dropzone create">
+                  enctype="multipart/form-data" class="dropzone create">
                   @csrf
                   <div class="fallback">
                     <input name="file" type="file" multiple />
@@ -165,52 +165,74 @@
                     </div>
                   </div>
 
-                  <div class="row">
+                  <div class="row mt-4">
                     <div class="col-lg-12">
-                      <h4 class="mb-3">{{ __('Atribut Kapal') }}</h4>
+                      <h4 class="mb-3"><strong>{{ __('Atribut Utama Kapal') }}</strong></h4>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                       <div class="form-group">
-                        <label>{{ __('Nama Kapten') }}</label>
-                        <input type="text" class="form-control" name="captain_name" placeholder="{{ __('Nama Kapten') }}">
+                        <label>{{ __('Nama KM (Kapal Motor)') . '*' }}</label>
+                        <input type="text" class="form-control" name="nama_km" placeholder="Contoh: KM Pesona Laut" required>
                       </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                       <div class="form-group">
-                        <label>{{ __('Mesin 1') }}</label>
-                        <input type="text" class="form-control" name="engine_1" placeholder="{{ __('Mesin 1') }}">
+                        <label>{{ __('Jumlah Kamar Tidur') }}</label>
+                        <input type="number" class="form-control" name="bedroom_count" value="0" min="0">
                       </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <label>{{ __('Jumlah Toilet') }}</label>
+                        <input type="number" class="form-control" name="toilet_count" value="0" min="0">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mt-2">
+                    <div class="col-lg-12">
+                      <h4 class="mb-3"><strong>{{ __('Spesifikasi Kapal') }}</strong></h4>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <label>{{ __('Nama Kapten') . '*' }}</label>
+                        <input type="text" class="form-control" name="captain_name" placeholder="Nama Kapten">
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <label>{{ __('Mesin 1') . '*' }}</label>
+                        <input type="text" class="form-control" name="engine_1" placeholder="Mesin 1">
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
                       <div class="form-group">
                         <label>{{ __('Mesin 2') }}</label>
-                        <input type="text" class="form-control" name="engine_2" placeholder="{{ __('Mesin 2') }}">
+                        <input type="text" class="form-control" name="engine_2" placeholder="Mesin 2">
                       </div>
                     </div>
                     <div class="col-lg-3">
                       <div class="form-group">
-                        <label>{{ __('Kapasitas Orang') . '*' }}</label>
-                        <input type="number" class="form-control" name="adult" placeholder="{{ __('Masukkan Kapasitas Orang') }}">
+                        <label>{{ __('Panjang (m)') }}</label>
+                        <input type="text" class="form-control" name="boat_length">
                       </div>
                     </div>
                     <div class="col-lg-3">
                       <div class="form-group">
-                        <label>{{ __('Kapasitas Tambahan') . '*' }}</label>
-                        <input type="number" class="form-control" name="children" value="0"
-                          placeholder="{{ __('Masukkan Kapasitas Tambahan') }}">
+                        <label>{{ __('Lebar (m)') }}</label>
+                        <input type="text" class="form-control" name="boat_width">
                       </div>
                     </div>
                     <div class="col-lg-3">
                       <div class="form-group">
-                        <label>{{ __('Jumlah Mesin') . '*' }}</label>
-                        <input type="number" class="form-control" name="bed" placeholder="{{ __('Masukkan Jumlah Mesin') }}">
+                        <label>{{ __('Kapasitas (Orang)') . '*' }}</label>
+                        <input type="number" class="form-control" name="adult">
                       </div>
                     </div>
                     <div class="col-lg-3">
                       <div class="form-group">
                         <label>{{ __('Jumlah Kru') . '*' }}</label>
-                        <input type="number" class="form-control" name="bathroom"
-                          placeholder="{{ __('Masukkan Jumlah Kru') }}">
+                        <input type="number" class="form-control" name="crew_count">
                       </div>
                     </div>
                   </div>

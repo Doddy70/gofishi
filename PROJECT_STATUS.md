@@ -137,5 +137,17 @@
 - [x] **Database Schema Extension**: Migrasi tabel `hotel_faqs` (hotel_id, language_id, question, answer, serial_number) berhasil dijalankan dan terintegrasi penuh dengan model `Hotel`.
 - [x] **Dropzone UI Polish**: Menghapus limit `maxFilesize` pada plugin Dropzone Admin untuk memudahkan vendor mengunggah foto dermaga berkualitas tinggi tanpa hambatan teknis.
 
+### Terbaru (Boat Creation & Validation Fixes - 2026-03-20):
+- [x] **Mandatory Boat Validation**: Memperbarui `RoomStoreRequest` & `RoomUpdateRequest` untuk mewajibkan kolom inti: `nama_km`, `captain_name`, `engine_1`, dan `crew_count`. Menghapus duplikasi aturan validasi `engine` yang tidak perlu.
+- [x] **Admin UI Alignment**: Merombak form Tambah & Edit Perahu di panel Admin agar menyertakan input `nama_km`, `captain_name`, `engine_1/2`, `crew_count`, serta dimensi kapal (`boat_length`, `boat_width`). Melakukan sinkronisasi label dari terminologi "Kamar/Toilet" ke atribut kapal yang sesuai.
+- [x] **Vendor UI Consistency**: Memperbaiki form Edit Perahu di panel Vendor agar menggunakan kolom `crew_count` secara konsisten (sebelumnya masih menggunakan legacy field `bathroom`), serta memastikan `nama_km` dan spesifikasi mesin tampil dengan benar sesuai Mandat GEMINI.md.
+- [x] **Schema Integrity**: Memastikan seluruh field metadata kapal (`nama_km`, `captain_name`, `engine_1`, `crew_count`, dll) terdaftar dalam `$fillable` pada model `Room` untuk kelancaran proses `store` dan `update`.
+
+### Terbaru (Admin & Location Creation Stability - 2026-03-20):
+- [x] **Universal Image Sync**: Mengubah pemetaan atribut `logo` di backend menjadi `Gambar Utama (Hero)` pada seluruh sistem validasi (`HotelStore` & `HotelUpdate`). Ini menyinkronkan terminologi visual di UI dengan sistem pelaporan error Laravel.
+- [x] **System-Wide Enctype Fix**: Mendeteksi dan memperbaiki kesalahan pengetikan massal `enctype="multipart/formdata"` (seharusnya `multipart/form-data`) di seluruh file `.blade.php` project. Ini menjamin proses unggah galeri dan file berfungsi stabil di level protokol HTTP.
+- [x] **Dynamic Upload Limit**: Mengatasi hambatan pengunggahan foto resolusi tinggi dengan meningkatkan `upload_max_filesize` dan `post_max_size` dari default 2MB menjadi 128MB melalui konfigurasi runtime server.
+- [x] **Editor Logic Consolidation**: Memperbaiki konflik antara editor teks Summernote dan TinyMCE di javascript admin yang sebelumnya menyebabkan spinner "stuck" selamanya saat proses submit form.
+
 ---
-*(Ekosistem Go Fishi kini memiliki identitas visual yang kohesif, modern, dan premium di setiap sudut aplikasinya, dari pencarian cerdas berbasis AI hingga manajemen detail dermaga yang sangat fleksibel)*
+*(Sistem manajemen lokasi dan perahu kini stabil sepenuhnya dengan pelaporan error yang akurat dan dukungan unggah gambar resolusi tinggi)*

@@ -45,7 +45,7 @@ class GofishiDemoSeeder extends Seeder
             DB::table('basic_settings')->truncate();
             DB::table('basic_settings')->insert([
                 'uniqid' => 12345,
-                'website_title' => 'Go Fishi',
+                'website_title' => 'Gofishi',
                 'base_currency_text' => 'IDR',
                 'base_currency_symbol' => 'Rp',
                 'theme_version' => '1',

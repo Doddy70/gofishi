@@ -5,190 +5,262 @@
 @endphp
 
 @section('pageHeading')
-    {{ __('Search Results') }}
+    {{ __('Armada Terdekat') }}
 @endsection
 
 @section('content')
-{{-- Categories Navigation (Sticky) --}}
-@include('frontend.partials.categories-slider')
-
-{{-- Main Grid List --}}
-<div class="max-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4 py-8" x-data="{ showMap: false }">
+<div class="h-[calc(100vh-80px)] overflow-hidden" 
+     x-data="perahuSearch()" 
+     x-init="initMap()">
     
-    {{-- Search & Filter Summary --}}
-    <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-            <div class="text-[14px] text-gray-500 font-light mb-1">
-                {{ $room_contents->total() }} {{ __('listings found') }}
-            </div>
-            <h1 class="text-[28px] font-bold text-gray-900 tracking-tight">
-                @if(request('location'))
-                    {{ __('Perahu di') }} {{ request('location') }}
-                @elseif(request('category'))
-                    {{ __('Kategori') }} {{ request('category') }}
-                @else
-                    {{ __('Semua Armada Go Fishi') }}
-                @endif
-            </h1>
-        </div>
-        
-        {{-- AI Search Bar (Narrower for Airbnb look) --}}
-        <div class="relative group w-full md:w-[400px]">
-            <form action="{{ route('frontend.perahu.ai_search') }}" method="GET">
-                <div class="relative flex items-center bg-white border border-gray-200 rounded-full py-2.5 px-5 hover:shadow-md transition-shadow">
-                    <i data-lucide="sparkles" class="w-4 h-4 text-rose-500 mr-2"></i>
-                    <input type="text" name="q" placeholder="{{ __('Tanya AI...') }}" class="w-full bg-transparent border-none focus:ring-0 text-sm" value="{{ request('q') }}">
+    <div class="flex h-full no-gutters">
+        {{-- List Column (Left) --}}
+        <div class="w-full lg:w-[60%] h-full overflow-y-auto no-scrollbar border-r border-gray-100 px-4 md:px-8 py-8 bg-white" 
+             id="list-scroll-container">
+            
+            {{-- Search & Filter Section --}}
+            <div class="mb-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+                    <div>
+                        <div class="text-[14px] text-gray-500 font-light mb-1" x-text="listingCount + ' {{ __('listings found') }}'">
+                            {{ $room_contents->total() }} {{ __('listings found') }}
+                        </div>
+                        <h1 class="text-[28px] font-bold text-gray-900 tracking-tight">
+                            @if(request('location'))
+                                {{ __('Perahu di') }} {{ request('location') }}
+                            @elseif(isset($hub))
+                                {{ __('Armada di') }} {{ $hub->title }}
+                            @elseif(request('category'))
+                                {{ __('Kategori') }} {{ request('category') }}
+                            @else
+                                {{ __('Semua Armada Gofishi') }}
+                            @endif
+                        </h1>
+                    </div>
+
+                    {{-- Action Buttons --}}
+                    <div class="flex items-center space-x-2">
+                        {{-- Search Near Me Button --}}
+                        <button @click="searchNearMe()" 
+                                :disabled="loading"
+                                class="flex items-center space-x-2 px-4 py-2.5 rounded-full border border-gray-200 hover:border-black hover:bg-gray-50 transition shadow-sm bg-white">
+                            <i data-lucide="target" class="w-4 h-4 text-rose-500" :class="loading ? 'animate-pulse' : ''"></i>
+                            <span class="text-sm font-semibold">{{ __('Cari dekat saya') }}</span>
+                        </button>
+                    </div>
                 </div>
-            </form>
-        </div>
-    </div>
 
-    {{-- Listing Grid: Full Width columns --}}
-    @if($room_contents->total() < 1)
-        <div class="py-20 text-center flex flex-col items-center">
-            <div class="bg-gray-50 p-10 rounded-full mb-6">
-                <i data-lucide="search-x" class="w-16 h-16 text-gray-300"></i>
+                {{-- AI Search Bar --}}
+                <div class="relative group w-full mb-8">
+                    <form action="{{ route('frontend.perahu.ai_search') }}" method="GET" @submit.prevent="handleAiSearch($event)">
+                        <div class="relative flex items-center bg-white border border-gray-200 rounded-full py-3 px-6 hover:shadow-md transition-shadow group-focus-within:border-black">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-rose-500 mr-3"></i>
+                            <input type="text" name="q" 
+                                   placeholder="{{ __('Ke mana rencana berlayar Anda?') }}" 
+                                   class="w-full bg-transparent border-none focus:ring-0 text-[15px] placeholder-gray-400" 
+                                   value="{{ request('q') }}">
+                            <button type="submit" class="bg-rose-500 text-white p-2 rounded-full absolute right-2 hover:bg-rose-600 transition">
+                                <i data-lucide="search" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <h3 class="text-xl font-bold">{{ __('Tidak menemukan hasil') }}</h3>
-            <p class="text-gray-500">{{ __('Coba hapus filter atau gunakan pencarian lain.') }}</p>
-        </div>
-    @else
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-6 gap-y-10 transition-all duration-500">
-            @foreach($room_contents as $room)
-                @include('frontend.perahu._card', ['room' => $room])
-            @endforeach
+
+            {{-- List Items Container --}}
+            <div id="list-container" class="transition-opacity duration-300" :class="loading ? 'opacity-40 pointer-events-none' : 'opacity-100'">
+                @include('frontend.perahu._list_items')
+            </div>
+
+            {{-- Mobile Map Toggle --}}
+            <div class="lg:hidden fixed bottom-10 left-1/2 -translate-x-1/2 z-[45]">
+                <button @click="mobileShowMap = !mobileShowMap" 
+                        class="bg-gray-900 text-white px-5 py-3 rounded-full font-bold flex items-center space-x-3 shadow-2xl">
+                    <span x-text="mobileShowMap ? '{{ __('Tampilkan Daftar') }}' : '{{ __('Tampilkan Peta') }}'"></span>
+                    <i :data-lucide="mobileShowMap ? 'list' : 'map'" class="w-5 h-5"></i>
+                </button>
+            </div>
         </div>
 
-        {{-- Pagination --}}
-        <div class="mt-16 pt-12 border-t border-gray-100 flex flex-col items-center gap-4">
-            {{ $room_contents->appends(request()->input())->links('pagination::tailwind') }}
-            <p class="text-sm text-gray-400">
-                {{ __('Menampilkan') }} {{ $room_contents->total() }} {{ __('armada terbaik.') }}
-            </p>
+        {{-- Map Column (Right - Desktop) --}}
+        <div class="hidden lg:block lg:w-[40%] h-full bg-gray-100 relative">
+            <div id="main-map" class="w-full h-full"></div>
+            
+            {{-- Map Loader --}}
+            <div x-show="loading" class="absolute inset-0 bg-white/20 backdrop-blur-[1px] flex items-center justify-center z-20">
+                <div class="w-10 h-10 border-4 border-rose-500/20 border-t-rose-500 rounded-full animate-spin"></div>
+            </div>
         </div>
-    @endif
 
-    {{-- Floating Map Toggle Button --}}
-    <div class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[45]">
-        <button @click="showMap = !showMap" 
-                class="bg-gray-900 text-white px-5 py-3.5 rounded-full font-bold flex items-center space-x-3 shadow-2xl hover:scale-105 active:scale-95 transition backdrop-blur-md">
-            <span x-text="showMap ? 'Tampilkan Daftar' : 'Tampilkan Peta'"></span>
-            <i :data-lucide="showMap ? 'list' : 'map'" class="w-5 h-5"></i>
-        </button>
-    </div>
-
-    {{-- Full Screen Map Overlay --}}
-    <div x-show="showMap" 
-         x-cloak
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0 translate-y-10"
-         x-transition:enter-end="opacity-100 translate-y-0"
-         x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-start="opacity-100 translate-y-0"
-         x-transition:leave-end="opacity-0 translate-y-10"
-         class="fixed inset-0 z-[40] bg-white">
-        <div id="main-map" class="w-full h-full"></div>
+        {{-- Mobile Map Overlay --}}
+        <div x-show="mobileShowMap" 
+             x-cloak
+             class="fixed inset-0 z-[40] bg-white lg:hidden">
+            <div id="mobile-map" class="w-full h-full"></div>
+            <div class="absolute top-4 left-4 z-50">
+                <button @click="mobileShowMap = false" class="bg-white p-2 rounded-full shadow-lg border border-gray-200">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
 
 @section('script')
   @if ($hotelbs && $hotelbs->google_map_api_key_status == 1 && !empty(config('google.maps_api_key')))
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('google.maps_api_key') }}&libraries=places&callback=initGeoSearchMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('google.maps_api_key') }}&libraries=places"></script>
   @endif
   
   <script>
-    "use strict";
-    var room_contents = {!! json_encode($room_contents->items()) !!};
-    
-    function initGeoSearchMap() {
-        if (typeof google === 'undefined') return;
-        
-        const mapElement = document.getElementById('main-map');
-        const map = new google.maps.Map(mapElement, {
-            center: { 
-                lat: {{ request('lat') ?? -6.1214 }}, 
-                lng: {{ request('lng') ?? 106.8302 }} 
+    function perahuSearch() {
+        return {
+            loading: false,
+            mobileShowMap: false,
+            listingCount: {{ $room_contents->total() }},
+            map: null,
+            markers: [],
+            rooms: {!! json_encode($room_contents->items()) !!},
+
+            initMap() {
+                setTimeout(() => {
+                    const mapEl = document.getElementById('main-map') || document.getElementById('mobile-map');
+                    if (!mapEl || typeof google === 'undefined') return;
+
+                    this.map = new google.maps.Map(mapEl, {
+                        center: { lat: -6.1214, lng: 106.8302 },
+                        zoom: 12,
+                        disableDefaultUI: true,
+                        zoomControl: true,
+                        styles: [
+                            { "featureType": "poi", "elementType": "all", "stylers": [{"visibility": "off"}] },
+                            { "featureType": "water", "elementType": "all", "stylers": [{"color": "#c8d7d4"}] }
+                        ]
+                    });
+
+                    this.renderMarkers();
+                }, 100);
             },
-            zoom: 13,
-            maxZoom: 18,
-            minZoom: 5,
-            disableDefaultUI: true,
-            zoomControl: true,
-            gestureHandling: 'greedy',
-            styles: [
-                { "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [{"color": "#444444"}] },
-                { "featureType": "landscape", "elementType": "all", "stylers": [{"color": "#f2f2f2"}] },
-                { "featureType": "poi", "elementType": "all", "stylers": [{"visibility": "off"}] },
-                { "featureType": "road", "elementType": "all", "stylers": [{"saturation": -100}, {"lightness": 45}] },
-                { "featureType": "transit", "elementType": "all", "stylers": [{"visibility": "off"}] },
-                { "featureType": "water", "elementType": "all", "stylers": [{"color": "#c8d7d4"}, {"visibility": "on"}] }
-            ]
-        });
 
-        const bounds = new google.maps.LatLngBounds();
+            renderMarkers() {
+                // Clear existing
+                this.markers.forEach(m => m.setMap(null));
+                this.markers = [];
 
-        // Add Premium Price Markers
-        room_contents.forEach(room => {
-            if (room.latitude && room.longitude) {
-                const pos = { lat: parseFloat(room.latitude), lng: parseFloat(room.longitude) };
-                bounds.extend(pos);
+                const bounds = new google.maps.LatLngBounds();
+                let hasCoords = false;
 
-                const price = (room.price_day_1 / 1000000).toFixed(1) + 'jt';
-                
-                // Content for Custom Marker Overlay (Simple implementation using Standard Marker with Label)
-                const marker = new google.maps.Marker({
-                    position: pos,
-                    map: map,
-                    icon: {
-                        path: google.maps.SymbolPath.CIRCLE,
-                        scale: 0 // Hide default icon
-                    },
-                    label: {
-                        text: 'Rp' + price,
-                        color: 'black',
-                        fontSize: '14px',
-                        fontWeight: 'bold',
-                        className: 'map-price-label-v2'
+                this.rooms.forEach(room => {
+                    if (room.latitude && room.longitude) {
+                        const pos = { lat: parseFloat(room.latitude), lng: parseFloat(room.longitude) };
+                        bounds.extend(pos);
+                        hasCoords = true;
+
+                        const price = (room.price_day_1 / 1000).toFixed(0) + 'rb';
+                        const marker = new google.maps.Marker({
+                            position: pos,
+                            map: this.map,
+                            label: {
+                                text: 'Rp' + price,
+                                color: 'black',
+                                fontSize: '13px',
+                                fontWeight: '900',
+                                className: 'map-price-label-v3'
+                            },
+                            icon: { path: google.maps.SymbolPath.CIRCLE, scale: 0 }
+                        });
+
+                        marker.addListener("click", () => {
+                            window.location.href = `/perahu/${room.slug}/${room.id}`;
+                        });
+                        this.markers.push(marker);
                     }
                 });
 
-                marker.addListener("click", () => {
-                   window.location.href = `/perahu/${room.slug}/${room.id}`;
-                });
-            }
-        });
+                if (hasCoords) this.map.fitBounds(bounds);
+            },
 
-        if (room_contents.length > 0 && !{{ request('lat') ? 'true' : 'false' }}) {
-            map.fitBounds(bounds);
+            async searchNearMe() {
+                if (!navigator.geolocation) {
+                    alert('Geolocation tidak didukung browser Anda');
+                    return;
+                }
+
+                this.loading = true;
+                navigator.geolocation.getCurrentPosition(
+                    async (pos) => {
+                        const lat = pos.coords.latitude;
+                        const lng = pos.coords.longitude;
+                        await this.fetchRooms({ lat, lng });
+                    },
+                    (err) => {
+                        this.loading = false;
+                        alert('Gagal mendapatkan lokasi: ' + err.message);
+                    }
+                );
+            },
+
+            async fetchRooms(params = {}) {
+                this.loading = true;
+                const url = new URL(window.location.href);
+                Object.keys(params).forEach(key => url.searchParams.set(key, params[key]));
+
+                try {
+                    const response = await fetch(url, {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    });
+                    const data = await response.json();
+                    
+                    document.getElementById('list-container').innerHTML = data.html;
+                    this.rooms = data.items;
+                    this.listingCount = this.rooms.length;
+                    
+                    // Re-init lucide icons for new content
+                    if (window.lucide) lucide.createIcons();
+                    
+                    this.renderMarkers();
+                    
+                    // Scroll to top of list
+                    document.getElementById('list-scroll-container').scrollTo(0, 0);
+                    
+                    // Update URL without reload
+                    window.history.pushState({}, '', url);
+                } catch (e) {
+                    console.error('Fetch error:', e);
+                } finally {
+                    this.loading = false;
+                }
+            },
+
+            async handleAiSearch(e) {
+                const form = e.target;
+                const q = form.querySelector('[name="q"]').value;
+                await this.fetchRooms({ q });
+            }
         }
     }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        if(window.google) initGeoSearchMap();
-    });
   </script>
 
   <style>
-    /* Premium Map Labels */
-    .map-price-label-v2 {
+    .map-price-label-v3 {
         background: white !important;
-        border: 1px solid #DDDDDD !important;
-        border-radius: 28px !important;
-        padding: 6px 14px !important;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.1) !important;
-        transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        border: 1px solid #ddd !important;
+        border-radius: 20px !important;
+        padding: 5px 12px !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
         cursor: pointer !important;
     }
-    .map-price-label-v2:hover {
-        transform: scale(1.1) !important;
-        z-index: 1000 !important;
+    .map-price-label-v3:hover {
         background: #000 !important;
         color: #fff !important;
-        border-color: #000 !important;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+        z-index: 1000;
     }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .sticky-map {
+        position: sticky;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
   </style>
 @endsection

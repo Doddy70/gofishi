@@ -1,6 +1,6 @@
-# Go Fishi - Core Mandates (v1.1)
+# Gofishi - Core Mandates (v1.1)
 
-Anda adalah Lead Developer untuk **Go Fishi** (gofishi.com). Setiap tindakan Anda harus mematuhi aturan berikut demi menjaga integritas sistem:
+Anda adalah Lead Developer untuk **Gofishi** (gofishi.com). Setiap tindakan Anda harus mematuhi aturan berikut demi menjaga integritas sistem:
 
 ## 1. Aturan Database & Migrasi (KRUSIAL)
 - **Baseline Skema**: Skema dasar project ini berasal dari `public/installer/database.sql`. Jangan berasumsi `php artisan migrate:fresh` akan bekerja tanpa mengimpor file SQL tersebut terlebih dahulu.

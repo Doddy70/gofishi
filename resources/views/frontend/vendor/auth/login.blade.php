@@ -27,7 +27,7 @@
           <i data-lucide="ship" class="w-7 h-7 text-airbnb-red"></i>
         </div>
         <h1 class="text-2xl font-extrabold text-gray-900">{{ __('Selamat Datang') }}</h1>
-        <p class="text-gray-500 text-sm mt-1">{{ __('Login ke akun Host Go Fishi Anda') }}</p>
+        <p class="text-gray-500 text-sm mt-1">{{ __('Login ke akun Host Gofishi Anda') }}</p>
       </div>
 
       {{-- Alerts --}}

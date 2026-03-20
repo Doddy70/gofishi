@@ -134,11 +134,12 @@
                                     {{ __('Details') }}
                                 </a>
                                 @if ($booking->order_status == 'approved' && $booking->payment_status == 0)
-                                    <a href="{{ route('user.perahu_bookings', ['id' => $booking->id]) }}" 
+                                    <a href="{{ route('user.perahu_booking.pay_later.midtrans', ['id' => $booking->id]) }}" 
                                        class="flex-1 sm:flex-none text-center px-6 py-2.5 bg-green-600 text-white rounded-xl hover:bg-green-700 transition font-bold text-sm shadow-sm">
                                         {{ __('Bayar Sekarang') }}
                                     </a>
                                 @endif
+
                             </div>
                         </div>
                     </div>

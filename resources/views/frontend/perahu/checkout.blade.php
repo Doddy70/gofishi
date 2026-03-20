@@ -184,7 +184,7 @@
                                 @if($onlineGateways->isEmpty() && $offline_gateways->isEmpty())
                                 <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-xl text-yellow-800 text-sm">
                                     <i class="fas fa-exclamation-triangle mr-2"></i>
-                                    Belum ada metode pembayaran yang aktif. Hubungi admin.
+                                    {{ __('Belum ada metode pembayaran yang aktif. Hubungi admin.') }}
                                 </div>
                                 @endif
                             </div>
@@ -230,12 +230,12 @@
                                 <img src="{{ asset('assets/img/perahu/featureImage/' . $room->feature_image) }}" class="w-full h-full object-cover">
                             </div>
                             <div class="flex flex-col overflow-hidden">
-                                <span class="text-xs text-neutral-500 font-light truncate">KM {{ $room->nama_km ?? 'Perahu' }} / {{ $roomCategory }}</span>
+                                <span class="text-xs text-neutral-500 font-light truncate">KM {{ $room->nama_km ?? __('Perahu') }} / {{ $roomCategory }}</span>
                                 <span class="text-sm font-semibold text-neutral-900 truncate">{{ $roomTitle }}</span>
                                 <div class="flex items-center gap-1 text-[10px] mt-1">
                                     <i class="fas fa-star text-[8px]"></i>
                                     <span class="font-bold">{{ number_format($room->average_rating, 1) }}</span>
-                                    <span class="text-neutral-500 ml-1">· {{ __('Kapt.') }} {{ $room->captain_name ?? 'Profesional' }}</span>
+                                    <span class="text-neutral-500 ml-1">· {{ __('Kapt.') }} {{ $room->captain_name ?? __('Profesional') }}</span>
                                 </div>
                             </div>
                         </div>

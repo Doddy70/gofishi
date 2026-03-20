@@ -1,7 +1,7 @@
-# Go Fishi - Project Goals & Requirements (MVP)
+# Gofishi - Project Goals & Requirements (MVP)
 
 ## Business Information
-- **Name**: Go Fishi (gofishi.com)
+- **Name**: Gofishi (gofishi.com)
 - **Niche**: Saltwater Angler & Fly Fishing Specialist.
 - **Location**: Jakarta Utara.
 - **Partners**: 30+ US Coast Guard licensed captains.

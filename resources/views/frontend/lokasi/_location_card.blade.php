@@ -3,18 +3,27 @@
         return;
     }
 
+    // Automatically eager-load if missing to cure N+1 globally
+    if (!$hotel->relationLoaded('hotel_contents')) {
+        $hotel->load(['hotel_contents', 'room']);
+    }
+
     $lang = $currentLanguageInfo ?? get_lang();
-    $hotelContent = $hotel->hotel_contents()->where('language_id', $lang->id)->first();
     
-    if (!$hotelContent) {
-        $hotelContent = $hotel->hotel_contents()->first();
+    // Properti relasi digunakan agar tidak memicu query raw
+    $hotelContent = $hotel->hotel_contents ? $hotel->hotel_contents->where('language_id', $lang->id)->first() : null;
+    
+    if (!$hotelContent && $hotel->hotel_contents) {
+        $hotelContent = $hotel->hotel_contents->first();
     }
 
     $title = $hotelContent ? $hotelContent->title : 'Dermaga';
     $slug = $hotelContent ? $hotelContent->slug : ($hotel->slug ?? 'dermaga');
     $image = $hotel->logo ? asset('assets/img/hotel/logo/' . $hotel->logo) : 'https://picsum.photos/seed/dermaga' . $hotel->id . '/400/400';
     $rating = round($hotel->average_rating ?? 4.5, 1);
-    $totalPerahu = \App\Models\Perahu::where('hotel_id', $hotel->id)->count();
+    
+    // Gunakan eager loaded rooms/perahu bukan .count() dari DB
+    $totalPerahu = $hotel->room ? $hotel->room->count() : 0;
     
     $city = null;
     if ($hotelContent && $hotelContent->city_id) {

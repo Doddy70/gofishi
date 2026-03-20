@@ -122,7 +122,8 @@ class HomeController extends Controller
       )
       ->orderBy('rooms.id', 'desc')
       ->limit(8)
-      ->get();
+      ->get()
+      ->loadMissing(['room_galleries', 'hotel.hotel_contents', 'room_content']);
     $information['room_contents_count'] = $information['room_contents'];
 
     // Manfaat / Benefits

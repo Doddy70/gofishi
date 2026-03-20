@@ -1,4 +1,4 @@
-# Go Fishi
+# Gofishi
 
 ## Description
 A premium Boat Rental Marketplace (gofishi.com) focusing on Airbnb-style UI/UX for specific locations (Dermaga) and detailed listings for boats (Perahu).

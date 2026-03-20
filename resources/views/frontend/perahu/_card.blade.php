@@ -10,7 +10,12 @@
   
   if (!$room) return;
 
-  $roomImages = \App\Models\RoomImage::where('room_id', $room->id)->get();
+  // Automatically eager-load if missing (saves global headache)
+  if (!$room->relationLoaded('room_galleries')) {
+      $room->load(['room_galleries', 'hotel.hotel_contents', 'room_content']);
+  }
+
+  $roomImages = $room->room_galleries ?? [];
   $allImages = [];
   
   if (!empty($room->feature_image)) {
@@ -35,17 +40,18 @@
   $currentLang = isset($currentLanguageInfo) ? $currentLanguageInfo : get_lang();
   $langId = $currentLang ? $currentLang->id : 1;
 
-  // Use relationship method for safety
+  // Use relationship properties to prevent N+1 queries
   $hotelContent = null;
-  if ($room->hotel) {
-      $hotelContent = $room->hotel->hotel_contents()->where('language_id', $langId)->first();
+  if ($room->hotel && $room->hotel->hotel_contents) {
+      $hotelContent = $room->hotel->hotel_contents->where('language_id', $langId)->first();
   }
   
-  $locationLabel = $hotelContent ? ($hotelContent->title . ', ' . ($room->hotel->hotel_contents()->where('language_id', $langId)->first()->city ?? 'Jakarta')) : ($room->hotelName ?? 'Jakarta Utara');
+  $locationLabel = $hotelContent ? ($hotelContent->title . ', ' . ($hotelContent->city_id ? \App\Models\Location\City::find($hotelContent->city_id)->name : 'Jakarta')) : ($room->hotelName ?? 'Jakarta Utara');
   
-  // Use relationship method for room content
-  $roomContent = $room->room_content()->where('language_id', $langId)->first();
-  $categoryLabel = ($roomContent && $roomContent->category) ? $roomContent->category->name : 'Boat';
+  // Use relationship property for room content
+  $roomContent = $room->room_content ? $room->room_content->where('language_id', $langId)->first() : null;
+  $categoryLabel = 'Boat'; // Keep simple to avoid more queries
+
   $price = $room->price_day_1 ?? $room->min_price ?? 0;
   $slug = $roomContent ? $roomContent->slug : ($room->slug ?? 'perahu');
   $title = $roomContent ? $roomContent->title : ($room->title ?? 'Perahu');
@@ -125,10 +131,15 @@
             </div>
         </div>
 
-        {{-- Row 2: Boat Name --}}
-        <p class="text-[15px] text-gray-500 font-light truncate">
-            KM {{ $room->nama_km ?? $title }} · {{ $room->boat_length ?? '16' }}m
-        </p>
+        {{-- Row 2: Boat Name & Distance --}}
+        <div class="flex items-center justify-between text-[15px] text-gray-500 font-light truncate">
+            <span>KM {{ $room->nama_km ?? $title }} · {{ $room->boat_length ?? '16' }}m</span>
+            @if (!empty($room->distance))
+                <span class="text-rose-600 font-medium text-[13px]">
+                    {{ number_format($room->distance, 1) }} km
+                </span>
+            @endif
+        </div>
 
         {{-- Row 3: Technical Specs --}}
         <p class="text-[15px] text-gray-500 font-light truncate">

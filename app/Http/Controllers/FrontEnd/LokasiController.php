@@ -71,37 +71,64 @@ class LokasiController extends Controller
 
     public function index(Request $request)
     {
-        $language = get_lang();
-        $settings = $this->lokasiService->getSettings();
-
+        $misc = app(MiscellaneousController::class);
+        $language = $misc->getLanguage();
+        
         $information['seoInfo'] = $language->seoInfo ? $language->seoInfo()->first() : null;
-        $information['currencyInfo'] = $this->getCurrencyInfo();
-        $information['hotelbs'] = $settings;
+        $information['bgImg'] = $misc->getBreadcrumb();
+        $information['pageHeading'] = __('Jelajahi Semua Dermaga Gofishi');
 
-        $filters = $request->all();
-        $hotels = $this->lokasiService->getAvailableHotels($filters, $language->id);
-
-        $information['currentPageData'] = $hotels;
-        $information['hotel_contentss'] = $hotels;
-        $information['featured_contents'] = [];
-        $information['categories'] = HotelCategory::where('language_id', $language->id)->where('status', 1)
-            ->orderBy('serial_number', 'asc')->get();
-        if (Schema::hasColumn('booking_hours', 'hour')) {
-            $information['bookingHours'] = BookingHour::orderBy('hour', 'desc')->get();
-        } else {
-            $information['bookingHours'] = collect([]);
+        // We will use the first/primary hotel as the "Main Hub" presentation
+        // Alternately, we could pass an aggregate, but let's select the first one to render the nice Single layout.
+        $hotel = HotelContent::join('hotels', 'hotels.id', '=', 'hotel_contents.hotel_id')
+            ->leftJoin('hotel_categories', 'hotel_contents.category_id', '=', 'hotel_categories.id')
+            ->where('hotel_contents.language_id', $language->id)
+            ->where('hotels.status', 1)
+            ->select('hotels.*', 'hotel_contents.address as address', 'hotel_contents.title', 'hotel_contents.slug', 'hotel_contents.description', 'hotel_contents.amenities')
+            ->first();
+            
+        if (!$hotel) {
+            return redirect()->route('index');
         }
         
-        $information['countries'] = Country::where('language_id', $language->id)->orderBy('id', 'asc')->get();
-        $information['states'] = State::where('language_id', $language->id)->orderBy('id', 'asc')->get();
-        $information['cities'] = City::where('language_id', $language->id)->orderBy('id', 'asc')->get();
+        // Mock a title if it's supposed to represent "All Hubs" 
+        $hotel->title = "Pusat Keberangkatan Gofishi";
+        $hotel->address = "Pelabuhan Premium Jakarta";
 
-        $view = $settings->hotel_view;
-        if ($view == 0) {
-            return view('frontend.lokasi.hotel-map', $information);
-        } else {
-            return view('frontend.lokasi.hotel-gird', $information);
-        }
+        $information['hotel'] = $hotel;
+        $information['hotelImages'] = HotelImage::limit(8)->get(); // General gallery
+        $information['language'] = $language;
+        $information['all_amenities'] = Amenitie::where('language_id', $language->id)->get();
+        $information['faqs'] = FAQ::where('language_id', $language->id)->take(5)->get(); // general FAQs
+        $information['numOfReview'] = RoomReview::count();
+        $information['total_vendors'] = Vendor::count();
+        
+        // Fetch all specific locations (Hotels/Hubs) for the user to select from
+        $information['all_hotels'] = \App\Models\Hotel::join('hotel_contents', 'hotels.id', '=', 'hotel_contents.hotel_id')
+            ->where('hotel_contents.language_id', $language->id)
+            ->where('hotels.status', 1)
+            ->select('hotels.*', 'hotel_contents.title', 'hotel_contents.slug', 'hotel_contents.address')
+            ->orderBy('hotels.id', 'desc')
+            ->get();
+
+        // ---------------------------------------------------------------------
+        // FETCH ALL BOATS FOR THE "ALL LOCATIONS" SINGLE PAGE
+        // ---------------------------------------------------------------------
+        $roomsQuery = \App\Models\Perahu::join('room_contents', 'rooms.id', '=', 'room_contents.room_id')
+            ->where('room_contents.language_id', $language->id)
+            ->where('rooms.status', 1);
+
+        $information['rooms'] = $roomsQuery->select(
+                'rooms.*',
+                'room_contents.title',
+                'room_contents.slug'
+            )
+            ->orderBy('rooms.average_rating', 'desc')
+            ->get()
+            ->loadMissing(['room_galleries', 'hotel.hotel_contents', 'room_content']);
+
+        // Render the beautiful Single Layout for the main /lokasi page!
+        return view('frontend.lokasi.hotel-details', $information);
     }
 
     public function search_hotel(Request $request)
@@ -113,121 +140,57 @@ class LokasiController extends Controller
     {
         $misc = app(MiscellaneousController::class);
         $language = $misc->getLanguage();
-        $information['bgImg'] = $misc->getBreadcrumb();
+        
+        $information['seoInfo'] = $language->seoInfo ? $language->seoInfo()->first() : null;
         $information['pageHeading'] = $misc->getPageHeading($language);
+        $information['bgImg'] = $misc->getBreadcrumb();
+        $information['hotelbs'] = Basic::select('google_map_api_key_status')->first();
 
-        $vendorId = Hotel::where('id', $id)->pluck('vendor_id')->first();
-
-        $hotel = HotelContent::join('hotels', 'hotels.id', '=', 'hotel_contents.hotel_id')
-            ->Join('hotel_categories', 'hotel_contents.category_id', '=', 'hotel_categories.id')
-            ->where('hotel_contents.language_id', $language->id)
-            ->where('hotel_categories.status', 1)
-            ->where('hotels.status', 1)
-            ->select(
-                'hotels.*',
-                'hotel_contents.address as address',
-                'hotel_contents.title',
-                'hotel_contents.slug',
-                'hotel_contents.city_id',
-                'hotel_contents.state_id',
-                'hotel_contents.country_id',
-                'hotel_contents.amenities',
-                'hotel_categories.name as categoryName',
-                'hotel_categories.slug as categorySlug',
-                'hotel_contents.meta_keyword',
-                'hotel_contents.meta_description',
-                'hotel_contents.description',
-            )
-            ->where('hotels.id', $id)
-            ->firstOrFail();
-
-        if ($vendorId == 0) {
-            $information['vendor'] = Admin::first();
-            $information['userName'] = 'admin';
-        } else {
-            $information['vendor'] = Vendor::Where('id', $vendorId)->first();
-            $information['userName'] = $information['vendor'] ? $information['vendor']->username : 'Unknown';
-        }
-
-        $information['hotel'] = $hotel;
-        $information['hotelImages'] = HotelImage::where('hotel_id', $id)->get();
-        $information['language'] = $language;
-
-        // Fetch Actual Amenities Objects based on IDs stored in hotel_contents
-        $amenityIds = json_decode($hotel->amenities, true) ?? [];
-        $information['all_amenities'] = Amenitie::whereIn('id', $amenityIds)
-            ->where('language_id', $language->id)
-            ->get();
-
-        // FAQs for this location (safe check for language_id)
-        $faqsQuery = \App\Models\HotelFaq::where('hotel_id', $id);
-        if (\Illuminate\Support\Facades\Schema::hasColumn('hotel_faqs', 'language_id')) {
-            $faqsQuery->where('language_id', $language->id);
-        }
-        $information['faqs'] = $faqsQuery->orderBy('serial_number', 'asc')
-            ->get();
-
-        $information['hotelCounters'] = HotelCounter::join('hotel_counter_contents', 'hotel_counters.id', '=', 'hotel_counter_contents.hotel_counter_id')
-            ->where('hotel_id', $id)
-            ->where('hotel_counter_contents.language_id', $language->id)->get();
-
-        $reviews = RoomReview::with('userInfo')->where('hotel_id', $id)->orderByDesc('id')->get();
-        $information['reviews'] = $reviews;
-        $information['numOfReview'] = $reviews->count();
+        // FETCH THE HOTEL DETAILS TO PASS TO THE GRID PAGE SO IT KNOWS WHICH HUB IT IS
+        $hotel = HotelContent::where('hotel_id', $id)
+                    ->where('language_id', $language->id)
+                    ->first();
+                    
+        $information['hub'] = $hotel; // Custom variable so we can display it on the map header
 
         // ---------------------------------------------------------------------
-        // FILTER LOGIC FOR BOATS (ROOMS)
+        // FETCH BOATS FOR THIS SPECIFIC LOCATION, RENDER AS SPLIT-VIEW MAP (room-gird)
         // ---------------------------------------------------------------------
-        $checkin = $request->input('checkin');
-        $checkout = $request->input('checkout');
-        $guests = $request->input('guests', 1);
-
-        $roomsQuery = RoomContent::join('rooms', 'rooms.id', '=', 'room_contents.room_id')
-            ->leftJoin('room_categories', 'room_contents.room_category', '=', 'room_categories.id')
+        $roomsQuery = \App\Models\Perahu::join('room_contents', 'rooms.id', '=', 'room_contents.room_id')
+            ->leftJoin('hotels', 'rooms.hotel_id', '=', 'hotels.id')
+            ->leftJoin('hotel_categories', 'hotels.id', '=', 'hotel_categories.id')
             ->where('rooms.hotel_id', $id)
             ->where('room_contents.language_id', $language->id)
             ->where('rooms.status', 1);
 
-        // Count unique vendors in this location
-        $information['total_vendors'] = Room::where('hotel_id', $id)
-            ->whereNotNull('vendor_id')
-            ->distinct('vendor_id')
-            ->count('vendor_id');
-
-        if ($request->filled('guests')) {
-            $roomsQuery->where('rooms.adult', '>=', $guests);
-        }
-
-        // Availability Filtering Logic
-        if ($checkin && $checkout) {
-            $checkInDateTime = Carbon::parse($checkin . ' 00:00:00');
-            $checkOutDateTime = Carbon::parse($checkout . ' 23:59:59');
-
-            $roomsQuery->whereRaw('rooms.number_of_rooms_of_this_same_type > (
-                SELECT COUNT(*) FROM bookings 
-                WHERE bookings.room_id = rooms.id 
-                AND bookings.payment_status != 2
-                AND (
-                    (bookings.check_in_date_time BETWEEN ? AND ?)
-                    OR (bookings.check_out_date_time BETWEEN ? AND ?)
-                    OR (bookings.check_in_date_time <= ? AND bookings.check_out_date_time >= ?)
-                )
-            )', [
-                $checkInDateTime, $checkOutDateTime,
-                $checkInDateTime, $checkOutDateTime,
-                $checkInDateTime, $checkOutDateTime
-            ]);
-        }
-
-        $information['rooms'] = $roomsQuery->select(
+        $information['room_contents'] = $roomsQuery->select(
                 'rooms.*',
                 'room_contents.title',
                 'room_contents.slug',
-                'room_categories.name as room_category_name'
+                'rooms.latitude as room_lat',
+                'rooms.longitude as room_lng',
+                'hotels.latitude',
+                'hotels.longitude'
             )
             ->orderBy('rooms.id', 'desc')
-            ->get();
+            ->paginate(12);
 
-        return view('frontend.lokasi.hotel-details', $information);
+        // Fetch categories to pass to view if room-gird needs it
+        $information['roomCategories'] = \App\Models\RoomCategory::where('language_id', $language->id)->where('status', 1)->get();
+        // Min max price 
+        $information['min'] = Room::min('price_day_1') ?? 0;
+        $information['max'] = Room::max('price_day_1') ?? 100000000;
+        
+        if ($request->ajax()) {
+            // Need to return json if the room-gird map triggers ajax filters
+            return response()->json([
+                'html' => view('frontend.perahu._list_items', $information)->render(),
+                'items' => $information['room_contents']->items(),
+                'pagination' => (string) $information['room_contents']->links('pagination::tailwind')
+            ]);
+        }
+
+        // Return the Map / Grid View so the user can search boats in this exact location!
+        return view('frontend.perahu.room-gird', $information);
     }
 }

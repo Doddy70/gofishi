@@ -10,7 +10,7 @@ tags: `service`,`business-logic`,`rental`,`search`,`availability`
 
 # RoomService Documentation
 
-The `RoomService` is a core business logic component in the **Go Fishi** system. It centralizes the complexity of retrieving boat listings, managing multilingual content, and enforcing real-time availability rules (holidays and existing bookings).
+The `RoomService` is a core business logic component in the **Gofishi** system. It centralizes the complexity of retrieving boat listings, managing multilingual content, and enforcing real-time availability rules (holidays and existing bookings).
 
 ## 1. Component Overview
 

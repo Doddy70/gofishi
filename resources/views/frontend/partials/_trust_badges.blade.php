@@ -7,7 +7,7 @@
                 Certified Safe
             </h4>
             <p class="text-xs font-light text-gray-400 leading-relaxed">
-                Setiap kapten di Go Fishi telah melalui proses verifikasi identitas dan pengecekan lisensi operasional untuk keamanan Anda.
+                Setiap kapten di Gofishi telah melalui proses verifikasi identitas dan pengecekan lisensi operasional untuk keamanan Anda.
             </p>
         </div>
     </div>

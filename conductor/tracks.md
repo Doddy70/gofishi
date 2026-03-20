@@ -1,6 +1,6 @@
 # Conductor Tracks
 
-Currently registered tracks for Go Fishi:
+Currently registered tracks for Gofishi:
 
 | Status | Track ID            | Title                        | Created    |
 |--------|---------------------|------------------------------|------------|

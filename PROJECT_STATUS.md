@@ -1,4 +1,4 @@
-# Go Fishi - Technical Project Status (v1.5 - Vendor Stability Fixes)
+# Gofishi - Technical Project Status (v1.5 - Vendor Stability Fixes)
 
 ## Foundation (Completed)
 - [x] **Database Schema**: Penyelarasan total tabel `bookings`, metadata kapal, dan area rute.
@@ -33,7 +33,7 @@
    - Konfigurasi menggunakan engine `google-gemini-php` yang sudah ada untuk komparibilitas dan stabilitas Laravel 11.
    - Inject skema `google_gemini_status` & API Key ke `basic_settings`.
    - Modifikasi UI Dasbor Admin Pengaturan Umum > Plugin (Auto sync ke file `.env`).
-2. **[x] AI Business Logic (Go Fishi Engine) - Tahap 1**:
+2. **[x] AI Business Logic (Gofishi Engine) - Tahap 1**:
    - **Smart Search**: Fitur _Natural Language Processing_ berhasil dibuat di `/perahu/ai-search`. Input teks pengguna akan diurai oleh Google Gemini menjadi format JSON (Lokasi, Orang, Kata Kunci Lengkap) dan ditembakkan langsung secara akurat ke *Database* lewat `RoomService`. Layar UI juga dirombak dengan Bar Pencarian AI Berkilau.
    - **Auto-Review Analysis**: (Masih dalam tahap rencana, untuk menganalisis sentimen dari ulasan-ulasan tamu menggunakan AI).
 3. **[x] Frontend & Dashboard Inject**: 
@@ -118,7 +118,7 @@
     - **Blog Hub**: Grid kartu artikel yang canggih dengan efek hover, sidebar kategori, dan optimasi konten detail yang fokus pada keterbacaan.
     - **Vendors/Captains List**: Transformasi halaman daftar mitra menjadi galeri profil kapten dengan lencana "Verified", hitungan armada, dan kartu profil yang elegan.
 - [x] **Custom Airbnb Pagination**: Membangun view pagination Tailwind kustom di `resources/views/vendor/pagination/tailwind.blade.php` untuk menggantikan default Bootstrap yang kaku. Navigasi halaman sekarang terasa sangat mulus dan menyatu dengan desain keseluruhan.
-- [x] **AI Intelligence Integration**: Memastikan fitur **Smart Search** dan **AI Assistant** berfungsi sempurna di seluruh halaman yang baru diupgrade, menjaga konsistensi fitur pintar di seluruh ekosistem Go Fishi.
+- [x] **AI Intelligence Integration**: Memastikan fitur **Smart Search** dan **AI Assistant** berfungsi sempurna di seluruh halaman yang baru diupgrade, menjaga konsistensi fitur pintar di seluruh ekosistem Gofishi.
 - [x] **Code Quality & Stability Sweep**: Membereskan rentetan linting errors di `PerahuService` dan `checkout.blade.php`. Menggunakan pola *Optional Access* dan *Query Closures* untuk menjamin aplikasi tidak crash saat data profil user atau vendor tidak lengkap.
 
 ### Terbaru (UI/UX Transformation & Bug Squashing - 2026-03-19 Night):
@@ -149,5 +149,31 @@
 - [x] **Dynamic Upload Limit**: Mengatasi hambatan pengunggahan foto resolusi tinggi dengan meningkatkan `upload_max_filesize` dan `post_max_size` dari default 2MB menjadi 128MB melalui konfigurasi runtime server.
 - [x] **Editor Logic Consolidation**: Memperbaiki konflik antara editor teks Summernote dan TinyMCE di javascript admin yang sebelumnya menyebabkan spinner "stuck" selamanya saat proses submit form.
 
+### Terbaru (User Dashboard & PayLater Stability - 2026-03-20 Night):
+- [x] **UserController Method Recovery**: Mengembalikan 6 metode fungsional yang hilang (`roomBookings`, `roomBookingDetails`, `editProfile`, `updateProfile`, `changePassword`, `updatePassword`) pada `FrontEnd\UserController`. Ini memulihkan fungsi Dasbor Pengguna yang sebelumnya lumpuh.
+- [x] **Critical PayLater Fixes**: 
+    - **Amount Correction**: Menghapus perkalian `* 1000` yang salah pada `gross_amount` Midtrans di `PayLaterController`. 
+    - **Action Integration**: Mengintegrasikan `PayLaterController` dengan `ProcessPaidBooking` action agar sistem notifikasi WhatsApp, Email, dan update saldo vendor berjalan otomatis dan sinkron.
+    - **Route Redirection**: Memperbaiki rute redirect yang salah (`user.room_bookings` -> `user.perahu_bookings`) pada proses pembayaran susulan.
+- [x] **UI & Links Cleanup**: Memperbaiki link "Bayar Sekarang" di daftar pesanan user serta memperbaiki status `active` pada sidebar navigasi dasbor pengguna agar navigasi kembali normal.
+- [x] **Database Context Agent**: Menginisialisasi `context-agent` untuk manajemen kontinuidade sessões e acompanhamento de tarefas pendentes do projeto Gofishi.
+
 ---
-*(Sistem manajemen lokasi dan perahu kini stabil sepenuhnya dengan pelaporan error yang akurat dan dukungan unggah gambar resolusi tinggi)*
+### Terbaru (Frontend Translation & Internationalization - 2026-03-21):
+- [x] **Mass Translation (id.json)**: Melakukan penerjemahan otomatis dan manual terhadap lebih dari 450+ string bahasa Inggris ke Bahasa Indonesia di file `id.json`. Ini mencakup status pesanan ("Pending" -> "Menunggu Konfirmasi"), pesan sukses/gagal, dan istilah antarmuka dasar.
+- [x] **Core Frontend Internationalization**: Membungkus ribuan string hardcoded bahasa Inggris dengan helper `__()` pada file-file utama:
+    - **Hotel Details (`hotel-details.blade.php`)**: Seluruh informasi dermaga, fitur, dan FAQ.
+    - **Hero Search (`hero-search.blade.php`)**: UI pencarian cerdas, kalender dial, dan input AI.
+    - **Vendor Details (`vendor/details.blade.php`)**: Profil kapten, lencana sertifikasi, dan daftar armada.
+    - **Checkout (`checkout.blade.php`)**: Form pemesanan, kebijakan pembatalan, dan rincian harga.
+    - **User Dashboard (`booking/index.blade.php`)**: Status pesanan dan navigasi dasbor.
+- [x] **Term Consistency Service**: Sinkronisasi terminologi "Hotel/Room" menjadi "Lokasi/Perahu" di seluruh file bahasa untuk menjaga konsistensi domain bisnis Gofishi.
+- [x] **JSON Deduplication & Cleanup**: Menjalankan skrip optimasi untuk menghapus kunci duplikat dan merapikan struktur `id.json` agar performa pembacaan bahasa tetap cepat.
+
+---
+*(Proses internasionalisasi frontend tahap awal telah selesai, mencakup seluruh alur utama dari pencarian hingga checkout)*
+
+### Terbaru (UI/UX Perfecting & Booking Validation - 2026-03-21):
+- [x] **Split View Integration (Airbnb Style)**: Memperbaiki tata letak *grid* dan *carousel* pada `hotel-details.blade.php`. Daftar dermaga (*Hubs*) kini tampil dinamis dengan foto-foto galeri, sedangkan form pencarian *floating* telah dibelah menjadi kolom "Check In" dan "Check Out" yang langsung terhubung dengan Flatpickr bersyarat seperti milik Airbnb asli.
+- [x] **N+1 Query Eradication**: Merampingkan total *load time* dari halaman utama Lokasi dan `_card.blade.php`. Relasi lambat dieliminasi menggunakan properti akses langsung `$hotel->relationLoaded()` dan *Pre-loading* (`loadMissing`). Ini memangkas ratusan eksekusi raw SQL redundan di layar *Carousel*.
+- [x] **Booking Availability Subquery Fix**: Mengatasi error kritis `Call to undefined method App\Models\Perahu::bookings()` di `PerahuService` saat filter pencarian bersyarat (tanggal) dijalankan. Saya mengubah pemanggilan *Eloquent Relationship* asimetris menjadi *Raw Database Subquery* bersyarat `whereNotIn('rooms.id', ...)` memotong seluruh konflik basis data saat pengguna menentukan hari sewa.

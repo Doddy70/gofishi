@@ -9,14 +9,18 @@
     <div class="flex justify-between items-center h-20">
       {{-- Logo --}}
       <a href="{{ route('index') }}" class="flex items-center">
-        <svg
-          class="h-8 w-8 text-airbnb-red"
-          viewBox="0 0 32 32"
-          fill="currentColor"
-        >
-          <path d="M16 1c2 0 3.46 1.5 3.46 3.8 0 2.6-2.5 6-3.46 7.3-.96-1.3-3.46-4.7-3.46-7.3C12.54 2.5 14 1 16 1zm0 14.5c4.5 0 8.5 1.5 11.5 4C29 21 30 23 30 25.5c0 2.8-2.2 5-5 5H7c-2.8 0-5-2.2-5-5 0-2.5 1-4.5 2.5-6 3-2.5 7-4 11.5-4z" />
-        </svg>
-        <span class="ml-2 text-xl font-bold text-airbnb-red">{{ $websiteInfo->website_title ?? 'Go Fishi' }}</span>
+        @if(!empty($websiteInfo->logo))
+            <img src="{{ asset('assets/img/' . $websiteInfo->logo) }}" alt="logo" class="h-8 w-auto">
+        @else
+            <svg
+              class="h-8 w-8 text-airbnb-red"
+              viewBox="0 0 32 32"
+              fill="currentColor"
+            >
+              <path d="M16 1c2 0 3.46 1.5 3.46 3.8 0 2.6-2.5 6-3.46 7.3-.96-1.3-3.46-4.7-3.46-7.3C12.54 2.5 14 1 16 1zm0 14.5c4.5 0 8.5 1.5 11.5 4C29 21 30 23 30 25.5c0 2.8-2.2 5-5 5H7c-2.8 0-5-2.2-5-5 0-2.5 1-4.5 2.5-6 3-2.5 7-4 11.5-4z" />
+            </svg>
+        @endif
+        <span class="ml-2 text-xl font-bold text-airbnb-red">{{ $websiteInfo->website_title ?? 'Gofishi' }}</span>
       </a>
 
       {{-- Center Navigation Menus - Desktop --}}

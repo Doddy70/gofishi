@@ -15,7 +15,7 @@
                     {{ !empty($pageHeading) ? $pageHeading->blog_page_title : __('Tips & Cerita Wisata') }}
                 </h1>
                 <p class="text-lg text-gray-500 font-light">
-                    {{ __('Temukan panduan memancing, cerita perjalanan, dan tips terbaik dari Go Fishi.') }}
+                    {{ __('Temukan panduan memancing, cerita perjalanan, dan tips terbaik dari Gofishi.') }}
                 </p>
             </div>
 

@@ -115,14 +115,14 @@
                 :class="searchMode === 'classic' ? 'text-gray-900 font-medium' : 'text-gray-500 hover:text-gray-700'"
                 class="text-base transition border-b-2 px-1 pb-1"
                 :style="searchMode === 'classic' ? 'border-color: #222222' : 'border-color: transparent'">
-            Stays / Perahu
+            {{ __('Stays / Perahu') }}
         </button>
         @if($aiStatus)
         <button @click="searchMode = 'ai'; activeField = null; $nextTick(() => $refs.aiInput.focus())"
                 :class="searchMode === 'ai' ? 'text-gray-900 font-medium' : 'text-gray-500 hover:text-gray-700'"
                 class="text-base transition border-b-2 px-1 pb-1 flex items-center gap-1.5"
                 :style="searchMode === 'ai' ? 'border-color: #222222' : 'border-color: transparent'">
-            <i class="fas fa-sparkles text-rose-500 text-sm"></i> Smart Search
+            <i class="fas fa-sparkles text-rose-500 text-sm"></i> {{ __('Smart Search') }}
         </button>
         @endif
     </div>
@@ -202,15 +202,15 @@
                     <div class="bg-gray-100/80 p-1.5 rounded-full inline-flex items-center space-x-1">
                         <button @click.prevent="calendarTab = 'dates'" 
                                 :class="calendarTab === 'dates' ? 'bg-white shadow-sm text-gray-900 font-semibold' : 'text-gray-600 font-medium hover:text-gray-900'"
-                                class="px-6 py-1.5 rounded-full text-[15px] transition-all duration-200">Dates</button>
+                                class="px-6 py-1.5 rounded-full text-[15px] transition-all duration-200">{{ __('Tanggal') }}</button>
                                 
                         <button @click.prevent="calendarTab = 'months'" 
                                 :class="calendarTab === 'months' ? 'bg-white shadow-sm text-gray-900 font-semibold' : 'text-gray-600 font-medium hover:text-gray-900'"
-                                class="px-6 py-1.5 rounded-full text-[15px] transition-all duration-200">Months</button>
+                                class="px-6 py-1.5 rounded-full text-[15px] transition-all duration-200">{{ __('Months') }}</button>
                                 
                         <button @click.prevent="calendarTab = 'flexible'" 
                                 :class="calendarTab === 'flexible' ? 'bg-white shadow-sm text-gray-900 font-semibold' : 'text-gray-600 font-medium hover:text-gray-900'"
-                                class="px-6 py-1.5 rounded-full text-[15px] transition-all duration-200">Flexible</button>
+                                class="px-6 py-1.5 rounded-full text-[15px] transition-all duration-200">{{ __('Flexible') }}</button>
                     </div>
                 </div>
 
@@ -221,7 +221,7 @@
                         <input x-ref="datepicker" type="text" class="hidden">
                     </div>
                     <div class="calendar-buttons w-full flex flex-wrap justify-center gap-2 mt-6 pb-2">
-                        <button class="px-4 py-2 text-[13px] font-medium border border-gray-900 rounded-full text-gray-900 bg-gray-50 hover:bg-gray-100 transition-colors">Exact dates</button>
+                        <button class="px-4 py-2 text-[13px] font-medium border border-gray-900 rounded-full text-gray-900 bg-gray-50 hover:bg-gray-100 transition-colors">{{ __('Exact dates') }}</button>
                         <button class="px-4 py-2 text-[13px] font-medium border border-gray-300 rounded-full text-gray-700 hover:border-gray-900 hover:text-gray-900 transition-colors">&plusmn; 1 day</button>
                         <button class="px-4 py-2 text-[13px] font-medium border border-gray-300 rounded-full text-gray-700 hover:border-gray-900 hover:text-gray-900 transition-colors">&plusmn; 2 days</button>
                         <button class="px-4 py-2 text-[13px] font-medium border border-gray-300 rounded-full text-gray-700 hover:border-gray-900 hover:text-gray-900 transition-colors">&plusmn; 3 days</button>
@@ -233,7 +233,7 @@
                 {{-- Tab 2: Months (Dial Widget) --}}
                 <div x-show="calendarTab === 'months'" style="display: none;" class="py-8"
                      x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
-                    <h3 class="text-xl font-semibold text-center text-gray-900 mb-12">When's your trip?</h3>
+                    <h3 class="text-xl font-semibold text-center text-gray-900 mb-12">{{ __("When's your trip?") }}</h3>
                     <div class="flex flex-col items-center justify-center space-y-12">
                         
                         {{-- Circular UI dial mock --}}
@@ -246,7 +246,7 @@
                             
                             <div class="text-center z-10 relative">
                                 <span class="text-7xl font-bold tracking-tighter text-gray-900" x-text="monthsCount"></span>
-                                <span class="block text-lg font-medium text-gray-900 mt-1">bulan</span>
+                                <span class="block text-lg font-medium text-gray-900 mt-1">{{ __('bulan') }}</span>
                             </div>
 
                             {{-- Range Dots --}}
@@ -269,23 +269,23 @@
                 {{-- Tab 3: Flexible --}}
                 <div x-show="calendarTab === 'flexible'" style="display: none;" class="py-6"
                      x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
-                    <h3 class="text-xl font-semibold text-center text-gray-900 mb-6">How long would you like to stay?</h3>
+                    <h3 class="text-xl font-semibold text-center text-gray-900 mb-6">{{ __('How long would you like to stay?') }}</h3>
                     
                     {{-- Length Pills --}}
                     <div class="flex justify-center gap-3 mb-10">
                         <button @click.prevent="flexibleLength = 'weekend'" 
                                 :class="flexibleLength === 'weekend' ? 'border-gray-900 border-2 bg-gray-50' : 'border-gray-300 border hover:border-gray-900'"
-                                class="px-5 py-2.5 rounded-full text-sm font-medium text-gray-800 transition-all">Weekend</button>
+                                class="px-5 py-2.5 rounded-full text-sm font-medium text-gray-800 transition-all">{{ __('Weekend') }}</button>
                         <button @click.prevent="flexibleLength = 'week'" 
                                 :class="flexibleLength === 'week' ? 'border-gray-900 border-2 bg-gray-50' : 'border-gray-300 border hover:border-gray-900'"
-                                class="px-5 py-2.5 rounded-full text-sm font-medium text-gray-800 transition-all">Week</button>
+                                class="px-5 py-2.5 rounded-full text-sm font-medium text-gray-800 transition-all">{{ __('Week') }}</button>
                         <button @click.prevent="flexibleLength = 'month'" 
                                 :class="flexibleLength === 'month' ? 'border-gray-900 border-2 bg-gray-50' : 'border-gray-300 border hover:border-gray-900'"
-                                class="px-5 py-2.5 rounded-full text-sm font-medium text-gray-800 transition-all">Month</button>
+                                class="px-5 py-2.5 rounded-full text-sm font-medium text-gray-800 transition-all">{{ __('Month') }}</button>
                     </div>
 
                     <h3 class="text-lg font-semibold text-center text-gray-900 mb-6 relative">
-                        Go anytime
+                        {{ __('Go anytime') }}
                         <button class="absolute right-0 top-0 w-8 h-8 border border-gray-300 rounded-full flex items-center justify-center text-sm shadow hover:shadow-md hover:scale-105 transition-all text-gray-600 hidden md:flex"><i class="fas fa-chevron-right"></i></button>
                     </h3>
 
@@ -299,7 +299,7 @@
                                 :class="flexibleMonth === '{{ strtolower($month) }}' ? 'border-gray-900 border-2 bg-gray-50 shadow-sm' : 'border-gray-200 border hover:border-gray-900'"
                                 class="flex flex-col items-center justify-center py-6 px-2 rounded-2xl transition-all h-32 relative">
                             <i class="far fa-calendar-alt text-3xl mb-3 text-gray-700"></i>
-                            <span class="text-[15px] font-semibold text-gray-900">{{ $month }}</span>
+                            <span class="text-[15px] font-semibold text-gray-900">{{ __($month) }}</span>
                             <span class="text-xs text-gray-500 mt-0.5">2026</span>
                             <div x-show="flexibleMonth === '{{ strtolower($month) }}'" class="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 text-white rounded-full flex items-center justify-center text-[10px]">
                                 <i class="fas fa-check"></i>
@@ -324,7 +324,7 @@
                             class="bg-[#FF385C] text-white rounded-full hover:bg-[#D70466] hover:shadow-lg transition-all duration-300 flex items-center justify-center shrink-0"
                             :class="activeField === null ? 'h-12 w-12' : 'h-12 w-[110px] pl-4 pr-5 gap-2'">
                         <i class="fas fa-search text-[15px]"></i>
-                        <span class="font-bold text-sm" x-show="activeField !== null">Cari</span>
+                        <span class="font-bold text-sm" x-show="activeField !== null">{{ __('Cari') }}</span>
                     </button>
                 </div>
 
@@ -377,16 +377,16 @@
          class="bg-white rounded-full border border-gray-200 shadow-md hover:shadow-lg transition-shadow overflow-hidden mx-auto max-w-[700px]">
         <form action="{{ route('frontend.perahu.ai_search') }}" method="GET" class="flex items-center h-16 sm:h-[68px] relative">
             <div class="pl-8 pr-4 flex-grow relative h-full flex flex-col justify-center">
-                <label for="aiInput" class="block text-xs font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-purple-600 mb-0.5 tracking-tight uppercase">Sparkle Search</label>
+                <label for="aiInput" class="block text-xs font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-purple-600 mb-0.5 tracking-tight uppercase">{{ __('Sparkle Search') }}</label>
                 <input x-ref="aiInput" id="aiInput" type="text" name="q" x-model="aiQuery" 
-                       placeholder="Try: 'Luxury yacht for 10 people in Bali...'" 
+                       placeholder="{{ __('Try: \'Luxury yacht for 10 people in Bali...\'') }}" 
                        class="w-full text-[15px] outline-none border-none p-0 focus:ring-0 text-gray-900 font-medium placeholder-gray-400 bg-transparent">
             </div>
             <div class="pr-2.5">
                 <button type="submit" 
                         class="bg-gradient-to-r from-rose-500 to-rose-600 text-white rounded-full hover:scale-105 hover:shadow-lg transition-transform flex items-center justify-center shrink-0 h-12 px-6 gap-2">
                     <i class="fas fa-magic text-[14px]"></i>
-                    <span class="font-bold text-sm hidden sm:block">Ask AI</span>
+                    <span class="font-bold text-sm hidden sm:block">{{ __('Ask AI') }}</span>
                 </button>
             </div>
         </form>

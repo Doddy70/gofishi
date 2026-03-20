@@ -57,7 +57,7 @@ class DummyArticleSeeder extends Seeder
                     'title' => $art['title'],
                     'slug' => Str::slug($art['title']),
                     'content' => $art['content'],
-                    'author' => 'Go Fishi Editor',
+                    'author' => 'Gofishi Editor',
                 ]);
             }
         }

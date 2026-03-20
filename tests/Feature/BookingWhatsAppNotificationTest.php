@@ -22,7 +22,7 @@ class BookingWhatsAppNotificationTest extends TestCase
         
         // Setup basic settings
         Basic::create([
-            'website_title' => 'Go Fishi Test',
+            'website_title' => 'Gofishi Test',
             'whatsapp_status' => 1,
             'whatsapp_number' => '628123456789'
         ]);

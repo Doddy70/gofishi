@@ -9,9 +9,6 @@
 @endsection
 
 @section('content')
-{{-- Categories Navigation --}}
-@include('frontend.partials.categories-slider')
-
 {{-- Dual Panel Container --}}
 <div class="flex flex-col lg:flex-row h-[calc(100vh-172px)] overflow-hidden">
     
@@ -27,7 +24,7 @@
                 @if(request('location'))
                     {{ __('Dermaga di') }} {{ request('location') }}
                 @else
-                    {{ __('Pusat Keberangkatan Go Fishi') }}
+                    {{ __('Pusat Keberangkatan Gofishi') }}
                 @endif
             </h1>
 

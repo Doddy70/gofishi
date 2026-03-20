@@ -29,7 +29,7 @@
 
             {{-- Column 3 --}}
             <div class="flex flex-col gap-4">
-                <h4 class="text-sm font-bold text-neutral-900">{{ __('Go Fishi') }}</h4>
+                <h4 class="text-sm font-bold text-neutral-900">{{ __('Gofishi') }}</h4>
                 <ul class="flex flex-col gap-3 text-sm text-neutral-600 font-light">
                     <li><a href="#" class="hover:underline">{{ __('Ruang Berita') }}</a></li>
                     <li><a href="#" class="hover:underline">{{ __('Fitur Baru') }}</a></li>
@@ -59,7 +59,7 @@
         {{-- Bottom Bar --}}
         <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 text-sm text-neutral-600 font-light">
-                <span>© {{ date('Y') }} Go Fishi, Inc.</span>
+                <span>© {{ date('Y') }} Gofishi, Inc.</span>
                 <span class="hidden md:inline">·</span>
                 <a href="#" class="hover:underline">{{ __('Privasi') }}</a>
                 <span class="hidden md:inline">·</span>

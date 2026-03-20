@@ -1,4 +1,4 @@
-# Go Fishi - Technical Project Status
+# Gofishi - Technical Project Status
 
 ## Foundation (Completed)
 - [x] **Database Schema**: Penambahan field teknis kapal, paket harian (1-3 hari), jam kumpul/kembali, dan area rute pada tabel `rooms` dan `vendors`.

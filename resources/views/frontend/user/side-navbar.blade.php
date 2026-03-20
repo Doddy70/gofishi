@@ -6,7 +6,7 @@
         <li><a href="{{ route('user.dashboard') }}"
             class="{{ request()->routeIs('user.dashboard') ? 'active' : '' }}">{{ __('Dashboard') }}</a></li>
         <li><a href="{{ route('user.perahu_bookings') }}"
-            class="{{ request()->routeIs('user.room_bookings') || request()->routeIs('user.room_booking_details') ? 'active' : '' }}">{{ __('Perahu Booking') }}
+            class="{{ request()->routeIs('user.perahu_bookings') || request()->routeIs('user.perahu_booking_details') ? 'active' : '' }}">{{ __('Perahu Booking') }}
           </a></li>
         <li
           class="{{ request()->routeIs('user.wishlist.lokasi') || request()->routeIs('user.wishlist.perahu') ? 'active' : '' }}">

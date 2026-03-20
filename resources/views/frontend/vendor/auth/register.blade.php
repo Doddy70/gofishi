@@ -26,7 +26,7 @@
     {{-- Header --}}
     <div class="text-center mb-12">
       <h1 class="text-4xl font-extrabold text-gray-900 mb-4">{{ __('Become a Host') }}</h1>
-      <p class="text-lg text-gray-600 font-light">{{ __('Share your boat and earn extra income with Go Fishi.') }}</p>
+      <p class="text-lg text-gray-600 font-light">{{ __('Share your boat and earn extra income with Gofishi.') }}</p>
     </div>
 
     {{-- Progress Stepper --}}
@@ -184,7 +184,7 @@
                         {{ __('Saya menyatakan bahwa semua data yang saya berikan adalah benar dan saya menyetujui') }} 
                         <a href="#" class="text-airbnb-red font-bold hover:underline">{{ __('Syarat & Ketentuan') }}</a> 
                         {{ __('serta') }} 
-                        <a href="#" class="text-airbnb-red font-bold hover:underline">{{ __('Kebijakan Privasi') }}</a> {{ __('Go Fishi.') }}
+                        <a href="#" class="text-airbnb-red font-bold hover:underline">{{ __('Kebijakan Privasi') }}</a> {{ __('Gofishi.') }}
                     </label>
                 </div>
                 @error('terms_and_conditions') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror

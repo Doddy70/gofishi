@@ -1,7 +1,7 @@
 @extends('frontend.layout-airbnb')
 
 @section('pageHeading')
-  {{ $vendor->username }} - Certified Fishing Captain
+  {{ $vendor->username }} - {{ __('Certified Fishing Captain') }}
 @endsection
 
 @section('content')
@@ -36,7 +36,7 @@
                     @if(@$vendorInfo->license_number)
                         <span class="inline-flex items-center px-4 py-1.5 bg-blue-50 text-blue-600 rounded-full text-xs font-bold uppercase tracking-widest border border-blue-100">
                             <i data-lucide="shield-check" class="w-3.5 h-3.5 mr-2"></i>
-                            Certified Captain
+                            {{ __('Certified Captain') }}
                         </span>
                     @endif
                 </div>
@@ -44,15 +44,15 @@
                 <div class="flex flex-wrap justify-center md:justify-start gap-6 text-gray-500 font-light mb-8">
                     <div class="flex items-center">
                         <i data-lucide="map-pin" class="w-4 h-4 mr-2 text-airbnb-red"></i>
-                        {{ @$vendorInfo->city ?: 'Coastal Base' }}, {{ @$vendorInfo->country }}
+                        {{ @$vendorInfo->city ?: __('Coastal Base') }}, {{ @$vendorInfo->country }}
                     </div>
                     <div class="flex items-center">
                         <i data-lucide="calendar" class="w-4 h-4 mr-2 text-airbnb-red"></i>
-                        Member since {{ \Carbon\Carbon::parse($vendor->created_at)->format('Y') }}
+                        {{ __('Member since') }} {{ \Carbon\Carbon::parse($vendor->created_at)->format('Y') }}
                     </div>
                     <div class="flex items-center">
                         <i data-lucide="anchor" class="w-4 h-4 mr-2 text-airbnb-red"></i>
-                        {{ count($hotel_contents) }} Active Listings
+                        {{ count($hotel_contents) }} {{ __('Active Listings') }}
                     </div>
                 </div>
 
@@ -95,7 +95,7 @@
                                     {{ trim($spec) }}
                                 </span>
                             @empty
-                                <span class="text-gray-400 italic text-sm">General</span>
+                                <span class="text-gray-400 italic text-sm">{{ __('General') }}</span>
                             @endforelse
                         </div>
                     </div>
@@ -108,7 +108,7 @@
                             <div class="flex items-center gap-3 text-blue-700">
                                 <i data-lucide="award" class="w-5 h-5"></i>
                                 <div class="text-xs font-bold leading-none">
-                                    <p class="mb-1 text-[10px] uppercase opacity-70">License Verified</p>
+                                    <p class="mb-1 text-[10px] uppercase opacity-70">{{ __('License Verified') }}</p>
                                     <p>{{ $license }}</p>
                                 </div>
                             </div>

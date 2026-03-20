@@ -1,17 +1,17 @@
 ---
 name: gofishi-management
-description: "Master management skill for Go Fishi (gofishi.com). Handles database synchronization, modern stack porting, and core feature delivery consistency."
+description: "Master management skill for Gofishi (gofishi.com). Handles database synchronization, modern stack porting, and core feature delivery consistency."
 version: 1.0.0
 ---
 
-# Go Fishi Management Skill
+# Gofishi Management Skill
 
 ## Capability
-Skill ini memberikan pengetahuan mendalam tentang arsitektur project Go Fishi, terutama penanganan database hibrida (SQL Dump + Migration) dan implementasi fitur khusus (WA, 17+, Admin Tier).
+Skill ini memberikan pengetahuan mendalam tentang arsitektur project Gofishi, terutama penanganan database hibrida (SQL Dump + Migration) dan implementasi fitur khusus (WA, 17+, Admin Tier).
 
 ## Triggers
-- "Lanjutkan project Go Fishi"
-- "Setup database Go Fishi"
+- "Lanjutkan project Gofishi"
+- "Setup database Gofishi"
 - "Implementasikan fitur perahu"
 
 ## Instructions (Core Workflow)

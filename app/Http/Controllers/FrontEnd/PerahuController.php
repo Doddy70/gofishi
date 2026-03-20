@@ -49,7 +49,7 @@ class PerahuController extends Controller
         $filters = $request->all();
         $information['room_contents'] = $this->perahuService->getAvailableRooms($filters, $language->id);
         
-        // Dapatkan konten unggulan (featured) - rooms tidak punya kolom is_featured
+        // Dapatkan konten unggulan (featured)
         $information['featured_contents'] = Perahu::join('room_contents', 'rooms.id', '=', 'room_contents.room_id')
             ->where('room_contents.language_id', $language->id)
             ->where('rooms.status', 1)
@@ -60,9 +60,14 @@ class PerahuController extends Controller
         $information['seoInfo'] = $language->seoInfo() ? $language->seoInfo()->first() : null;
         $information['pageHeading'] = $misc->getPageHeading($language);
         $information['bgImg'] = $misc->getBreadcrumb();
-        
-        // Variabel penting untuk Google Maps di room-gird.blade.php
         $information['hotelbs'] = Basic::select('google_map_api_key_status')->first();
+
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('frontend.perahu._list_items', $information)->render(),
+                'items' => $information['room_contents']->items()
+            ]);
+        }
 
         return view('frontend.perahu.room-gird', $information);
     }

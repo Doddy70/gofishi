@@ -208,9 +208,152 @@ class UserController extends Controller
     return redirect()->route('user.dashboard');
   }
 
+
+  public function editProfile()
+  {
+    $misc = new MiscellaneousController();
+    $language = $misc->getLanguage();
+    $information['bgImg'] = $misc->getBreadcrumb();
+    $information['pageHeading'] = $misc->getPageHeading($language);
+
+    return view('frontend.user.edit-profile', $information);
+  }
+
+  public function updateProfile(Request $request)
+  {
+    $user = Auth::guard('web')->user();
+    $rules = [
+      'name' => 'required',
+      'username' => 'required|unique:users,username,' . $user->id,
+      'phone' => 'nullable',
+      'country' => 'nullable',
+      'city' => 'nullable',
+      'state' => 'nullable',
+      'zip_code' => 'nullable',
+      'address' => 'nullable',
+    ];
+
+    if ($request->hasFile('image')) {
+      $rules['image'] = 'mimes:jpeg,jpg,png,gif|max:2048';
+    }
+
+    $request->validate($rules);
+
+    $user->name = $request->name;
+    $user->username = $request->username;
+    $user->phone = $request->phone;
+    $user->country = $request->country;
+    $user->city = $request->city;
+    $user->state = $request->state;
+    $user->zip_code = $request->zip_code;
+    $user->address = $request->address;
+
+    if ($request->hasFile('image')) {
+        $img = $request->file('image');
+        $extension = $img->getClientOriginalExtension();
+        $fileName = time() . '.' . $extension;
+        $directory = public_path('assets/img/users/');
+        @mkdir($directory, 0775, true);
+        $img->move($directory, $fileName);
+        
+        // delete old image
+        if ($user->image && file_exists($directory . $user->image)) {
+            @unlink($directory . $user->image);
+        }
+        $user->image = $fileName;
+    }
+
+    $user->save();
+
+    return redirect()->back()->with('success', __('Profil berhasil diperbarui.'));
+  }
+
+  public function changePassword()
+  {
+    $misc = new MiscellaneousController();
+    $language = $misc->getLanguage();
+    $information['bgImg'] = $misc->getBreadcrumb();
+    $information['pageHeading'] = $misc->getPageHeading($language);
+
+    return view('frontend.user.change-password', $information);
+  }
+
+  public function updatePassword(Request $request)
+  {
+    $rules = [
+      'current_password' => 'required',
+      'new_password' => 'required|confirmed|min:6',
+    ];
+
+    $messages = [
+      'current_password.required' => __('Kata sandi saat ini wajib diisi.'),
+      'new_password.required' => __('Kata sandi baru wajib diisi.'),
+      'new_password.confirmed' => __('Konfirmasi kata sandi baru tidak cocok.'),
+      'new_password.min' => __('Kata sandi baru minimal 6 karakter.'),
+    ];
+
+    $validator = Validator::make($request->all(), $rules, $messages);
+
+    if ($validator->fails()) {
+      return redirect()->back()->withErrors($validator)->withInput();
+    }
+
+    $user = Auth::guard('web')->user();
+
+    if (!Hash::check($request->current_password, $user->password)) {
+      return redirect()->back()->withErrors(['current_password' => __('Kata sandi saat ini salah.')]);
+    }
+
+    $user->password = Hash::make($request->new_password);
+    $user->save();
+
+    return redirect()->back()->with('success', __('Kata sandi berhasil diperbarui.'));
+  }
+
+  public function roomBookings(Request $request)
+  {
+    $misc = new MiscellaneousController();
+    $language = $misc->getLanguage();
+    $information['bgImg'] = $misc->getBreadcrumb();
+    $information['pageHeading'] = $misc->getPageHeading($language);
+
+    $user = Auth::guard('web')->user();
+    $query = $user->roomBookings()->orderBy('id', 'desc');
+
+    if ($request->status) {
+        $query->where('order_status', $request->status);
+    }
+
+    $information['bookings'] = $query->get();
+
+    return view('frontend.user.booking.index', $information);
+  }
+
+  public function roomBookingDetails($id)
+  {
+    $misc = new MiscellaneousController();
+    $language = $misc->getLanguage();
+    $information['bgImg'] = $misc->getBreadcrumb();
+    $information['pageHeading'] = $misc->getPageHeading($language);
+
+    $user = Auth::guard('web')->user();
+    $booking = $user->roomBookings()->where('id', $id)->firstOrFail();
+
+    $information['booking'] = $booking;
+
+    return view('frontend.user.booking.details', $information);
+  }
+
+  public function supportTicket()
+  {
+     // Redirect to SupportTicketController if it exists, or handle here
+     return redirect()->route('user.support_ticket.index');
+  }
+
   public function logoutSubmit()
   {
     Auth::guard('web')->logout();
     return redirect()->route('user.login');
   }
 }
+

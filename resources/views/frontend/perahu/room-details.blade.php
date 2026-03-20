@@ -97,22 +97,45 @@
     </div>
 
     {{-- Image Gallery (Airbnb Grid) --}}
-    <div class="relative grid grid-cols-4 gap-2 rounded-2xl overflow-hidden h-[450px] mb-10 group">
+    @php
+        // Pastikan kita memiliki minimal 5 gambar untuk grid
+        $gridImages = $allImages;
+        while(count($gridImages) < 5) {
+            $gridImages[] = $allImages[0];
+        }
+    @endphp
+    
+    <style>
+        .airbnb-gallery:hover .gallery-item::after { opacity: 1; }
+        .gallery-item:hover::after { opacity: 0 !important; }
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+    </style>
+
+    <div class="relative grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-2 rounded-2xl overflow-hidden h-[300px] md:h-[450px] mb-10 airbnb-gallery">
         {{-- Main Large Photo --}}
-        <div class="col-span-2 row-span-2 relative cursor-pointer overflow-hidden">
-            <img src="{{ $allImages[0] }}" class="w-full h-full object-cover group-hover:brightness-95 hover:brightness-90 transition duration-300 transform hover:scale-[1.02]">
+        <div class="md:col-span-2 md:row-span-2 relative cursor-pointer gallery-item" @click="openPhotos = true">
+            <img src="{{ $gridImages[0] }}" class="w-full h-full object-cover">
         </div>
+        
         {{-- 4 Supporting Photos --}}
-        @php $galleryImages = array_slice($allImages, 1, 4); @endphp
-        @foreach($galleryImages as $idx => $img)
-            <div class="relative cursor-pointer overflow-hidden">
-                <img src="{{ $img }}" class="w-full h-full object-cover group-hover:brightness-95 hover:brightness-90 transition duration-300 transform hover:scale-[1.02]">
+        @foreach(array_slice($gridImages, 1, 4) as $idx => $img)
+            <div class="hidden md:block relative cursor-pointer h-full gallery-item" @click="openPhotos = true">
+                <img src="{{ $img }}" class="w-full h-full object-cover">
             </div>
         @endforeach
         
         {{-- View All Photos Button --}}
-        <button @click="openPhotos = true" class="absolute bottom-6 right-6 bg-white border border-gray-900 rounded-lg px-4 py-1.5 font-semibold text-sm shadow-sm hover:bg-gray-100 transition">
-            <i data-lucide="grid" class="w-4 h-4 inline-block mr-2 -mt-0.5"></i>
+        <button @click="openPhotos = true" class="absolute bottom-6 right-6 bg-white border border-gray-900 rounded-lg px-4 py-1.5 font-semibold text-[14px] shadow-sm hover:bg-gray-100 transition z-30 transform hover:scale-[1.02] active:scale-[0.98] flex items-center">
+            <i data-lucide="grid" class="w-4 h-4 mr-2"></i>
             {{ __('Tampilkan semua foto') }}
         </button>
     </div>
@@ -437,15 +460,40 @@
         </div>
     </div>
 
-    {{-- Full Screen Photo Modal (Alpine) --}}
-    <div x-show="openPhotos" x-cloak class="fixed inset-0 z-[100] bg-white overflow-y-auto" x-transition>
-        <div class="max-w-4xl mx-auto py-12 px-6">
-            <button @click="openPhotos = false" class="fixed top-6 left-6 p-2 rounded-full hover:bg-gray-100 transition">
-                <i data-lucide="chevron-left" class="w-8 h-8"></i>
+    {{-- Full Screen Photo Modal (Lightbox) --}}
+    <div x-show="openPhotos" x-cloak 
+         class="fixed inset-0 z-[100] bg-white overflow-y-auto" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 translate-y-full"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 translate-y-full">
+        
+        <div class="sticky top-0 bg-white/90 backdrop-blur-md z-50 px-6 py-4 flex justify-between items-center border-b border-gray-100">
+            <button @click="openPhotos = false" class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition font-semibold text-[15px]">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                <span>Kembali</span>
             </button>
-            <div class="space-y-6">
-                @foreach($allImages as $img)
-                    <img src="{{ $img }}" class="w-full h-auto rounded-xl">
+            <div class="flex items-center space-x-4">
+                <button class="flex items-center hover:bg-gray-100 px-2 py-1 rounded-md transition text-[14px] font-semibold">
+                    <i data-lucide="share" class="w-4 h-4 mr-2"></i> Bagikan
+                </button>
+                <button class="flex items-center hover:bg-gray-100 px-2 py-1 rounded-md transition border border-transparent text-airbnb-red text-[14px] font-semibold">
+                    <i data-lucide="heart" class="w-4 h-4 mr-2"></i> Simpan
+                </button>
+            </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto py-8 px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="md:col-span-2">
+                    <img src="{{ $allImages[0] }}" class="w-full h-auto rounded-xl object-cover" style="max-height: 600px">
+                </div>
+                @foreach(array_slice($allImages, 1) as $idx => $img)
+                    <div class="{{ $loop->iteration % 3 == 0 ? 'md:col-span-2' : '' }}">
+                       <img src="{{ $img }}" class="w-full h-auto rounded-xl object-cover" style="max-height: 600px">
+                    </div>
                 @endforeach
             </div>
         </div>

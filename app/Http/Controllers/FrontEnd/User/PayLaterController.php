@@ -9,10 +9,16 @@ use App\Models\Booking;
 use App\Models\PaymentGateway\OnlineGateway;
 use Midtrans\Config as MidtransConfig;
 use Midtrans\Snap;
-use App\Http\Controllers\FrontEnd\BookingPayment\BookingController;
+use App\Actions\Booking\ProcessPaidBooking;
+use App\Models\BasicSettings\Basic;
+use App\Models\Vendor;
 
 class PayLaterController extends Controller
 {
+    public function __construct(
+        protected ProcessPaidBooking $processPaidBooking
+    ) {}
+
     public function midtrans(Request $request, $id)
     {
         $bookingInfo = Booking::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
@@ -35,8 +41,9 @@ class PayLaterController extends Controller
         $params = [
             'transaction_details' => [
                 'order_id' => $bookingInfo->order_number . '-' . time(),
-                'gross_amount' => intval($bookingInfo->grand_total) * 1000, 
+                'gross_amount' => (int)$bookingInfo->grand_total, 
             ],
+
             'customer_details' => [
                 'email' =>  $bookingInfo->booking_email,
                 'phone' => $bookingInfo->booking_phone,
@@ -66,65 +73,13 @@ class PayLaterController extends Controller
     {
         $booking_id = $request->session()->get('pay_later_booking_id');
         if (!$booking_id) {
-            return redirect()->route('user.room_bookings')->with('error', 'Payment session expired.');
+            return redirect()->route('user.perahu_bookings')->with('error', 'Payment session expired.');
         }
 
         $bookingInfo = Booking::find($booking_id);
-        if ($bookingInfo) {
-            $bookingInfo->update(['payment_status' => 1]);
-
-            // generate an invoice in pdf format 
-            $bookingProcess = new BookingController();
-            $invoice = $bookingProcess->generateInvoice($bookingInfo);
-            $bookingInfo->update(['invoice' => $invoice]);
-
-            // send a mail to the customer with the invoice
-            $bookingProcess->prepareMailForCustomer($bookingInfo);
-            $bookingProcess->prepareMailForvendor($bookingInfo);
-
-            // Handle vendor balance logic
-            $vendor_id = $bookingInfo->vendor_id;
-            if ($vendor_id == 0) {
-                $commission = $bookingInfo->grand_total;
-            } else {
-                $commission = 0;
-            }
-            $vendor = \App\Models\Vendor::find($vendor_id);
-            $earning = \App\Models\BasicSettings\Basic::first();
-            if ($vendor_id == 0) {
-                $earning->total_earning += $bookingInfo->grand_total;
-            } else {
-                $earning->total_earning += $commission;
-            }
-            $earning->save();
-
-            if ($vendor) {
-                $pre_balance = $vendor->amount;
-                $vendor->amount += ($bookingInfo->grand_total - $commission);
-                $vendor->save();
-                $after_balance = $vendor->amount;
-            } else {
-                $after_balance = NULL;
-                $pre_balance = NULL;
-            }
-
-            $data = [
-                'transcation_id' => time(),
-                'booking_id' => $bookingInfo->id,
-                'transcation_type' => 'room_booking',
-                'user_id' => $bookingInfo->user_id,
-                'vendor_id' => $vendor_id,
-                'payment_status' => 1,
-                'payment_method' => $bookingInfo->payment_method,
-                'grand_total' => $bookingInfo->grand_total,
-                'commission' => $commission,
-                'pre_balance' => $pre_balance,
-                'after_balance' => $after_balance,
-                'gateway_type' => $bookingInfo->gateway_type,
-                'currency_symbol' => $bookingInfo->currency_symbol,
-                'currency_symbol_position' => $bookingInfo->currency_symbol_position,
-            ];
-            store_transaction($data);
+        if ($bookingInfo && $bookingInfo->payment_status == 0) {
+            // Using unified action for paid booking processing
+            $this->processPaidBooking->execute($bookingInfo, 'TRX-' . time());
         }
 
         $request->session()->forget('pay_later_booking_id');

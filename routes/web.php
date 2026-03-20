@@ -4,6 +4,84 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/set-locale', 'FrontEnd\MiscellaneousController@setLanguage')->name('change_language');
 
+Route::get('/agent-update-blogs', function () {
+    $blogs = \App\Models\Journal\Blog::orderBy('id', 'asc')->take(3)->get();
+    if($blogs->count() < 1) return response()->json(['error' => 'No blogs found']);
+
+    $data = [
+        [
+            'image' => 'fishing_spot.png',
+            'title' => 'Rahasia Spot Mancing Terbaik di Kepulauan Seribu',
+            'slug' => \Illuminate\Support\Str::slug('Rahasia Spot Mancing Terbaik di Kepulauan Seribu'),
+            'content' => '<p class="lead" style="font-size: 1.1rem; color: #555;">Jangan buang waktu Anda mencoba spot yang tidak pasti. Kepulauan Seribu menyembunyikan surga memancing yang hanya diketahui oleh kapten lokal berpengalaman.</p>
+<h3 class="mt-4 mb-2" style="font-weight:bold;">Mengapa Pemancing Pro Memilih Kepulauan Seribu?</h3>
+<p>Dari terumbu karang dangkal hingga perairan dalam yang kaya akan ikan pelagis, Kepulauan Seribu menawarkan variasi tarikan yang mendebarkan. Anda bisa menargetkan Giant Trevally (GT), Tenggiri, hingga Kerapu monster.</p>
+<h3 class="mt-4 mb-2" style="font-weight:bold;">Fasilitas Kapal Pancing yang Wajib Ada</h3>
+<ul style="list-style-type: disc; margin-left: 20px;">
+<li style="margin-bottom: 8px;"><strong>Fish Finder &amp; GPS:</strong> Kapal modern di Gofishi dilengkapi sonar untuk mendeteksi pergerakan ikan di bawah laut.</li>
+<li style="margin-bottom: 8px;"><strong>Rod Holder &amp; Live Bait Tank:</strong> Kenyamanan bertarung dengan ikan besar sangat bergantung pada tata letak kapal.</li>
+<li style="margin-bottom: 8px;"><strong>Kapten Berpengalaman:</strong> Memahami arus dan jadwal pasang surut adalah kunci.</li>
+</ul>
+<blockquote style="border-left: 4px solid #FF385C; padding-left: 15px; font-style: italic; margin-top: 20px;">"Pengalaman memancing yang sesungguhnya bukan hanya soal alat, tapi soal bersama siapa Anda pergi."</blockquote>
+<h3 class="mt-5 mb-2" style="font-weight:bold;">Siap Memecahkan Rekor Tangkapan Anda?</h3>
+<p>Jangan biarkan akhir pekan Anda berlalu tanpa tarikan. Kami telah mengkurasi kapal pancing terbaik di Jakarta dengan kapten yang hafal seluk-beluk Kepulauan Seribu.</p>
+<div style="margin-top: 25px;"><a href="/perahu" style="background-color: #FF385C; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">Lihat Kapal Pancing Tersedia</a></div>'
+        ],
+        [
+            'image' => 'luxury_yacht.png',
+            'title' => 'Cara Cerdas Menyewa Yacht Mewah di Jakarta untuk Acara Spesial',
+            'slug' => \Illuminate\Support\Str::slug('Cara Cerdas Menyewa Yacht Mewah di Jakarta untuk Acara Spesial'),
+            'content' => '<p class="lead" style="font-size: 1.1rem; color: #555;">Bosan dengan perayaan di hotel bintang lima? Menyewa yacht pribadi menyajikan level eksklusivitas yang tidak bisa didapatkan di tempat lain. Baik untuk ulang tahun, <i>anniversary</i>, maupun pesta perusahaan.</p>
+<h3 class="mt-4 mb-2" style="font-weight:bold;">Keistimewaan Merayakan di Atas Yacht</h3>
+<p>Ketenangan laut dipasangkan dengan kemewahan fasilitas modern. Dari dek berjemur (sundeck) yang luas, interior ber-AC, hingga layanan katering kelas premium. Anda akan menikmati pemandangan matahari terbenam (sunset) terbaik di Teluk Jakarta secara privat.</p>
+<h3 class="mt-4 mb-2" style="font-weight:bold;">3 Tips Memilih Yacht yang Tepat</h3>
+<ol style="list-style-type: decimal; margin-left: 20px;">
+<li style="margin-bottom: 8px;"><strong>Sesuaikan dengan Jumlah Tamu:</strong> Pastikan ruang gerak nyaman. Yacht yang terlalu padat akan mengurangi kesan mewah.</li>
+<li style="margin-bottom: 8px;"><strong>Cek Fasilitas Entertainment:</strong> Apakah ada sound system premium? Bagaimana dengan dapur dan toiletnya?</li>
+<li style="margin-bottom: 8px;"><strong>Pilih Kru Profesional:</strong> Hospitality dari kru akan sangat menentukan kesuksesan acara Anda.</li>
+</ol>
+<p>Di Gofishi, kami memastikan setiap yacht yang terdaftar telah melewati standar kelayakan dan pelayanan eksklusif.</p>
+<h3 class="mt-5 mb-2" style="font-weight:bold;">Wujudkan Momen Tak Terlupakan Anda</h3>
+<p>Amankan tanggal Anda sebelum kehabisan. Yacht mewah sangat diminati saat menjelang akhir pekan dan libur panjang.</p>
+<div style="margin-top: 25px;"><a href="/perahu" style="background-color: #FF385C; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">Cek Harga Sewa Yacht</a></div>'
+        ],
+        [
+            'image' => 'speedboat.png',
+            'title' => 'Sensasi Speedboat Manta Ray: Cepat, Aman, dan Mengguncang Adrenalin',
+            'slug' => \Illuminate\Support\Str::slug('Sensasi Speedboat Manta Ray: Cepat, Aman dan Mengguncang Adrenalin'),
+            'content' => '<p class="lead" style="font-size: 1.1rem; color: #555;">Waktu liburan Anda terlalu berharga untuk dihabiskan dalam perjalanan yang lambat. Speedboat bermesin ganda kami siap memotong waktu tempuh Anda ke pulau impian hingga separuhnya.</p>
+<h3 class="mt-4 mb-2" style="font-weight:bold;">Mengapa Memilih Speedboat Modern?</h3>
+<p>Dirancang untuk membelah ombak dengan mulus, speedboat kelas atas ini menggunakan mesin berkekuatan ganda yang stabil. Sangat cocok bagi Anda (dan keluarga) yang mudah mabuk laut, karena waktu tempuh yang super singkat.</p>
+<h3 class="mt-4 mb-2" style="font-weight:bold;">Spesifikasi yang Akan Anda Cintai:</h3>
+<ul style="list-style-type: disc; margin-left: 20px;">
+<li style="margin-bottom: 8px;"><strong>Kecepatan Maksimal:</strong> Menghemat hingga 40% waktu perjalanan dibanding kapal reguler.</li>
+<li style="margin-bottom: 8px;"><strong>Kabin Nyaman:</strong> Dilengkapi tempat duduk ergonomis yang mengurangi benturan ombak.</li>
+<li style="margin-bottom: 8px;"><strong>Standar Keselamatan Internasional:</strong> Navigasi modern, radio komunikasi vhf, dan <i>life jacket</i> berkualitas untuk setiap penumpang.</li>
+</ul>
+<h3 class="mt-5 mb-2" style="font-weight:bold;">Jangan Mau Menunggu Lama di Dermaga</h3>
+<p>Rencanakan perjalanan <i>island hopping</i> Anda berikutnya dengan penuh gaya dan kecepatan maksimal. Hindari antrean panjang kapal feri umum.</p>
+<div style="margin-top: 25px;"><a href="/perahu" style="background-color: #FF385C; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">Sewa Speedboat Sekarang</a></div>'
+        ]
+    ];
+
+    $updated = [];
+    foreach($blogs as $index => $blog) {
+        if (!isset($data[$index])) break;
+        
+        $blog->update(['image' => $data[$index]['image']]);
+        
+        \App\Models\Journal\BlogInformation::where('blog_id', $blog->id)->update([
+            'title' => $data[$index]['title'],
+            'slug' => $data[$index]['slug'],
+            'content' => $data[$index]['content']
+        ]);
+        
+        $updated[] = $data[$index]['title'];
+    }
+
+    return response()->json(['success' => true, 'updated_blogs' => $updated]);
+});
+
 Route::middleware(['change.lang'])->group(function () {
   Route::get('/', 'FrontEnd\HomeController@index')->name('index');
   Route::get('/about-us', 'FrontEnd\HomeController@about')->name('about_us');
@@ -37,7 +115,12 @@ Route::middleware(['change.lang'])->group(function () {
       Route::get('/support-ticket', 'FrontEnd\UserController@supportTicket')->name('user.support_ticket');
       Route::get('/perahu-bookings', 'FrontEnd\UserController@roomBookings')->name('user.perahu_bookings');
       Route::get('/perahu-booking-details/{id}', 'FrontEnd\UserController@roomBookingDetails')->name('user.perahu_booking_details');
+
+      // Pay Later Routes
+      Route::get('/booking/{id}/pay-later/midtrans', 'FrontEnd\User\PayLaterController@midtrans')->name('user.perahu_booking.pay_later.midtrans');
+      Route::get('/booking/pay-later/midtrans/notify', 'FrontEnd\User\PayLaterController@midtransNotify')->name('user.perahu_booking.pay_later.midtrans.notify');
     });
+
 
     // Socialite Login Routes
     Route::get('/login/{provider}', 'FrontEnd\SocialLoginController@redirectToProvider')->name('user.login.provider');

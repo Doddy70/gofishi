@@ -6,7 +6,7 @@
 <div x-data="{ 
     open: false, 
     messages: [
-        { role: 'assistant', content: 'Halo! Saya asisten AI Go Fishi. Ada yang bisa saya bantu cari perahu hari ini?' }
+        { role: 'assistant', content: 'Halo! Saya asisten AI Gofishi. Ada yang bisa saya bantu cari perahu hari ini?' }
     ],
     userInput: '',
     loading: false,
@@ -70,7 +70,7 @@
             </div>
             <div>
                 <h4 class="font-bold">Smart Assistant</h4>
-                <p class="text-xs text-white/80">Powered by Go Fishi AI</p>
+                <p class="text-xs text-white/80">Powered by Gofishi AI</p>
             </div>
         </div>
 

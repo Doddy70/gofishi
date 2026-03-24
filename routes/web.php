@@ -163,6 +163,9 @@ Route::middleware(['change.lang'])->group(function () {
   Route::get('/lokasi', 'FrontEnd\LokasiController@index')->name('frontend.lokasi');
   Route::get('/lokasi/{slug}/{id}', 'FrontEnd\LokasiController@details')->name('frontend.lokasi.details');
   Route::get('/faq', 'FrontEnd\FaqController@faq')->name('faq');
+  
+  // Custom Pages (Must be at the end to avoid clashing with other top-level routes)
+  Route::get('/{slug}', 'FrontEnd\PageController@page')->name('frontend.custom_page');
 });
 
 // Admin Auth (Outside global middleware to avoid loop)

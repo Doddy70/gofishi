@@ -157,21 +157,55 @@
                         hasCoords = true;
 
                         const price = (room.price_day_1 / 1000).toFixed(0) + 'rb';
+                        // InfoWindow for detail on click
+                        const infoWindow = new google.maps.InfoWindow({
+                            content: `
+                                <div class="p-2 min-w-[200px]">
+                                    <div class="aspect-video mb-2">
+                                        <img src="/assets/img/perahu/featureImage/${room.feature_image}" class="w-full h-full object-cover rounded-lg">
+                                    </div>
+                                    <h5 class="font-bold text-sm mb-1">${room.title}</h5>
+                                    <p class="text-xs text-gray-500 mb-2"><i data-lucide="map-pin" class="inline w-3 h-3"></i> ${room.hotel_name || ''}</p>
+                                    <div class="flex items-center justify-between mt-2">
+                                        <span class="font-bold text-rose-500">${'Rp' + price}</span>
+                                        <a href="/perahu/${room.slug}/${room.id}" class="text-xs bg-gray-900 text-white px-3 py-1.5 rounded-lg hover:bg-black">Detail</a>
+                                    </div>
+                                </div>
+                            `
+                        });
+
                         const marker = new google.maps.Marker({
                             position: pos,
                             map: this.map,
                             label: {
                                 text: 'Rp' + price,
                                 color: 'black',
-                                fontSize: '13px',
-                                fontWeight: '900',
+                                fontSize: '12px',
+                                fontWeight: 'bold',
                                 className: 'map-price-label-v3'
                             },
-                            icon: { path: google.maps.SymbolPath.CIRCLE, scale: 0 }
+                            // Memberi scale > 0 agar marker bisa di-klik. 
+                            // Gunakan path lingkaran transparan sebagai area klik.
+                            icon: { 
+                                path: google.maps.SymbolPath.CIRCLE, 
+                                scale: 20,
+                                fillOpacity: 0,
+                                strokeOpacity: 0,
+                                labelOrigin: new google.maps.Point(0, 0)
+                            }
                         });
 
                         marker.addListener("click", () => {
-                            window.location.href = `/perahu/${room.slug}/${room.id}`;
+                            // Menutup InfoWindow lain jika ada
+                            if (window.currentInfoWindow) window.currentInfoWindow.close();
+                            
+                            infoWindow.open(this.map, marker);
+                            window.currentInfoWindow = infoWindow;
+
+                            // Re-init lucide icons inside infowindow
+                            setTimeout(() => {
+                                if (window.lucide) lucide.createIcons();
+                            }, 100);
                         });
                         this.markers.push(marker);
                     }

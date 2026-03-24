@@ -71,6 +71,41 @@
             </div>
         </div>
     </div>
+    
+    {{-- SIMPLE AI SMART SEARCH --}}
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-20 mb-16">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                <i data-lucide="sparkles" class="w-6 h-6 text-rose-500 mr-2"></i>
+                {{ __('Tanya Asisten AI Gofishi') }}
+            </h2>
+            
+            <form action="{{ route('frontend.perahu.ai_search') }}" method="GET" class="relative">
+                <div class="flex items-center bg-gray-50 border border-gray-200 rounded-2xl p-2 focus-within:bg-white focus-within:shadow-md transition-all focus-within:border-rose-300">
+                    <div class="px-4 text-gray-400">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </div>
+                    <input type="text" name="q" 
+                           placeholder="{{ __('Ke mana rencana berlayar Anda? Cari armada terbaik dengan AI...') }}" 
+                           class="w-full bg-transparent border-none p-4 text-[16px] focus:ring-0 placeholder:text-gray-400 text-gray-900">
+                    <button type="submit" class="bg-rose-500 text-white px-8 py-3.5 rounded-xl font-bold hover:bg-rose-600 transition shadow-sm">
+                        {{ __('Cari') }}
+                    </button>
+                </div>
+                
+                {{-- Quick Examples --}}
+                <div class="flex flex-wrap items-center gap-3 mt-6">
+                    <span class="text-sm text-gray-400 mr-2 flex items-center">
+                        <i data-lucide="info" class="w-3.5 h-3.5 mr-1.5 opacity-50"></i>
+                        {{ __('Coba tanya:') }}
+                    </span>
+                    <a href="{{ route('frontend.perahu.ai_search', ['q' => 'Kapal di Ancol']) }}" class="text-xs text-gray-500 font-medium px-4 py-2 border border-gray-200 rounded-full hover:border-rose-400 hover:text-rose-500 transition-all">{{ __('Kapal di Ancol') }}</a>
+                    <a href="{{ route('frontend.perahu.ai_search', ['q' => 'Budget di bawah 3 juta']) }}" class="text-xs text-gray-500 font-medium px-4 py-2 border border-gray-200 rounded-full hover:border-rose-400 hover:text-rose-500 transition-all">{{ __('Budget di bawah 3 juta') }}</a>
+                    <a href="{{ route('frontend.perahu.ai_search', ['q' => 'Kapasitas 10 orang']) }}" class="text-xs text-gray-500 font-medium px-4 py-2 border border-gray-200 rounded-full hover:border-rose-400 hover:text-rose-500 transition-all">{{ __('Kapasitas 10 orang') }}</a>
+                </div>
+            </form>
+        </div>
+    </div>
 
 
     {{-- GRID PUSAT KEBERANGKATAN (LOKASI/DERMAGA) --}}

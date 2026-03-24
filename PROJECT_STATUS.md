@@ -177,3 +177,19 @@
 - [x] **Split View Integration (Airbnb Style)**: Memperbaiki tata letak *grid* dan *carousel* pada `hotel-details.blade.php`. Daftar dermaga (*Hubs*) kini tampil dinamis dengan foto-foto galeri, sedangkan form pencarian *floating* telah dibelah menjadi kolom "Check In" dan "Check Out" yang langsung terhubung dengan Flatpickr bersyarat seperti milik Airbnb asli.
 - [x] **N+1 Query Eradication**: Merampingkan total *load time* dari halaman utama Lokasi dan `_card.blade.php`. Relasi lambat dieliminasi menggunakan properti akses langsung `$hotel->relationLoaded()` dan *Pre-loading* (`loadMissing`). Ini memangkas ratusan eksekusi raw SQL redundan di layar *Carousel*.
 - [x] **Booking Availability Subquery Fix**: Mengatasi error kritis `Call to undefined method App\Models\Perahu::bookings()` di `PerahuService` saat filter pencarian bersyarat (tanggal) dijalankan. Saya mengubah pemanggilan *Eloquent Relationship* asimetris menjadi *Raw Database Subquery* bersyarat `whereNotIn('rooms.id', ...)` memotong seluruh konflik basis data saat pengguna menentukan hari sewa.
+
+### Terbaru (Contact & Social Integration - 2026-03-21):
+- [x] **Contact Page Transformation**: Merampingkan halaman "Hubungi Kami" dengan mengganti peta statis menjadi *Direct Contact Panel* yang interaktif. Menambahkan nomor WhatsApp Rudi, serta integrasi visual untuk YouTube dan Instagram Gofishi.
+- [x] **Global Brand Consistency**: Sinkronisasi tautan Media Sosial (Instagram & YouTube) di footer seluruh halaman agar selaras dengan profil resmi Gofishi.
+### Terbaru (Footer & Custom Page Integration - 2026-03-24):
+- [x] **Dynamic Footer Engine**: Merombak total `footer.blade.php` agar 100% dinamis. Sekarang, link di footer tidak lagi hardcoded melainkan ditarik langsung dari database (`Quick Links` & `Custom Pages`).
+- [x] **Frontend Custom Page Routing**: Mengaktifkan rute `/{slug}` yang sebelumnya terabaikan. Halaman tambahan yang dibuat admin di dashboard kini memiliki URL publik yang valid dan dapat diakses user.
+- [x] **Custom Page Schema Repair**: Memperbaiki kerusakan skema pada tabel `pages` dan `page_contents` (pemulihan kolom `title`, `slug`, `content`, `status`). Tanpa perbaikan ini, fitur "Tambah Halaman" di admin akan menyebabkan crash database.
+- [x] **Global Data Providers**: Mengintegrasikan `AppServiceProvider` untuk menyuplai data navigasi footer ke seluruh view frontend secara otomatis, menjamin konsistensi menu di setiap halaman.
+- [x] **Initial Content Seeding**: Menambahkan seeder `AirbnbFooterIntegrationSeeder` yang secara otomatis mengisi database dengan halaman standar (Pusat Bantuan, Karier, Ketentuan, dll) sesuai permintaan desain user (Image 2).
+
+### Terbaru (Production Deployment & Server Finalization - 2026-03-24):
+- [x] **Live Server Transition**: Berhasil melakukan *deploy* project Gofishi ke server *live* (aaPanel) menggunakan arsitektur OpenLiteSpeed (OLS). Menggantikan Nginx untuk mengatasi konflik routing bawaan aaPanel yang menyebabkan error 404 pada rute dinamis Laravel.
+- [x] **Codebase & Database Sanitization**: Menghapus seluruh referensi *hardcoded* `http://localhost:8000` dan `127.0.0.1` dari *database dump* (terutama pada JSON Menu Builder) dan *source code* agar semua URL internal dan aset merujuk ke domain utama `https://gofishi.com`.
+- [x] **Production Optimization**: Membersihkan seluruh cache lokal (`storage/framework/views`, `sessions`), mengatur `.env` ke mode `production` (`APP_DEBUG=false`), dan mempersiapkan paket ZIP "Ready to Live" yang menyertakan `/vendor` untuk mendobrak limit memori kompilasi di server panel.
+- [x] **Permissions & Cache Recovery**: Memperbaiki masalah HTTP Error 500 pasca-*upload* dengan membuat ulang struktur direktori `storage/framework/cache/data` (yang kosong/terkecuali saat *zipping*) dan memastikan perizinan (Chmod 775, Chown www:www) berjalan dengan benar. Proyek kini stabil di *live environment*.

@@ -1,57 +1,36 @@
 
 > dev
-> vite --port=5183
+> vite
 
-✘ [ERROR] "laravel-vite-plugin" resolved to an ESM file. ESM file cannot be loaded by `require`. See https://vite.dev/guide/troubleshooting.html#this-package-is-esm-only for more details. [plugin externalize-deps]
+Re-optimizing dependencies because lockfile has changed
 
-    node_modules/esbuild/lib/main.js:1225:27:
-      1225 │         let result = await callback({
-           ╵                            ^
+  VITE v5.4.21  ready in 544 ms
 
-    at file:///Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:66928:23
-    at requestCallbacks.on-resolve (/Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:1225:28)
-    at handleRequest (/Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:647:17)
-    at handleIncomingPacket (/Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:672:7)
-    at Socket.readFromStdout (/Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:600:7)
-    at Socket.emit (node:events:508:20)
-    at addChunk (node:internal/streams/readable:564:12)
-    at readableAddChunkPushByteMode (node:internal/streams/readable:515:3)
-    at Readable.push (node:internal/streams/readable:395:5)
-    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
 
-  This error came from the "onResolve" callback registered here:
+  LARAVEL v11.48.0  plugin v1.3.0
 
-    node_modules/esbuild/lib/main.js:1150:20:
-      1150 │       let promise = setup({
-           ╵                     ^
+  ➜  APP_URL: http://localhost:8000
+12:03:10 PM [vite] .env changed, restarting server...
+12:03:10 PM [vite] server restarted.
 
-    at setup (file:///Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:66890:18)
-    at handlePlugins (/Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:1150:21)
-    at buildOrContextImpl (/Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:873:5)
-    at Object.buildOrContext (/Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:699:5)
-    at /Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:2023:15
-    at new Promise (<anonymous>)
-    at Object.build (/Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:2022:25)
-    at build (/Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:1873:51)
-    at bundleConfigFile (file:///Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:66845:24)
+  LARAVEL v11.48.0  plugin v1.3.0
 
-  The plugin "externalize-deps" was triggered by this import
+  ➜  APP_URL: http://localhost:8000
+12:26:11 PM [vite] .env changed, restarting server...
+12:26:11 PM [vite] server restarted.
 
-    vite.config.js:2:20:
-      2 │ import laravel from 'laravel-vite-plugin';
-        ╵                     ~~~~~~~~~~~~~~~~~~~~~
+  LARAVEL v11.48.0  plugin v1.3.0
 
-failed to load config from /Users/doddykapisha/Documents/GitHub/Airbnb/project/vite.config.js
-error when starting dev server:
-Error: Build failed with 1 error:
-node_modules/esbuild/lib/main.js:1225:27: ERROR: [plugin: externalize-deps] "laravel-vite-plugin" resolved to an ESM file. ESM file cannot be loaded by `require`. See https://vite.dev/guide/troubleshooting.html#this-package-is-esm-only for more details.
-    at failureErrorWithLog (/Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:1472:15)
-    at /Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:945:25
-    at runOnEndCallbacks (/Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:1315:45)
-    at buildResponseToResult (/Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:943:7)
-    at /Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:970:16
-    at responseCallbacks.<computed> (/Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:622:9)
-    at handleIncomingPacket (/Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:677:12)
-    at Socket.readFromStdout (/Users/doddykapisha/Documents/GitHub/Airbnb/project/node_modules/esbuild/lib/main.js:600:7)
-    at Socket.emit (node:events:508:20)
-    at addChunk (node:internal/streams/readable:564:12)
+  ➜  APP_URL: http://localhost:8000
+1:01:00 PM [vite] full reload resources/views/frontend/perahu/room-gird.blade.php
+1:01:15 PM [vite] full reload resources/views/frontend/perahu/room-gird.blade.php
+1:05:05 PM [vite] full reload resources/views/frontend/lokasi/hotel-details.blade.php
+1:08:22 PM [vite] full reload resources/views/frontend/lokasi/hotel-details.blade.php
+1:14:40 PM [vite] full reload resources/views/frontend/lokasi/hotel-details.blade.php
+1:17:07 PM [vite] full reload resources/views/frontend/lokasi/hotel-details.blade.php
+1:32:07 PM [vite] full reload routes/web.php
+1:36:40 PM [vite] full reload resources/views/frontend/partials/footer.blade.php
+1:37:29 PM [vite] full reload resources/views/frontend/partials/footer.blade.php
+1:37:46 PM [vite] full reload resources/views/frontend/partials/footer.blade.php

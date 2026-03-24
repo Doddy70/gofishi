@@ -3,39 +3,50 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12 pb-12 border-b border-neutral-200">
             
-            {{-- Column 1 --}}
+            {{-- Column 1 - Support --}}
             <div class="flex flex-col gap-4">
                 <h4 class="text-sm font-bold text-neutral-900">{{ __('Dukungan') }}</h4>
                 <ul class="flex flex-col gap-3 text-sm text-neutral-600 font-light">
-                    <li><a href="#" class="hover:underline">{{ __('Pusat Bantuan') }}</a></li>
-                    <li><a href="#" class="hover:underline">{{ __('AirCover') }}</a></li>
-                    <li><a href="#" class="hover:underline">{{ __('Anti-diskriminasi') }}</a></li>
-                    <li><a href="#" class="hover:underline">{{ __('Dukungan Disabilitas') }}</a></li>
-                    <li><a href="#" class="hover:underline">{{ __('Opsi Pembatalan') }}</a></li>
+                    @if(count($supportPages) > 0)
+                        @foreach($supportPages as $page)
+                            <li><a href="{{ route('frontend.custom_page', $page->slug) }}" class="hover:underline">{{ __($page->title) }}</a></li>
+                        @endforeach
+                    @else
+                        <li><a href="#" class="hover:underline">{{ __('Pusat Bantuan') }}</a></li>
+                        <li><a href="#" class="hover:underline">{{ __('AirCover') }}</a></li>
+                        <li><a href="#" class="hover:underline">{{ __($companyPages->where('title', 'Privacy Policy')->first()->title ?? 'Kebijakan Privasi') }}</a></li>
+                    @endif
                 </ul>
             </div>
 
-            {{-- Column 2 --}}
+            {{-- Column 2 - Hosting --}}
             <div class="flex flex-col gap-4">
                 <h4 class="text-sm font-bold text-neutral-900">{{ __('Hosting') }}</h4>
                 <ul class="flex flex-col gap-3 text-sm text-neutral-600 font-light">
-                    <li><a href="{{ route('vendor.dashboard') }}" class="hover:underline">{{ __('Gofishi-kan perahu Anda') }}</a></li>
-                    <li><a href="#" class="hover:underline">{{ __('AirCover untuk Host') }}</a></li>
-                    <li><a href="#" class="hover:underline">{{ __('Sumber Daya Hosting') }}</a></li>
-                    <li><a href="#" class="hover:underline">{{ __('Forum Komunitas') }}</a></li>
-                    <li><a href="#" class="hover:underline">{{ __('Hosting Bertanggung Jawab') }}</a></li>
+                    @if(count($quickLinks) > 0)
+                        @foreach($quickLinks as $link)
+                            <li><a href="{{ $link->url }}" class="hover:underline">{{ __($link->title) }}</a></li>
+                        @endforeach
+                    @else
+                        <li><a href="{{ route('vendor.dashboard') }}" class="hover:underline">{{ __('Gofishi-kan perahu Anda') }}</a></li>
+                        <li><a href="#" class="hover:underline">{{ __('Sumber Daya Hosting') }}</a></li>
+                    @endif
                 </ul>
             </div>
 
-            {{-- Column 3 --}}
+            {{-- Column 3 - Company --}}
             <div class="flex flex-col gap-4">
                 <h4 class="text-sm font-bold text-neutral-900">{{ __('Gofishi') }}</h4>
                 <ul class="flex flex-col gap-3 text-sm text-neutral-600 font-light">
-                    <li><a href="#" class="hover:underline">{{ __('Ruang Berita') }}</a></li>
-                    <li><a href="#" class="hover:underline">{{ __('Fitur Baru') }}</a></li>
-                    <li><a href="#" class="hover:underline">{{ __('Karier') }}</a></li>
-                    <li><a href="#" class="hover:underline">{{ __('Investor') }}</a></li>
-                    <li><a href="#" class="hover:underline">{{ __('Gift Cards') }}</a></li>
+                    @if(count($companyPages) > 0)
+                        @foreach($companyPages as $page)
+                            <li><a href="{{ route('frontend.custom_page', $page->slug) }}" class="hover:underline">{{ __($page->title) }}</a></li>
+                        @endforeach
+                    @else
+                        <li><a href="#" class="hover:underline">{{ __('Ruang Berita') }}</a></li>
+                        <li><a href="#" class="hover:underline">{{ __('Karier') }}</a></li>
+                        <li><a href="#" class="hover:underline">{{ __('Investor') }}</a></li>
+                    @endif
                 </ul>
             </div>
 
@@ -77,9 +88,9 @@
                     <span class="hover:underline cursor-pointer">IDR</span>
                 </div>
                 <div class="flex items-center gap-4 text-neutral-900">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/gofishi/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.instagram.com/gofishi/" target="_blank"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
         </div>

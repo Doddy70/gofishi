@@ -121,9 +121,32 @@ class AppServiceProvider extends ServiceProvider
                   $footerTextInfo = DB::table('footer_texts')->where('language_id', $defaultLang->id)->first();
               } catch (\Exception $e) {}
           }
+
+          // Dynamic Quick Links (Integrated with Footer)
+          $quickLinks = collect([]);
+          if ($defaultLang && Schema::hasTable('quick_links')) {
+              try {
+                  $quickLinks = DB::table('quick_links')->where('language_id', $defaultLang->id)->orderBy('serial_number', 'asc')->get();
+              } catch (\Exception $e) {}
+          }
+
+          // Dynamic Custom Pages (Integrated with Footer)
+          $supportPages = collect([]);
+          $companyPages = collect([]);
+          if ($defaultLang && Schema::hasTable('page_contents')) {
+              try {
+                  $allPages = DB::table('page_contents')->where('language_id', $defaultLang->id)->get();
+                  $supportTitles = ['Pusat Bantuan', 'Privacy Policy', 'Dukungan & Bantuan', 'Kebijakan Pembatalan'];
+                  $supportPages = $allPages->filter(fn($p) => in_array($p->title, $supportTitles));
+                  $companyPages = $allPages->filter(fn($p) => !in_array($p->title, $supportTitles));
+              } catch (\Exception $e) {}
+          }
           
           $view->with('footerTextInfo', $footerTextInfo);
           $view->with('menuData', $menuData);
+          $view->with('quickLinks', $quickLinks);
+          $view->with('supportPages', $supportPages);
+          $view->with('companyPages', $companyPages);
 
           // Theme version for Admin
           if ($settings && !isset($settings->admin_theme_version)) {

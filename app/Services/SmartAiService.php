@@ -113,7 +113,7 @@ class SmartAiService
             config(['gemini.api_key' => $basicSettings->google_gemini_api_key]);
         }
 
-        $result = Gemini::geminiPro()->generateContent($prompt);
+        $result = app('gemini')->generativeModel('gemini-2.5-flash')->generateContent($prompt);
         return $result->text();
     }
 }

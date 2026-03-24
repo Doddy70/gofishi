@@ -74,7 +74,7 @@
                         <i data-lucide="phone" class="w-6 h-6"></i>
                     </div>
                     <h3 class="font-bold text-gray-900 mb-2">{{ __('Hubungi Kami') }}</h3>
-                    <p class="text-gray-500 text-sm font-light">{{ $info->contact_number }}</p>
+                    <p class="text-gray-500 text-sm font-light">+62 856-9877-491 (Rudi)</p>
                 </div>
                 <div class="p-8 bg-white border border-gray-100 rounded-3xl shadow-sm hover:shadow-md transition group">
                     <div class="w-12 h-12 bg-rose-50 rounded-2xl flex items-center justify-center text-airbnb-red mb-6 group-hover:scale-110 transition">
@@ -85,18 +85,38 @@
                 </div>
             </div>
 
-            <div class="relative rounded-3xl overflow-hidden shadow-2xl h-[450px] border-8 border-white group">
-                @if (!empty($info->latitude) && !empty($info->longitude))
-                    <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                            class="grayscale hover:grayscale-0 transition duration-1000"
-                            src="https://maps.google.com/maps?q={{ $info->latitude }},{{ $info->longitude }}+({{ urlencode($websiteInfo->website_title) }})&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
-                    </iframe>
-                @endif
-                <div class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-airbnb-red rounded-full flex items-center justify-center text-white shrink-0">
-                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+            <div class="bg-gray-50 rounded-3xl p-10 border border-gray-100 flex flex-col justify-center space-y-8 shadow-sm">
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ __('Terhubung Dengan Kami') }}</h3>
+                    <p class="text-gray-500 font-light">{{ __('Punya pertanyaan mendesak atau butuh inspirasi liburan memancing berikutnya? Pantau terus jaringan sosial kami atau hubungi tim lapangan secara langsung.') }}</p>
+                </div>
+
+                <a href="https://wa.me/628569877491" target="_blank" class="flex items-center space-x-6 p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-green-500/30 hover:shadow-md transition group">
+                    <div class="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center text-green-600 shrink-0 group-hover:scale-110 group-hover:bg-green-500 group-hover:text-white transition duration-300">
+                        <i data-lucide="phone-call" class="w-7 h-7"></i>
                     </div>
-                    <p class="text-sm font-medium text-gray-800">{{ $info->address }}</p>
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">{{ __('Nomer Telepon Lapangan') }}</p>
+                        <p class="text-xl text-gray-900 font-bold group-hover:text-green-600 transition">+62 856-9877-491 <span class="text-sm font-medium text-gray-500">(Rudi)</span></p>
+                    </div>
+                </a>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <a href="https://www.youtube.com/" target="_blank" class="flex flex-col items-center justify-center p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 hover:border-red-200 transition group relative overflow-hidden">
+                        <div class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-5 transition duration-300"></div>
+                        <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-red-600 mb-4 group-hover:bg-red-600 group-hover:text-white transition duration-300 z-10">
+                            <i data-lucide="youtube" class="w-6 h-6"></i>
+                        </div>
+                        <span class="font-bold text-gray-900 group-hover:text-red-600 transition z-10">{{ __('YouTube Channel') }}</span>
+                    </a>
+
+                    <a href="https://www.instagram.com/gofishi/" target="_blank" class="flex flex-col items-center justify-center p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 hover:border-pink-200 transition group relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 opacity-0 group-hover:opacity-[0.03] transition duration-300"></div>
+                        <div class="w-12 h-12 bg-pink-50 rounded-full flex items-center justify-center text-pink-600 mb-4 group-hover:bg-gradient-to-tr group-hover:from-yellow-400 group-hover:via-pink-500 group-hover:to-purple-500 group-hover:text-white transition duration-300 z-10">
+                            <i data-lucide="instagram" class="w-6 h-6"></i>
+                        </div>
+                        <span class="font-bold text-gray-900 group-hover:text-pink-600 transition z-10">{{ __('Instagram') }}</span>
+                    </a>
                 </div>
             </div>
         </div>

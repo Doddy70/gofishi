@@ -1,371 +1,733 @@
 
-   INFO  Server running on [http://127.0.0.1:8001].  
+   INFO  Server running on [http://127.0.0.1:8000].  
 
   Press Ctrl+C to stop the server
 
-  2026-03-20 00:24:39 ............................................ ~ 504.69ms
-  2026-03-20 00:24:39 /assets/admin/css/all.min.css .............. ~ 508.34ms
-  2026-03-20 00:24:39 /assets/admin/css/fontawesome-iconpicker.min.css  ~ 0.68ms
-  2026-03-20 00:24:39 /assets/admin/css/fonts.min.css .............. ~ 0.82ms
-  2026-03-20 00:24:39 /assets/admin/css/bootstrap.min.css .......... ~ 0.75ms
-  2026-03-20 00:24:39 /assets/admin/css/bootstrap-tagsinput.css .... ~ 1.12ms
-  2026-03-20 00:24:39 /assets/admin/css/jquery-ui.min.css .......... ~ 1.33ms
-  2026-03-20 00:24:39 /assets/admin/css/jquery.timepicker.min.css .. ~ 0.08ms
-  2026-03-20 00:24:39 /assets/admin/css/bootstrap-datepicker.min.css  ~ 0.27ms
-  2026-03-20 00:24:39 /assets/admin/css/dropzone.min.css ........... ~ 0.24ms
-  2026-03-20 00:24:39 /assets/admin/css/select2.min.css ............ ~ 0.65ms
-  2026-03-20 00:24:39 /assets/admin/css/atlantis.css ............... ~ 1.26ms
-  2026-03-20 00:24:39 /assets/front/css/vendors/daterangepicker.css  ~ 1.55ms
-  2026-03-20 00:24:39 /assets/admin/css/admin-main.css ............. ~ 0.45ms
-  2026-03-20 00:24:39 .............................................. ~ 0.08ms
-  2026-03-20 00:24:39 /assets/img/loader.gif ....................... ~ 2.23ms
-  2026-03-20 00:24:39 /assets/admin/js/jquery.min.js ............... ~ 0.99ms
-  2026-03-20 00:24:39 /assets/admin/js/popper.min.js ............... ~ 0.66ms
-  2026-03-20 00:24:39 /assets/admin/js/bootstrap.min.js ............ ~ 1.36ms
-  2026-03-20 00:24:39 /assets/admin/js/jquery.ui.touch-punch.min.js  ~ 2.07ms
-  2026-03-20 00:24:39 /assets/admin/fonts/simple-line-icons/Simple-Line-Icons.woff2?v=2.4.0  ~ 1.70ms
-  2026-03-20 00:24:39 /assets/admin/js/jquery-ui.min.js ............ ~ 2.48ms
-  2026-03-20 00:24:39 /assets/admin/fonts/fontawesome/fa-solid-900.woff2  ~ 2.12ms
-  2026-03-20 00:24:39 /assets/admin/fonts/fontawesome/fa-regular-400.woff2  ~ 1.67ms
-  2026-03-20 00:24:39 /assets/admin/fonts/fontawesome/fa-light-300.woff2  ~ 1.66ms
-  2026-03-20 00:24:39 /assets/admin/fonts/flaticon/Flaticon.woff ... ~ 1.20ms
-  2026-03-20 00:24:39 /assets/admin/js/jquery.timepicker.min.js .... ~ 1.59ms
-  2026-03-20 00:24:39 /assets/admin/js/jquery.scrollbar.min.js ..... ~ 2.06ms
-  2026-03-20 00:24:39 /assets/admin/js/bootstrap-notify.min.js ..... ~ 0.84ms
-  2026-03-20 00:24:39 /assets/admin/js/sweet-alert.min.js .......... ~ 1.22ms
-  2026-03-20 00:24:39 /assets/admin/js/bootstrap-tagsinput.min.js .. ~ 1.66ms
-  2026-03-20 00:24:39 /assets/admin/js/bootstrap-datepicker.min.js . ~ 1.81ms
-  2026-03-20 00:24:39 /assets/admin/js/jscolor.min.js .............. ~ 1.04ms
-  2026-03-20 00:24:39 /assets/admin/js/fontawesome-iconpicker.min.js  ~ 1.02ms
-  2026-03-20 00:24:39 /assets/admin/js/datatables-1.10.23.min.js ... ~ 0.94ms
-  2026-03-20 00:24:39 /assets/admin/js/tinymce/js/tinymce/tinymce.min.js  ~ 2.66ms
-  2026-03-20 00:24:39 /assets/admin/js/datatables.bootstrap4.min.js  ~ 1.11ms
-  2026-03-20 00:24:39 /assets/admin/js/dropzone.min.js ............. ~ 1.27ms
-  2026-03-20 00:24:39 /assets/admin/js/atlantis.js ................. ~ 1.24ms
-  2026-03-20 00:24:39 /assets/front/js/vendors/moment.min.js ....... ~ 1.34ms
-  2026-03-20 00:24:39 /assets/front/js/vendors/daterangepicker.js .. ~ 1.50ms
-  2026-03-20 00:24:39 /assets/admin/js/webfont.min.js .............. ~ 1.21ms
-  2026-03-20 00:24:39 /assets/admin/js/select2.min.js .............. ~ 1.10ms
-  2026-03-20 00:24:39 /assets/admin/js/admin-main.js ............... ~ 1.57ms
-  2026-03-20 00:24:39 /assets/admin/js/admin-partial.js ............ ~ 2.01ms
-  2026-03-20 00:24:39 /assets/admin/js/admin-dropzone.js ........... ~ 2.28ms
-  2026-03-20 00:24:39 /assets/admin/fonts/fontawesome/fa-brands-400.woff2  ~ 0.14ms
-  2026-03-20 00:24:41 /sw.js ....................................... ~ 0.20ms
-  2026-03-20 00:24:45 ............................................ ~ 504.50ms
-  2026-03-20 00:24:45 /assets/admin/css/all.min.css .............. ~ 507.19ms
-  2026-03-20 00:24:46 /assets/admin/css/fontawesome-iconpicker.min.css  ~ 0.17ms
-  2026-03-20 00:24:46 /assets/admin/css/fonts.min.css .............. ~ 0.38ms
-  2026-03-20 00:24:46 /assets/admin/css/bootstrap.min.css .......... ~ 1.19ms
-  2026-03-20 00:24:46 /assets/admin/css/bootstrap-tagsinput.css .... ~ 1.82ms
-  2026-03-20 00:24:46 /assets/admin/css/jquery-ui.min.css .......... ~ 2.09ms
-  2026-03-20 00:24:46 /assets/admin/css/jquery.timepicker.min.css .. ~ 0.67ms
-  2026-03-20 00:24:46 /assets/admin/css/bootstrap-datepicker.min.css  ~ 0.42ms
-  2026-03-20 00:24:46 /assets/admin/css/dropzone.min.css ........... ~ 0.51ms
-  2026-03-20 00:24:46 /assets/admin/css/select2.min.css ............ ~ 0.90ms
-  2026-03-20 00:24:46 /assets/front/css/vendors/daterangepicker.css  ~ 1.15ms
-  2026-03-20 00:24:46 /assets/admin/css/atlantis.css ............... ~ 1.78ms
-  2026-03-20 00:24:46 /assets/admin/css/admin-main.css ............. ~ 1.70ms
-  2026-03-20 00:24:46 .............................................. ~ 0.17ms
-  2026-03-20 00:24:46 /assets/img/loader.gif ....................... ~ 3.01ms
-  2026-03-20 00:24:46 /assets/admin/js/jquery.min.js ............... ~ 1.03ms
-  2026-03-20 00:24:46 /assets/admin/js/popper.min.js ............... ~ 1.58ms
-  2026-03-20 00:24:46 /assets/admin/js/bootstrap.min.js ............ ~ 1.20ms
-  2026-03-20 00:24:46 /assets/img/hotel/logo/1773925012.jpg ........ ~ 5.42ms
-  2026-03-20 00:24:46 /assets/admin/fonts/simple-line-icons/Simple-Line-Icons.woff2?v=2.4.0  ~ 1.96ms
-  2026-03-20 00:24:46 /assets/admin/fonts/fontawesome/fa-solid-900.woff2  ~ 2.12ms
-  2026-03-20 00:24:46 /assets/admin/fonts/fontawesome/fa-regular-400.woff2  ~ 1.88ms
-  2026-03-20 00:24:46 /assets/admin/fonts/flaticon/Flaticon.woff ... ~ 0.61ms
-  2026-03-20 00:24:46 /assets/admin/fonts/fontawesome/fa-light-300.woff2  ~ 0.96ms
-  2026-03-20 00:24:46 /assets/admin/js/jquery-ui.min.js ............ ~ 0.19ms
-  2026-03-20 00:24:46 /assets/admin/js/jquery.ui.touch-punch.min.js  ~ 0.89ms
-  2026-03-20 00:24:46 /assets/admin/js/jquery.timepicker.min.js .... ~ 1.26ms
-  2026-03-20 00:24:46 /assets/admin/js/bootstrap-notify.min.js ..... ~ 0.54ms
-  2026-03-20 00:24:46 /assets/admin/js/jquery.scrollbar.min.js ..... ~ 1.83ms
-  2026-03-20 00:24:46 /assets/admin/js/sweet-alert.min.js .......... ~ 1.01ms
-  2026-03-20 00:24:46 /assets/admin/js/bootstrap-tagsinput.min.js .. ~ 1.40ms
-  2026-03-20 00:24:46 /assets/admin/js/bootstrap-datepicker.min.js . ~ 1.62ms
-  2026-03-20 00:24:46 /assets/admin/js/jscolor.min.js .............. ~ 0.49ms
-  2026-03-20 00:24:46 /assets/admin/js/fontawesome-iconpicker.min.js  ~ 0.89ms
-  2026-03-20 00:24:46 /assets/admin/js/datatables-1.10.23.min.js ... ~ 0.91ms
-  2026-03-20 00:24:46 /assets/admin/js/tinymce/js/tinymce/tinymce.min.js  ~ 1.99ms
-  2026-03-20 00:24:46 /assets/admin/js/datatables.bootstrap4.min.js  ~ 1.35ms
-  2026-03-20 00:24:46 /assets/admin/js/dropzone.min.js ............. ~ 1.54ms
-  2026-03-20 00:24:46 /assets/admin/js/atlantis.js ................. ~ 1.40ms
-  2026-03-20 00:24:46 /assets/front/js/vendors/moment.min.js ....... ~ 1.89ms
-  2026-03-20 00:24:46 /assets/front/js/vendors/daterangepicker.js .. ~ 1.80ms
-  2026-03-20 00:24:46 /assets/admin/js/webfont.min.js .............. ~ 1.96ms
-  2026-03-20 00:24:46 /assets/admin/js/select2.min.js .............. ~ 0.96ms
-  2026-03-20 00:24:46 /assets/admin/js/admin-main.js ............... ~ 1.14ms
-  2026-03-20 00:24:46 /assets/admin/js/admin-partial.js ............ ~ 1.76ms
-  2026-03-20 00:24:46 /assets/js/vendor-feature-checkout.js ........ ~ 2.60ms
-  2026-03-20 00:24:46 /assets/img/hotel/logo/1773929336.webp ....... ~ 3.40ms
-  2026-03-20 00:24:46 /assets/admin/fonts/fontawesome/fa-brands-400.woff2  ~ 0.07ms
-  2026-03-20 00:24:46 ............................................ ~ 504.26ms
-  2026-03-20 00:24:46 /assets/admin/css/all.min.css .............. ~ 505.90ms
-  2026-03-20 00:24:47 /assets/admin/css/fontawesome-iconpicker.min.css  ~ 0.10ms
-  2026-03-20 00:24:47 /assets/admin/css/fonts.min.css .............. ~ 0.21ms
-  2026-03-20 00:24:47 /assets/admin/css/bootstrap.min.css .......... ~ 0.62ms
-  2026-03-20 00:24:47 /assets/admin/css/bootstrap-tagsinput.css .... ~ 0.92ms
-  2026-03-20 00:24:47 /assets/admin/css/jquery-ui.min.css .......... ~ 1.12ms
-  2026-03-20 00:24:47 /assets/admin/css/jquery.timepicker.min.css .. ~ 0.08ms
-  2026-03-20 00:24:47 /assets/admin/css/bootstrap-datepicker.min.css  ~ 0.26ms
-  2026-03-20 00:24:47 /assets/admin/css/dropzone.min.css ........... ~ 0.36ms
-  2026-03-20 00:24:47 /assets/admin/css/atlantis.css ............... ~ 0.70ms
-  2026-03-20 00:24:47 /assets/admin/css/select2.min.css ............ ~ 0.97ms
-  2026-03-20 00:24:47 /assets/front/css/vendors/daterangepicker.css  ~ 1.31ms
-  2026-03-20 00:24:47 /assets/admin/css/admin-main.css ............. ~ 1.41ms
-  2026-03-20 00:24:47 .............................................. ~ 0.05ms
-  2026-03-20 00:24:47 /assets/img/loader.gif ....................... ~ 1.98ms
-  2026-03-20 00:24:47 /assets/admin/js/jquery.min.js ............... ~ 0.83ms
-  2026-03-20 00:24:47 /assets/admin/js/popper.min.js ............... ~ 1.30ms
-  2026-03-20 00:24:47 /assets/admin/js/bootstrap.min.js ............ ~ 0.99ms
-  2026-03-20 00:24:47 /assets/admin/js/jquery-ui.min.js ............ ~ 1.35ms
-  2026-03-20 00:24:47 /assets/admin/fonts/simple-line-icons/Simple-Line-Icons.woff2?v=2.4.0  ~ 1.72ms
-  2026-03-20 00:24:47 /assets/admin/fonts/fontawesome/fa-solid-900.woff2  ~ 1.36ms
-  2026-03-20 00:24:47 /assets/admin/fonts/fontawesome/fa-regular-400.woff2  ~ 0.70ms
-  2026-03-20 00:24:47 /assets/admin/fonts/fontawesome/fa-light-300.woff2  ~ 0.44ms
-  2026-03-20 00:24:47 /assets/admin/fonts/flaticon/Flaticon.woff ... ~ 0.42ms
-  2026-03-20 00:24:47 /assets/admin/js/jquery.ui.touch-punch.min.js  ~ 0.47ms
-  2026-03-20 00:24:47 /assets/admin/js/jquery.timepicker.min.js .... ~ 0.58ms
-  2026-03-20 00:24:47 /assets/admin/js/jquery.scrollbar.min.js ..... ~ 0.77ms
-  2026-03-20 00:24:47 /assets/admin/js/bootstrap-notify.min.js ..... ~ 0.59ms
-  2026-03-20 00:24:47 /assets/admin/js/sweet-alert.min.js .......... ~ 0.67ms
-  2026-03-20 00:24:47 /assets/admin/js/bootstrap-tagsinput.min.js .. ~ 0.80ms
-  2026-03-20 00:24:47 /assets/admin/js/bootstrap-datepicker.min.js . ~ 0.74ms
-  2026-03-20 00:24:47 /assets/admin/js/jscolor.min.js .............. ~ 0.64ms
-  2026-03-20 00:24:47 /assets/admin/js/fontawesome-iconpicker.min.js  ~ 0.57ms
-  2026-03-20 00:24:47 /assets/admin/js/tinymce/js/tinymce/tinymce.min.js  ~ 1.36ms
-  2026-03-20 00:24:47 /assets/admin/js/datatables-1.10.23.min.js ... ~ 0.06ms
-  2026-03-20 00:24:47 /assets/admin/js/datatables.bootstrap4.min.js  ~ 0.23ms
-  2026-03-20 00:24:47 /assets/admin/js/dropzone.min.js ............. ~ 0.33ms
-  2026-03-20 00:24:47 /assets/admin/js/atlantis.js ................. ~ 0.54ms
-  2026-03-20 00:24:47 /assets/front/js/vendors/moment.min.js ....... ~ 0.53ms
-  2026-03-20 00:24:47 /assets/front/js/vendors/daterangepicker.js .. ~ 0.08ms
-  2026-03-20 00:24:47 /assets/admin/js/webfont.min.js .............. ~ 0.24ms
-  2026-03-20 00:24:47 /assets/admin/js/select2.min.js .............. ~ 0.65ms
-  2026-03-20 00:24:47 /assets/admin/js/admin-main.js ............... ~ 1.28ms
-  2026-03-20 00:24:47 /assets/admin/js/admin-partial.js ............ ~ 1.74ms
-  2026-03-20 00:24:47 /assets/admin/js/admin-dropzone.js ........... ~ 1.94ms
-  2026-03-20 00:24:47 /assets/admin/fonts/fontawesome/fa-brands-400.woff2  ~ 0.05ms
-  2026-03-20 00:24:48 /sw.js ....................................... ~ 0.11ms
-  2026-03-20 00:24:51 .............................................. ~ 0.23ms
-  2026-03-20 00:24:51 ............................................. ~ 16.03ms
-  2026-03-20 00:24:51 /assets/admin/css/all.min.css ................ ~ 0.29ms
-  2026-03-20 00:24:51 /assets/admin/css/fontawesome-iconpicker.min.css  ~ 0.40ms
-  2026-03-20 00:24:51 /assets/admin/css/fonts.min.css .............. ~ 0.77ms
-  2026-03-20 00:24:51 /assets/admin/css/bootstrap.min.css ......... ~ 12.43ms
-  2026-03-20 00:24:51 /assets/admin/css/bootstrap-tagsinput.css ... ~ 18.61ms
-  2026-03-20 00:24:51 /assets/admin/css/jquery-ui.min.css ......... ~ 20.48ms
-  2026-03-20 00:24:51 /assets/admin/css/jquery.timepicker.min.css . ~ 23.30ms
-  2026-03-20 00:24:51 /assets/admin/css/bootstrap-datepicker.min.css  ~ 0.70ms
-  2026-03-20 00:24:51 /assets/admin/css/dropzone.min.css ........... ~ 1.42ms
-  2026-03-20 00:24:51 /assets/admin/css/atlantis.css ............... ~ 4.59ms
-  2026-03-20 00:24:51 /assets/admin/css/select2.min.css ............ ~ 0.91ms
-  2026-03-20 00:24:51 /assets/front/css/vendors/daterangepicker.css  ~ 0.08ms
-  2026-03-20 00:24:51 /assets/admin/css/admin-main.css ............. ~ 0.21ms
-  2026-03-20 00:24:51 /assets/img/loader.gif ....................... ~ 0.06ms
-  2026-03-20 00:24:51 .............................................. ~ 0.08ms
-  2026-03-20 00:24:51 /assets/img/noimage.jpg ...................... ~ 0.13ms
-  2026-03-20 00:24:51 /assets/admin/js/jquery.min.js ............... ~ 1.04ms
-  2026-03-20 00:24:51 /assets/admin/js/popper.min.js ............... ~ 1.59ms
-  2026-03-20 00:24:51 /assets/admin/js/bootstrap.min.js ............ ~ 2.13ms
-  2026-03-20 00:24:51 /assets/admin/fonts/simple-line-icons/Simple-Line-Icons.woff2?v=2.4.0  ~ 1.66ms
-  2026-03-20 00:24:51 /assets/admin/fonts/fontawesome/fa-solid-900.woff2  ~ 1.23ms
-  2026-03-20 00:24:51 /assets/admin/js/jquery-ui.min.js ............ ~ 2.88ms
-  2026-03-20 00:24:51 /assets/admin/fonts/fontawesome/fa-regular-400.woff2  ~ 504.75ms
-  2026-03-20 00:24:51 /assets/admin/fonts/fontawesome/fa-light-300.woff2  ~ 504.67ms
-  2026-03-20 00:24:51 /assets/admin/fonts/flaticon/Flaticon.woff . ~ 504.87ms
-  2026-03-20 00:24:51 /assets/admin/js/jquery.ui.touch-punch.min.js  ~ 1.13ms
-  2026-03-20 00:24:51 /assets/admin/js/jquery.timepicker.min.js .... ~ 1.34ms
-  2026-03-20 00:24:51 /assets/admin/js/jquery.scrollbar.min.js ..... ~ 0.49ms
-  2026-03-20 00:24:51 /assets/admin/js/bootstrap-notify.min.js ..... ~ 0.54ms
-  2026-03-20 00:24:51 /assets/admin/js/sweet-alert.min.js .......... ~ 0.88ms
-  2026-03-20 00:24:51 /assets/admin/js/bootstrap-tagsinput.min.js .. ~ 1.46ms
-  2026-03-20 00:24:51 /assets/admin/js/bootstrap-datepicker.min.js . ~ 1.39ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/tinymce.min.js  ~ 1.58ms
-  2026-03-20 00:24:51 /assets/admin/js/jscolor.min.js .............. ~ 0.13ms
-  2026-03-20 00:24:51 /assets/admin/js/fontawesome-iconpicker.min.js  ~ 0.82ms
-  2026-03-20 00:24:51 /assets/admin/js/datatables-1.10.23.min.js ... ~ 1.00ms
-  2026-03-20 00:24:51 /assets/admin/js/datatables.bootstrap4.min.js  ~ 1.23ms
-  2026-03-20 00:24:51 /assets/admin/js/dropzone.min.js ............. ~ 1.38ms
-  2026-03-20 00:24:51 /assets/admin/js/atlantis.js ................. ~ 0.13ms
-  2026-03-20 00:24:51 /assets/front/js/vendors/moment.min.js ....... ~ 0.89ms
-  2026-03-20 00:24:51 /assets/front/js/vendors/daterangepicker.js .. ~ 1.27ms
-  2026-03-20 00:24:51 /assets/admin/js/webfont.min.js .............. ~ 1.47ms
-  2026-03-20 00:24:51 /assets/admin/js/select2.min.js .............. ~ 2.17ms
-  2026-03-20 00:24:51 /assets/admin/js/admin-main.js ............... ~ 1.92ms
-  2026-03-20 00:24:51 /assets/admin/js/admin-partial.js ............ ~ 2.06ms
-  2026-03-20 00:24:51 /assets/admin/js/map-init2.js ................ ~ 2.22ms
-  2026-03-20 00:24:51 /assets/admin/js/admin-hotel.js?v=1773941091 . ~ 2.06ms
-  2026-03-20 00:24:51 /assets/admin/js/admin-dropzone.js?v=1773941091  ~ 1.67ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/themes/silver/theme.min.js  ~ 0.08ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/models/dom/model.min.js  ~ 0.20ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/icons/default/icons.min.js  ~ 0.32ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/plugins/autolink/plugin.min.js  ~ 0.06ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/plugins/charmap/plugin.min.js  ~ 0.23ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/plugins/emoticons/plugin.min.js  ~ 0.23ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/plugins/image/plugin.min.js  ~ 0.39ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/plugins/link/plugin.min.js  ~ 0.52ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/plugins/lists/plugin.min.js  ~ 0.65ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/plugins/media/plugin.min.js  ~ 0.67ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/plugins/searchreplace/plugin.min.js  ~ 0.67ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/plugins/table/plugin.min.js  ~ 0.63ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/plugins/visualblocks/plugin.min.js  ~ 0.61ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/plugins/wordcount/plugin.min.js  ~ 0.55ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/plugins/directionality/plugin.min.js  ~ 0.52ms
-  2026-03-20 00:24:51 /assets/admin/fonts/fontawesome/fa-brands-400.woff2  ~ 0.05ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/skins/ui/oxide/skin.min.css  ~ 0.05ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/skins/ui/oxide/content.min.css  ~ 0.06ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/skins/content/default/content.min.css  ~ 0.17ms
-  2026-03-20 00:24:51 /assets/admin/js/tinymce/js/tinymce/plugins/emoticons/js/emojis.min.js  ~ 0.05ms
-  2026-03-20 00:24:53 /sw.js ....................................... ~ 0.15ms
-  2026-03-20 00:24:57 .............................................. ~ 0.16ms
-  2026-03-20 00:24:57 .............................................. ~ 1.93ms
-  2026-03-20 00:24:58 .............................................. ~ 0.06ms
-  2026-03-20 00:24:58 ............................................ ~ 501.58ms
-  2026-03-20 00:25:16 .............................................. ~ 0.47ms
-  2026-03-20 00:25:16 .............................................. ~ 0.08ms
-  2026-03-20 00:25:18 .............................................. ~ 0.19ms
-  2026-03-20 00:25:43 .............................................. ~ 0.16ms
-  2026-03-20 00:25:43 .............................................. ~ 0.08ms
-  2026-03-20 00:25:43 /assets/admin/css/all.min.css ................ ~ 2.67ms
-  2026-03-20 00:25:43 /assets/admin/css/fontawesome-iconpicker.min.css  ~ 0.12ms
-  2026-03-20 00:25:43 /assets/admin/css/fonts.min.css .............. ~ 0.27ms
-  2026-03-20 00:25:43 /assets/admin/css/bootstrap.min.css .......... ~ 0.85ms
-  2026-03-20 00:25:43 /assets/admin/css/bootstrap-tagsinput.css .... ~ 1.22ms
-  2026-03-20 00:25:43 /assets/admin/css/jquery-ui.min.css .......... ~ 1.46ms
-  2026-03-20 00:25:43 /assets/admin/css/jquery.timepicker.min.css .. ~ 0.45ms
-  2026-03-20 00:25:43 /assets/admin/css/bootstrap-datepicker.min.css  ~ 0.27ms
-  2026-03-20 00:25:43 /assets/admin/css/dropzone.min.css ........... ~ 0.25ms
-  2026-03-20 00:25:43 /assets/admin/css/select2.min.css ............ ~ 0.46ms
-  2026-03-20 00:25:43 /assets/admin/css/atlantis.css ............... ~ 1.06ms
-  2026-03-20 00:25:43 /assets/front/css/vendors/daterangepicker.css  ~ 1.41ms
-  2026-03-20 00:25:43 /assets/admin/css/admin-main.css ............. ~ 0.72ms
-  2026-03-20 00:25:43 ............................................ ~ 502.26ms
-  2026-03-20 00:25:43 /assets/img/loader.gif ..................... ~ 504.36ms
-  2026-03-20 00:25:43 /assets/img/noimage.jpg ...................... ~ 1.00ms
-  2026-03-20 00:25:43 /assets/admin/js/jquery.min.js ............... ~ 0.94ms
-  2026-03-20 00:25:43 /assets/admin/js/popper.min.js ............... ~ 1.48ms
-  2026-03-20 00:25:43 /assets/admin/js/bootstrap.min.js ............ ~ 2.00ms
-  2026-03-20 00:25:43 /assets/admin/fonts/simple-line-icons/Simple-Line-Icons.woff2?v=2.4.0  ~ 1.61ms
-  2026-03-20 00:25:43 /assets/admin/fonts/fontawesome/fa-solid-900.woff2  ~ 1.22ms
-  2026-03-20 00:25:43 /assets/admin/js/jquery-ui.min.js ............ ~ 2.76ms
-  2026-03-20 00:25:43 /assets/admin/fonts/fontawesome/fa-regular-400.woff2  ~ 0.87ms
-  2026-03-20 00:25:43 /assets/admin/fonts/fontawesome/fa-light-300.woff2  ~ 0.85ms
-  2026-03-20 00:25:43 /assets/admin/fonts/flaticon/Flaticon.woff ... ~ 0.39ms
-  2026-03-20 00:25:43 /assets/admin/js/jquery.ui.touch-punch.min.js  ~ 0.63ms
-  2026-03-20 00:25:43 /assets/admin/js/jquery.timepicker.min.js .... ~ 0.79ms
-  2026-03-20 00:25:43 /assets/admin/js/jquery.scrollbar.min.js ..... ~ 1.03ms
-  2026-03-20 00:25:43 /assets/admin/js/bootstrap-notify.min.js ..... ~ 1.84ms
-  2026-03-20 00:25:43 /assets/admin/js/sweet-alert.min.js .......... ~ 6.12ms
-  2026-03-20 00:25:43 /assets/admin/js/bootstrap-tagsinput.min.js .. ~ 6.28ms
-  2026-03-20 00:25:43 /assets/admin/js/bootstrap-datepicker.min.js . ~ 5.15ms
-  2026-03-20 00:25:43 /assets/admin/js/jscolor.min.js .............. ~ 0.87ms
-  2026-03-20 00:25:43 /assets/admin/js/tinymce/js/tinymce/tinymce.min.js  ~ 5.85ms
-  2026-03-20 00:25:44 /assets/admin/js/fontawesome-iconpicker.min.js  ~ 0.75ms
-  2026-03-20 00:25:44 /assets/admin/js/datatables-1.10.23.min.js ... ~ 0.89ms
-  2026-03-20 00:25:44 /assets/admin/js/datatables.bootstrap4.min.js  ~ 0.56ms
-  2026-03-20 00:25:44 /assets/admin/js/dropzone.min.js ............. ~ 0.67ms
-  2026-03-20 00:25:44 /assets/admin/js/atlantis.js ................. ~ 0.95ms
-  2026-03-20 00:25:44 /assets/front/js/vendors/moment.min.js ....... ~ 0.11ms
-  2026-03-20 00:25:44 /assets/front/js/vendors/daterangepicker.js .. ~ 0.47ms
-  2026-03-20 00:25:44 /assets/admin/js/webfont.min.js .............. ~ 0.71ms
-  2026-03-20 00:25:44 /assets/admin/js/select2.min.js .............. ~ 1.21ms
-  2026-03-20 00:25:44 /assets/admin/js/admin-main.js ............... ~ 1.81ms
-  2026-03-20 00:25:44 /assets/admin/js/admin-partial.js ............ ~ 1.98ms
-  2026-03-20 00:25:44 /assets/admin/js/map-init2.js ................ ~ 2.08ms
-  2026-03-20 00:25:44 /assets/admin/js/admin-hotel.js?v=1773941143 . ~ 2.07ms
-  2026-03-20 00:25:44 /assets/admin/js/admin-dropzone.js?v=1773941143  ~ 1.61ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/models/dom/model.min.js  ~ 0.09ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/icons/default/icons.min.js  ~ 0.20ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/themes/silver/theme.min.js  ~ 0.35ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/plugins/autolink/plugin.min.js  ~ 0.44ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/plugins/charmap/plugin.min.js  ~ 0.55ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/plugins/emoticons/plugin.min.js  ~ 0.05ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/plugins/image/plugin.min.js  ~ 0.09ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/plugins/link/plugin.min.js  ~ 0.22ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/plugins/lists/plugin.min.js  ~ 0.35ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/plugins/media/plugin.min.js  ~ 0.48ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/plugins/searchreplace/plugin.min.js  ~ 0.62ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/plugins/table/plugin.min.js  ~ 0.60ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/plugins/visualblocks/plugin.min.js  ~ 0.57ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/plugins/wordcount/plugin.min.js  ~ 0.56ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/plugins/directionality/plugin.min.js  ~ 0.54ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/skins/ui/oxide/skin.min.css  ~ 0.07ms
-  2026-03-20 00:25:44 /assets/admin/fonts/fontawesome/fa-brands-400.woff2  ~ 0.18ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/skins/ui/oxide/content.min.css  ~ 0.07ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/skins/content/default/content.min.css  ~ 0.18ms
-  2026-03-20 00:25:44 /assets/admin/js/tinymce/js/tinymce/plugins/emoticons/js/emojis.min.js  ~ 0.05ms
-  2026-03-20 00:25:45 /sw.js ....................................... ~ 0.19ms
-  2026-03-20 00:25:49 ............................................ ~ 500.58ms
-  2026-03-20 00:25:49 /assets/admin/css/all.min.css .............. ~ 503.05ms
-  2026-03-20 00:25:49 /assets/admin/css/fontawesome-iconpicker.min.css  ~ 0.40ms
-  2026-03-20 00:25:49 /assets/admin/css/fonts.min.css .............. ~ 0.82ms
-  2026-03-20 00:25:49 /assets/admin/css/bootstrap.min.css .......... ~ 1.36ms
-  2026-03-20 00:25:49 /assets/admin/css/bootstrap-tagsinput.css .... ~ 1.68ms
-  2026-03-20 00:25:49 /assets/admin/css/jquery-ui.min.css .......... ~ 1.91ms
-  2026-03-20 00:25:49 /assets/admin/css/jquery.timepicker.min.css .. ~ 0.09ms
-  2026-03-20 00:25:49 /assets/admin/css/bootstrap-datepicker.min.css  ~ 0.28ms
-  2026-03-20 00:25:49 /assets/admin/css/dropzone.min.css ........... ~ 0.10ms
-  2026-03-20 00:25:49 /assets/admin/css/select2.min.css ............ ~ 0.55ms
-  2026-03-20 00:25:49 /assets/admin/css/atlantis.css ............... ~ 1.25ms
-  2026-03-20 00:25:49 /assets/front/css/vendors/daterangepicker.css  ~ 2.38ms
-  2026-03-20 00:25:49 /assets/admin/css/admin-main.css ............. ~ 2.52ms
-  2026-03-20 00:25:49 .............................................. ~ 0.07ms
-  2026-03-20 00:25:49 /assets/img/loader.gif ....................... ~ 2.40ms
-  2026-03-20 00:25:49 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.99ms
-  2026-03-20 00:25:49 /assets/admin/js/jquery.min.js ............... ~ 1.31ms
-  2026-03-20 00:25:49 /assets/admin/js/popper.min.js ............... ~ 0.95ms
-  2026-03-20 00:25:49 /assets/admin/js/bootstrap.min.js ............ ~ 1.46ms
-  2026-03-20 00:25:49 /assets/admin/fonts/simple-line-icons/Simple-Line-Icons.woff2?v=2.4.0  ~ 1.89ms
-  2026-03-20 00:25:49 /assets/admin/fonts/fontawesome/fa-solid-900.woff2  ~ 1.70ms
-  2026-03-20 00:25:49 /assets/admin/fonts/fontawesome/fa-regular-400.woff2  ~ 0.38ms
-  2026-03-20 00:25:49 /assets/admin/fonts/flaticon/Flaticon.woff ... ~ 0.34ms
-  2026-03-20 00:25:49 /assets/admin/fonts/fontawesome/fa-light-300.woff2  ~ 0.69ms
-  2026-03-20 00:25:49 /assets/admin/js/jquery.ui.touch-punch.min.js  ~ 0.51ms
-  2026-03-20 00:25:49 /assets/admin/js/jquery-ui.min.js ............ ~ 0.66ms
-  2026-03-20 00:25:49 /assets/admin/js/jquery.timepicker.min.js .... ~ 1.17ms
-  2026-03-20 00:25:49 /assets/admin/js/jquery.scrollbar.min.js ..... ~ 0.18ms
-  2026-03-20 00:25:49 /assets/admin/js/bootstrap-notify.min.js ..... ~ 0.43ms
-  2026-03-20 00:25:49 /assets/admin/js/sweet-alert.min.js .......... ~ 0.85ms
-  2026-03-20 00:25:49 /assets/admin/js/bootstrap-tagsinput.min.js .. ~ 1.25ms
-  2026-03-20 00:25:49 /assets/admin/js/bootstrap-datepicker.min.js . ~ 1.43ms
-  2026-03-20 00:25:49 /assets/admin/js/tinymce/js/tinymce/tinymce.min.js  ~ 0.45ms
-  2026-03-20 00:25:49 /assets/admin/js/jscolor.min.js .............. ~ 0.10ms
-  2026-03-20 00:25:49 /assets/admin/js/fontawesome-iconpicker.min.js  ~ 0.59ms
-  2026-03-20 00:25:49 /assets/admin/js/datatables-1.10.23.min.js ... ~ 0.74ms
-  2026-03-20 00:25:49 /assets/admin/js/datatables.bootstrap4.min.js  ~ 0.92ms
-  2026-03-20 00:25:49 /assets/admin/js/dropzone.min.js ............. ~ 0.54ms
-  2026-03-20 00:25:49 /assets/admin/js/atlantis.js ................. ~ 0.83ms
-  2026-03-20 00:25:49 /assets/front/js/vendors/moment.min.js ....... ~ 0.10ms
-  2026-03-20 00:25:49 /assets/front/js/vendors/daterangepicker.js .. ~ 0.40ms
-  2026-03-20 00:25:49 /assets/admin/js/webfont.min.js .............. ~ 0.58ms
-  2026-03-20 00:25:49 /assets/admin/js/select2.min.js .............. ~ 1.09ms
-  2026-03-20 00:25:49 /assets/admin/js/admin-main.js ............... ~ 1.56ms
-  2026-03-20 00:25:49 /assets/admin/js/admin-partial.js ............ ~ 1.74ms
-  2026-03-20 00:25:49 /assets/js/vendor-feature-checkout.js ........ ~ 1.94ms
-  2026-03-20 00:25:49 /assets/img/hotel/logo/1773929336.webp ....... ~ 1.24ms
-  2026-03-20 00:25:49 /assets/img/hotel/logo/1773925012.jpg ........ ~ 1.99ms
-  2026-03-20 00:25:49 /assets/admin/fonts/fontawesome/fa-brands-400.woff2  ~ 0.08ms
-  2026-03-20 00:25:51 /sw.js ....................................... ~ 0.60ms
-  2026-03-20 00:26:04 .............................................. ~ 0.19ms
-  2026-03-20 00:26:04 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.08ms
-  2026-03-20 00:26:04 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.41ms
-  2026-03-20 00:26:04 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.06ms
-  2026-03-20 00:26:04 /manifest.json ............................... ~ 0.09ms
-  2026-03-20 00:26:05 .............................................. ~ 0.16ms
-  2026-03-20 00:26:05 /assets/img/6775123ebcb9e.png ................ ~ 2.23ms
-  2026-03-20 00:26:08 .............................................. ~ 0.88ms
-  2026-03-20 00:26:08 /assets/img/hotel/logo/1773941143.jpg ........ ~ 2.71ms
-  2026-03-20 00:26:08 /assets/img/hotel/hotel-gallery/69bc3169e806f.jpg  ~ 0.35ms
-  2026-03-20 00:26:08 /assets/img/hotel/hotel-gallery/69bc316a094d2.jpg  ~ 0.08ms
-  2026-03-20 00:26:08 /assets/img/hotel/hotel-gallery/69bc316a2deca.jpg  ~ 0.18ms
-  2026-03-20 00:26:08 /assets/img/hotel/hotel-gallery/69bc316a1bc1a.jpg  ~ 0.32ms
-  2026-03-20 00:26:08 /manifest.json ............................... ~ 0.31ms
-  2026-03-20 00:26:08 .............................................. ~ 0.09ms
-  2026-03-20 00:26:08 /assets/img/6775123ebcb9e.png ................ ~ 0.08ms
-  2026-03-20 00:26:57 ................................................. ~ 1dt
-  2026-03-20 00:26:59 ............................................ ~ 501.02ms
-  2026-03-20 00:26:59 .............................................. ~ 0.11ms
-  2026-03-20 00:27:01 .............................................. ~ 0.23ms
-  2026-03-20 00:27:01 /assets/img/6775123ebcb9e.png ................ ~ 0.15ms
+
+   INFO  Environment modified. Restarting server...  
+
+   INFO  Server running on [http://127.0.0.1:8000].  
+
+  Press Ctrl+C to stop the server
+
+  2026-03-24 12:03:25 ................................................. ~ 1dt
+  2026-03-24 12:03:26 /assets/img/blogs/speedboat.png .............. ~ 0.07ms
+  2026-03-24 12:03:26 /assets/img/blogs/luxury_yacht.png ........... ~ 0.06ms
+  2026-03-24 12:03:26 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 12:03:25 /assets/img/logo_v2.png ......................... ~ 1dt
+  2026-03-24 12:03:27 ............................................ ~ 508.99ms
+  2026-03-24 12:03:27 /assets/img/6775123ebcb9e.png .............. ~ 510.63ms
+  2026-03-24 12:03:32 ............................................ ~ 501.24ms
+  2026-03-24 12:03:32 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.06ms
+  2026-03-24 12:03:32 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.05ms
+  2026-03-24 12:03:32 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.05ms
+  2026-03-24 12:03:32 /manifest.json ............................... ~ 0.05ms
+  2026-03-24 12:03:32 /assets/img/logo_v2.png ...................... ~ 2.02ms
+  2026-03-24 12:03:33 .............................................. ~ 0.35ms
+  2026-03-24 12:03:33 /assets/img/6775123ebcb9e.png ................ ~ 5.12ms
+  2026-03-24 12:03:39 ............................................ ~ 509.69ms
+  2026-03-24 12:03:39 /assets/img/logo_v2.png ...................... ~ 0.11ms
+  2026-03-24 12:03:39 /manifest.json ............................... ~ 0.09ms
+  2026-03-24 12:03:40 ............................................ ~ 501.08ms
+  2026-03-24 12:03:40 /assets/img/6775123ebcb9e.png ................ ~ 0.16ms
+  2026-03-24 12:03:42 .............................................. ~ 0.24ms
+  2026-03-24 12:03:43 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.10ms
+  2026-03-24 12:03:43 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.43ms
+  2026-03-24 12:03:43 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.84ms
+  2026-03-24 12:03:43 /assets/img/logo_v2.png .................... ~ 508.07ms
+  2026-03-24 12:03:43 /manifest.json ............................... ~ 0.12ms
+  2026-03-24 12:03:43 ............................................ ~ 507.47ms
+  2026-03-24 12:03:43 /assets/img/6775123ebcb9e.png ................ ~ 0.06ms
+  2026-03-24 12:03:43 ............................................ ~ 508.00ms
+  2026-03-24 12:03:44 /assets/img/blogs/speedboat.png .............. ~ 0.07ms
+  2026-03-24 12:03:44 /assets/img/blogs/luxury_yacht.png ........... ~ 0.06ms
+  2026-03-24 12:03:44 /assets/img/logo_v2.png ...................... ~ 1.01ms
+  2026-03-24 12:03:44 /manifest.json ............................... ~ 0.07ms
+  2026-03-24 12:03:44 .............................................. ~ 0.13ms
+  2026-03-24 12:03:44 /assets/img/6775123ebcb9e.png ................ ~ 1.76ms
+  2026-03-24 12:03:46 ............................................ ~ 508.90ms
+  2026-03-24 12:03:46 /assets/img/logo_v2.png ...................... ~ 0.06ms
+  2026-03-24 12:03:46 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 12:03:51 .............................................. ~ 0.14ms
+  2026-03-24 12:03:51 /assets/img/6775123ebcb9e.png ................ ~ 1.83ms
+  2026-03-24 12:03:51 .............................................. ~ 0.20ms
+  2026-03-24 12:03:52 /assets/img/blogs/speedboat.png .............. ~ 0.18ms
+  2026-03-24 12:03:52 /assets/img/blogs/luxury_yacht.png ........... ~ 0.83ms
+  2026-03-24 12:03:52 /assets/img/logo_v2.png .................... ~ 510.56ms
+  2026-03-24 12:03:52 /manifest.json ............................... ~ 0.07ms
+  2026-03-24 12:03:52 ............................................ ~ 508.16ms
+  2026-03-24 12:03:52 /assets/img/6775123ebcb9e.png .............. ~ 509.77ms
+  2026-03-24 12:04:02 .............................................. ~ 0.24ms
+  2026-03-24 12:04:02 /assets/img/logo_v2.png ...................... ~ 0.07ms
+  2026-03-24 12:04:02 /manifest.json ............................... ~ 0.13ms
+  2026-03-24 12:04:04 .............................................. ~ 0.21ms
+  2026-03-24 12:04:04 /assets/img/6775123ebcb9e.png ................ ~ 1.66ms
+  2026-03-24 12:04:08 .............................................. ~ 0.14ms
+  2026-03-24 12:04:08 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.12ms
+  2026-03-24 12:04:08 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.62ms
+  2026-03-24 12:04:08 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.96ms
+  2026-03-24 12:04:08 /assets/img/logo_v2.png .................... ~ 509.41ms
+  2026-03-24 12:04:08 /manifest.json ............................... ~ 0.07ms
+  2026-03-24 12:04:08 ............................................ ~ 506.30ms
+  2026-03-24 12:04:08 /assets/img/6775123ebcb9e.png .............. ~ 507.82ms
+  2026-03-24 12:04:11 .............................................. ~ 0.25ms
+  2026-03-24 12:04:11 /assets/img/logo_v2.png ...................... ~ 0.07ms
+  2026-03-24 12:04:11 /manifest.json ............................... ~ 0.05ms
+  2026-03-24 12:04:11 .............................................. ~ 0.12ms
+  2026-03-24 12:04:11 /assets/img/6775123ebcb9e.png ................ ~ 1.66ms
+  2026-03-24 12:04:15 .............................................. ~ 0.14ms
+  2026-03-24 12:04:16 /assets/img/logo_v2.png .................... ~ 509.19ms
+  2026-03-24 12:04:16 /manifest.json ............................... ~ 0.05ms
+  2026-03-24 12:04:18 .............................................. ~ 0.14ms
+  2026-03-24 12:04:18 /assets/img/6775123ebcb9e.png ................ ~ 1.86ms
+  2026-03-24 12:04:25 ............................................ ~ 508.47ms
+  2026-03-24 12:04:26 /assets/img/blogs/luxury_yacht.png ........... ~ 0.10ms
+  2026-03-24 12:04:26 /assets/img/blogs/speedboat.png .............. ~ 1.02ms
+  2026-03-24 12:04:26 /assets/img/logo_v2.png ...................... ~ 1.69ms
+  2026-03-24 12:04:26 /manifest.json ............................... ~ 0.11ms
+  2026-03-24 12:04:26 .............................................. ~ 0.15ms
+  2026-03-24 12:04:26 /assets/img/6775123ebcb9e.png ................ ~ 1.91ms
+  2026-03-24 12:12:12 ............................................ ~ 505.45ms
+  2026-03-24 12:12:12 /manifest.json ............................... ~ 0.09ms
+  2026-03-24 12:12:12 /assets/img/logo_v2.png ...................... ~ 1.54ms
+  2026-03-24 12:12:13 ............................................ ~ 507.85ms
+  2026-03-24 12:12:13 /assets/img/6775123ebcb9e.png ................ ~ 0.07ms
+  2026-03-24 12:12:14 .............................................. ~ 0.27ms
+  2026-03-24 12:12:14 /assets/img/blogs/speedboat.png .............. ~ 0.16ms
+  2026-03-24 12:12:14 /assets/img/blogs/luxury_yacht.png ........... ~ 0.17ms
+  2026-03-24 12:12:14 /assets/img/logo_v2.png .................... ~ 503.15ms
+  2026-03-24 12:12:15 /manifest.json ............................... ~ 0.14ms
+  2026-03-24 12:12:15 .............................................. ~ 0.06ms
+  2026-03-24 12:12:15 /assets/img/6775123ebcb9e.png ................ ~ 0.06ms
+  2026-03-24 12:12:16 ............................................ ~ 503.52ms
+  2026-03-24 12:12:16 /assets/img/logo_v2.png ...................... ~ 0.32ms
+  2026-03-24 12:12:16 /manifest.json ............................... ~ 0.08ms
+  2026-03-24 12:12:17 .............................................. ~ 0.17ms
+  2026-03-24 12:12:17 /assets/img/6775123ebcb9e.png ................ ~ 0.08ms
+  2026-03-24 12:12:18 ............................................ ~ 500.90ms
+  2026-03-24 12:12:18 /assets/img/blogs/speedboat.png .............. ~ 0.17ms
+  2026-03-24 12:12:18 /assets/img/blogs/luxury_yacht.png ........... ~ 0.16ms
+  2026-03-24 12:12:18 /assets/img/logo_v2.png ...................... ~ 1.82ms
+  2026-03-24 12:12:19 /manifest.json ............................... ~ 0.14ms
+  2026-03-24 12:12:19 .............................................. ~ 0.07ms
+  2026-03-24 12:12:19 /assets/img/6775123ebcb9e.png ................ ~ 1.80ms
+  2026-03-24 12:21:33 ............................................ ~ 506.34ms
+  2026-03-24 12:21:33 /assets/img/blogs/speedboat.png .............. ~ 0.07ms
+  2026-03-24 12:21:33 /assets/img/blogs/luxury_yacht.png ........... ~ 0.07ms
+  2026-03-24 12:21:33 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 12:21:33 /assets/img/logo_v2.png .................... ~ 503.51ms
+  2026-03-24 12:21:34 .............................................. ~ 0.10ms
+  2026-03-24 12:21:34 /assets/img/6775123ebcb9e.png ................ ~ 2.30ms
+  2026-03-24 12:21:39 .............................................. ~ 0.13ms
+  2026-03-24 12:21:39 /assets/admin/css/bootstrap.min.css .......... ~ 2.02ms
+  2026-03-24 12:21:39 ............................................ ~ 502.71ms
+  2026-03-24 12:21:39 /assets/admin/css/admin-login.css .......... ~ 504.43ms
+  2026-03-24 12:21:39 /assets/admin/js/popper.min.js ............... ~ 0.40ms
+  2026-03-24 12:21:39 /assets/admin/js/bootstrap.min.js ............ ~ 0.83ms
+  2026-03-24 12:21:39 /assets/img/logo_v2.png .................... ~ 505.55ms
+  127.0.0.1:50043 [404]: GET /assets/img - Invalid argument
+  2026-03-24 12:21:40 .............................................. ~ 0.22ms
+  2026-03-24 12:21:42 .............................................. ~ 0.17ms
+  2026-03-24 12:21:42 .............................................. ~ 0.05ms
+  2026-03-24 12:21:42 /assets/admin/css/bootstrap.min.css .......... ~ 0.05ms
+  2026-03-24 12:21:42 ............................................ ~ 507.30ms
+  2026-03-24 12:21:42 /assets/admin/css/admin-login.css .......... ~ 508.87ms
+  2026-03-24 12:21:43 /assets/admin/js/popper.min.js ............... ~ 0.35ms
+  2026-03-24 12:21:43 /assets/admin/js/bootstrap.min.js ............ ~ 0.72ms
+  2026-03-24 12:21:42 /assets/img/logo_v2.png .................... ~ 509.83ms
+  2026-03-24 12:21:47 .............................................. ~ 0.13ms
+  2026-03-24 12:21:47 ............................................ ~ 508.72ms
+  2026-03-24 12:21:47 /assets/admin/css/all.min.css ................ ~ 0.10ms
+  2026-03-24 12:21:47 /assets/admin/css/fontawesome-iconpicker.min.css  ~ 0.60ms
+  2026-03-24 12:21:47 /assets/admin/css/fonts.min.css .............. ~ 0.73ms
+  2026-03-24 12:21:47 /assets/admin/css/bootstrap.min.css .......... ~ 1.16ms
+  2026-03-24 12:21:47 /assets/admin/css/bootstrap-tagsinput.css .... ~ 1.47ms
+  2026-03-24 12:21:47 /assets/admin/css/jquery-ui.min.css .......... ~ 1.15ms
+  2026-03-24 12:21:47 /assets/admin/css/jquery.timepicker.min.css .. ~ 1.33ms
+  2026-03-24 12:21:47 /assets/admin/css/bootstrap-datepicker.min.css  ~ 1.06ms
+  2026-03-24 12:21:47 /assets/admin/css/dropzone.min.css ........... ~ 0.69ms
+  2026-03-24 12:21:47 /assets/admin/css/select2.min.css ............ ~ 0.64ms
+  2026-03-24 12:21:47 /assets/front/css/vendors/daterangepicker.css  ~ 1.02ms
+  2026-03-24 12:21:47 /assets/admin/css/atlantis.css ............... ~ 1.46ms
+  2026-03-24 12:21:47 /assets/admin/css/admin-main.css ............. ~ 1.74ms
+  2026-03-24 12:21:47 .............................................. ~ 1.05ms
+  2026-03-24 12:21:47 /assets/img/loader.gif ....................... ~ 3.71ms
+  2026-03-24 12:21:47 /assets/admin/js/jquery.min.js ............... ~ 0.85ms
+  2026-03-24 12:21:47 /assets/admin/js/popper.min.js ............... ~ 0.62ms
+  2026-03-24 12:21:47 /assets/admin/js/bootstrap.min.js ............ ~ 1.13ms
+  2026-03-24 12:21:47 /assets/admin/fonts/simple-line-icons/Simple-Line-Icons.woff2?v=2.4.0  ~ 1.59ms
+  2026-03-24 12:21:47 /assets/admin/fonts/fontawesome/fa-solid-900.woff2  ~ 1.26ms
+  2026-03-24 12:21:47 /assets/admin/js/jquery-ui.min.js ............ ~ 1.86ms
+  2026-03-24 12:21:47 /assets/admin/fonts/fontawesome/fa-regular-400.woff2  ~ 1.19ms
+  2026-03-24 12:21:47 /assets/admin/fonts/fontawesome/fa-light-300.woff2  ~ 0.84ms
+  2026-03-24 12:21:47 /assets/admin/fonts/flaticon/Flaticon.woff ... ~ 0.81ms
+  2026-03-24 12:21:47 /assets/admin/js/jquery.ui.touch-punch.min.js  ~ 0.51ms
+  2026-03-24 12:21:47 /assets/admin/js/jquery.timepicker.min.js .... ~ 0.54ms
+  2026-03-24 12:21:47 /assets/admin/js/jquery.scrollbar.min.js ..... ~ 0.65ms
+  2026-03-24 12:21:47 /assets/admin/js/bootstrap-notify.min.js ..... ~ 0.73ms
+  2026-03-24 12:21:47 /assets/admin/js/sweet-alert.min.js .......... ~ 0.95ms
+  2026-03-24 12:21:47 /assets/admin/js/bootstrap-tagsinput.min.js .. ~ 1.16ms
+  2026-03-24 12:21:47 /assets/admin/js/bootstrap-datepicker.min.js . ~ 0.81ms
+  2026-03-24 12:21:47 /assets/admin/js/jscolor.min.js .............. ~ 0.38ms
+  2026-03-24 12:21:47 /assets/admin/js/tinymce/js/tinymce/tinymce.min.js  ~ 1.17ms
+  2026-03-24 12:21:47 /assets/admin/js/fontawesome-iconpicker.min.js  ~ 0.63ms
+  2026-03-24 12:21:47 /assets/admin/js/datatables-1.10.23.min.js ... ~ 0.77ms
+  2026-03-24 12:21:47 /assets/admin/js/datatables.bootstrap4.min.js  ~ 0.95ms
+  2026-03-24 12:21:47 /assets/admin/js/dropzone.min.js ............. ~ 0.63ms
+  2026-03-24 12:21:47 /assets/admin/js/atlantis.js ................. ~ 0.77ms
+  2026-03-24 12:21:47 /assets/front/js/vendors/moment.min.js ....... ~ 1.09ms
+  2026-03-24 12:21:47 /assets/front/js/vendors/daterangepicker.js .. ~ 1.22ms
+  2026-03-24 12:21:47 /assets/admin/js/webfont.min.js .............. ~ 1.04ms
+  2026-03-24 12:21:47 /assets/admin/js/select2.min.js .............. ~ 1.82ms
+  2026-03-24 12:21:47 /assets/admin/js/admin-main.js ............... ~ 1.53ms
+  2026-03-24 12:21:47 /assets/admin/js/admin-partial.js ............ ~ 0.99ms
+  2026-03-24 12:21:47 /assets/admin/js/chart.min.js ................ ~ 0.89ms
+  2026-03-24 12:21:47 /assets/admin/js/chart-init.js ............... ~ 1.35ms
+  2026-03-24 12:21:47 /assets/img/logo_v2.png ..................... ~ 13.79ms
+  2026-03-24 12:21:48 /assets/admin/fonts/fontawesome/fa-brands-400.woff2  ~ 0.12ms
+  2026-03-24 12:21:55 ............................................ ~ 504.75ms
+  2026-03-24 12:21:55 /assets/admin/css/all.min.css ................ ~ 0.28ms
+  2026-03-24 12:21:55 /assets/admin/css/fontawesome-iconpicker.min.css  ~ 0.17ms
+  2026-03-24 12:21:55 /assets/admin/css/fonts.min.css .............. ~ 0.50ms
+  2026-03-24 12:21:55 /assets/admin/css/bootstrap-tagsinput.css ... ~ 10.78ms
+  2026-03-24 12:21:55 /assets/admin/css/bootstrap.min.css ......... ~ 11.93ms
+  2026-03-24 12:21:55 /assets/admin/css/jquery-ui.min.css ......... ~ 12.52ms
+  2026-03-24 12:21:55 /assets/admin/css/jquery.timepicker.min.css .. ~ 0.53ms
+  2026-03-24 12:21:55 /assets/admin/css/bootstrap-datepicker.min.css  ~ 0.37ms
+  2026-03-24 12:21:55 /assets/admin/css/dropzone.min.css ........... ~ 1.22ms
+  2026-03-24 12:21:55 /assets/admin/css/select2.min.css ............ ~ 7.37ms
+  2026-03-24 12:21:55 /assets/front/css/vendors/daterangepicker.css  ~ 8.96ms
+  2026-03-24 12:21:55 /assets/admin/css/atlantis.css ............... ~ 9.61ms
+  2026-03-24 12:21:55 /assets/admin/css/admin-main.css ............ ~ 10.65ms
+  2026-03-24 12:21:55 /assets/img/loader.gif ....................... ~ 1.55ms
+  2026-03-24 12:21:55 .............................................. ~ 0.09ms
+  2026-03-24 12:21:55 /assets/admin/js/jquery.min.js ............... ~ 2.82ms
+  2026-03-24 12:21:55 /assets/admin/js/popper.min.js ............... ~ 3.36ms
+  2026-03-24 12:21:55 /assets/admin/js/bootstrap.min.js ............ ~ 1.34ms
+  2026-03-24 12:21:55 /assets/admin/fonts/simple-line-icons/Simple-Line-Icons.woff2?v=2.4.0  ~ 2.23ms
+  2026-03-24 12:21:55 /assets/admin/js/jquery-ui.min.js ............ ~ 2.43ms
+  2026-03-24 12:21:55 /assets/admin/fonts/fontawesome/fa-solid-900.woff2  ~ 2.10ms
+  2026-03-24 12:21:55 /assets/admin/fonts/fontawesome/fa-regular-400.woff2  ~ 1.42ms
+  2026-03-24 12:21:55 /assets/admin/fonts/flaticon/Flaticon.woff ... ~ 1.55ms
+  2026-03-24 12:21:55 /assets/admin/fonts/fontawesome/fa-light-300.woff2  ~ 1.56ms
+  2026-03-24 12:21:55 /assets/admin/js/jquery.ui.touch-punch.min.js  ~ 510.05ms
+  2026-03-24 12:21:55 /assets/admin/js/jquery.timepicker.min.js .. ~ 510.18ms
+  2026-03-24 12:21:55 /assets/admin/js/jquery.scrollbar.min.js ... ~ 510.34ms
+  2026-03-24 12:21:55 /assets/admin/js/bootstrap-notify.min.js ..... ~ 0.62ms
+  2026-03-24 12:21:55 /assets/admin/js/sweet-alert.min.js .......... ~ 0.91ms
+  2026-03-24 12:21:55 /assets/admin/js/bootstrap-tagsinput.min.js .. ~ 1.53ms
+  2026-03-24 12:21:55 /assets/admin/js/bootstrap-datepicker.min.js . ~ 1.33ms
+  2026-03-24 12:21:55 /assets/admin/js/tinymce/js/tinymce/tinymce.min.js  ~ 0.08ms
+  2026-03-24 12:21:55 /assets/admin/js/jscolor.min.js .............. ~ 0.21ms
+  2026-03-24 12:21:55 /assets/admin/js/fontawesome-iconpicker.min.js  ~ 0.80ms
+  2026-03-24 12:21:55 /assets/admin/js/datatables-1.10.23.min.js ... ~ 0.92ms
+  2026-03-24 12:21:55 /assets/admin/js/datatables.bootstrap4.min.js  ~ 0.94ms
+  2026-03-24 12:21:55 /assets/admin/js/dropzone.min.js ............. ~ 0.09ms
+  2026-03-24 12:21:55 /assets/admin/js/atlantis.js ................. ~ 0.49ms
+  2026-03-24 12:21:55 /assets/front/js/vendors/moment.min.js ....... ~ 0.97ms
+  2026-03-24 12:21:55 /assets/front/js/vendors/daterangepicker.js .. ~ 1.21ms
+  2026-03-24 12:21:55 /assets/admin/js/webfont.min.js .............. ~ 1.35ms
+  2026-03-24 12:21:55 /assets/admin/js/select2.min.js .............. ~ 0.07ms
+  2026-03-24 12:21:55 /assets/admin/js/admin-main.js ............... ~ 0.47ms
+  2026-03-24 12:21:55 /assets/admin/js/admin-partial.js ............ ~ 0.89ms
+  2026-03-24 12:21:55 /assets/img/logo_v2.png .................... ~ 526.03ms
+  2026-03-24 12:21:55 /assets/admin/fonts/fontawesome/fa-brands-400.woff2  ~ 0.05ms
+  2026-03-24 12:26:10 .............................................. ~ 0.46ms
+
+   INFO  Environment modified. Restarting server...  
+
+   INFO  Server running on [http://127.0.0.1:8000].  
+
+  Press Ctrl+C to stop the server
+
+  2026-03-24 12:26:12 ............................................ ~ 503.74ms
+  2026-03-24 12:26:12 /assets/admin/css/all.min.css ................ ~ 0.08ms
+  2026-03-24 12:26:12 /assets/admin/css/fontawesome-iconpicker.min.css  ~ 5.30ms
+  2026-03-24 12:26:12 /assets/admin/css/fonts.min.css .............. ~ 0.49ms
+  2026-03-24 12:26:12 /assets/admin/css/bootstrap.min.css .......... ~ 1.28ms
+  2026-03-24 12:26:12 /assets/admin/css/bootstrap-tagsinput.css .... ~ 1.78ms
+  2026-03-24 12:26:12 /assets/admin/css/jquery-ui.min.css .......... ~ 2.02ms
+  2026-03-24 12:26:12 /assets/admin/css/jquery.timepicker.min.css .. ~ 2.38ms
+  2026-03-24 12:26:12 /assets/admin/css/bootstrap-datepicker.min.css  ~ 1.73ms
+  2026-03-24 12:26:12 /assets/admin/css/dropzone.min.css ........... ~ 1.04ms
+  2026-03-24 12:26:12 /assets/admin/css/select2.min.css ............ ~ 0.86ms
+  2026-03-24 12:26:12 /assets/front/css/vendors/daterangepicker.css  ~ 1.05ms
+  2026-03-24 12:26:12 /assets/admin/css/atlantis.css ............... ~ 1.42ms
+  2026-03-24 12:26:12 /assets/admin/css/admin-main.css ............. ~ 1.51ms
+  2026-03-24 12:26:12 /assets/img/loader.gif ....................... ~ 1.65ms
+  2026-03-24 12:26:13 ............................................ ~ 500.89ms
+  2026-03-24 12:26:13 /assets/admin/js/jquery.min.js ............. ~ 504.23ms
+  2026-03-24 12:26:13 /assets/admin/js/popper.min.js ............... ~ 1.07ms
+  2026-03-24 12:26:13 /assets/admin/js/bootstrap.min.js ............ ~ 1.83ms
+  2026-03-24 12:26:13 /assets/admin/fonts/simple-line-icons/Simple-Line-Icons.woff2?v=2.4.0  ~ 2.70ms
+  2026-03-24 12:26:13 /assets/admin/fonts/fontawesome/fa-solid-900.woff2  ~ 2.07ms
+  2026-03-24 12:26:13 /assets/admin/js/jquery-ui.min.js ............ ~ 3.18ms
+  2026-03-24 12:26:13 /assets/admin/fonts/fontawesome/fa-regular-400.woff2  ~ 3.92ms
+  2026-03-24 12:26:13 /assets/admin/fonts/fontawesome/fa-light-300.woff2  ~ 4.08ms
+  2026-03-24 12:26:13 /assets/admin/fonts/flaticon/Flaticon.woff ... ~ 4.05ms
+  2026-03-24 12:26:13 /assets/admin/js/jquery.ui.touch-punch.min.js  ~ 1.96ms
+  2026-03-24 12:26:13 /assets/admin/js/jquery.timepicker.min.js .... ~ 2.13ms
+  2026-03-24 12:26:13 /assets/admin/js/jquery.scrollbar.min.js ..... ~ 1.49ms
+  2026-03-24 12:26:13 /assets/admin/js/bootstrap-notify.min.js ..... ~ 1.13ms
+  2026-03-24 12:26:13 /assets/admin/js/sweet-alert.min.js .......... ~ 1.04ms
+  2026-03-24 12:26:13 /assets/admin/js/bootstrap-tagsinput.min.js .. ~ 1.40ms
+  2026-03-24 12:26:13 /assets/admin/js/bootstrap-datepicker.min.js . ~ 1.38ms
+  2026-03-24 12:26:13 /assets/admin/js/jscolor.min.js .............. ~ 0.59ms
+  2026-03-24 12:26:13 /assets/admin/js/fontawesome-iconpicker.min.js  ~ 1.09ms
+  2026-03-24 12:26:13 /assets/admin/js/tinymce/js/tinymce/tinymce.min.js  ~ 2.04ms
+  2026-03-24 12:26:13 /assets/admin/js/datatables-1.10.23.min.js ... ~ 1.20ms
+  2026-03-24 12:26:13 /assets/admin/js/datatables.bootstrap4.min.js  ~ 1.41ms
+  2026-03-24 12:26:13 /assets/admin/js/dropzone.min.js ............. ~ 1.56ms
+  2026-03-24 12:26:13 /assets/admin/js/atlantis.js ................. ~ 1.08ms
+  2026-03-24 12:26:13 /assets/front/js/vendors/moment.min.js ....... ~ 1.85ms
+  2026-03-24 12:26:13 /assets/front/js/vendors/daterangepicker.js .. ~ 2.04ms
+  2026-03-24 12:26:13 /assets/admin/js/webfont.min.js .............. ~ 1.74ms
+  2026-03-24 12:26:13 /assets/admin/js/select2.min.js .............. ~ 2.22ms
+  2026-03-24 12:26:13 /assets/admin/js/admin-main.js ............... ~ 1.58ms
+  2026-03-24 12:26:13 /assets/admin/js/admin-partial.js ............ ~ 1.74ms
+  2026-03-24 12:26:12 /assets/img/logo_v2.png .................... ~ 522.77ms
+  2026-03-24 12:26:13 /assets/admin/fonts/fontawesome/fa-brands-400.woff2  ~ 509.78ms
+  2026-03-24 12:26:26 ............................................ ~ 506.65ms
+  2026-03-24 12:26:26 /assets/img/blogs/speedboat.png .............. ~ 0.09ms
+  2026-03-24 12:26:26 /assets/img/blogs/luxury_yacht.png ........... ~ 0.06ms
+  2026-03-24 12:26:26 /manifest.json ............................... ~ 0.15ms
+  2026-03-24 12:26:26 /assets/img/logo_v2.png .................... ~ 511.75ms
+  2026-03-24 12:26:27 /assets/img/6775123ebcb9e.png ................ ~ 0.17ms
+  2026-03-24 12:26:27 .............................................. ~ 0.05ms
+  2026-03-24 12:26:41 .............................................. ~ 0.13ms
+  2026-03-24 12:31:44 .............................................. ~ 0.36ms
+  2026-03-24 12:31:45 /assets/img/blogs/speedboat.png .............. ~ 0.07ms
+  2026-03-24 12:31:45 /assets/img/blogs/luxury_yacht.png ........... ~ 0.05ms
+  2026-03-24 12:31:45 /manifest.json ............................... ~ 0.05ms
+  2026-03-24 12:31:44 /assets/img/logo_v2.png ...................... ~ 2.06ms
+  2026-03-24 12:31:45 /assets/img/6775123ebcb9e.png ................ ~ 0.15ms
+  2026-03-24 12:31:45 .............................................. ~ 0.13ms
+  2026-03-24 12:32:03 ............................................ ~ 507.05ms
+  2026-03-24 12:47:03 .............................................. ~ 0.61ms
+  2026-03-24 12:47:04 /assets/img/blogs/speedboat.png .............. ~ 0.14ms
+  2026-03-24 12:47:04 /assets/img/blogs/luxury_yacht.png ........... ~ 0.06ms
+  2026-03-24 12:47:04 /manifest.json ............................... ~ 0.08ms
+  2026-03-24 12:47:04 /assets/img/logo_v2.png .................... ~ 506.87ms
+  2026-03-24 12:47:04 .............................................. ~ 0.33ms
+  2026-03-24 12:47:04 /assets/img/6775123ebcb9e.png ................ ~ 3.54ms
+  2026-03-24 12:47:21 ................................................. ~ 3dt
+  2026-03-24 12:53:28 ............................................ ~ 500.40ms
+  2026-03-24 12:53:28 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 12:53:28 /assets/img/logo_v2.png ...................... ~ 1.12ms
+  2026-03-24 12:53:29 ............................................ ~ 501.21ms
+  2026-03-24 12:53:29 /assets/img/6775123ebcb9e.png .............. ~ 503.94ms
+  2026-03-24 12:53:51 ............................................ ~ 503.57ms
+  2026-03-24 12:53:51 .............................................. ~ 0.09ms
+  2026-03-24 12:53:53 .............................................. ~ 0.37ms
+  2026-03-24 12:54:01 ............................................ ~ 504.79ms
+  2026-03-24 12:54:01 /assets/img/blogs/speedboat.png .............. ~ 0.07ms
+  2026-03-24 12:54:01 /assets/img/blogs/luxury_yacht.png ........... ~ 0.07ms
+  2026-03-24 12:54:01 /assets/img/logo_v2.png ...................... ~ 1.06ms
+  2026-03-24 12:54:01 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 12:54:02 .............................................. ~ 0.39ms
+  2026-03-24 12:54:02 /assets/img/6775123ebcb9e.png ................ ~ 3.62ms
+  2026-03-24 12:54:07 .............................................. ~ 0.42ms
+  2026-03-24 12:54:07 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.07ms
+  2026-03-24 12:54:07 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.17ms
+  2026-03-24 12:54:07 /assets/img/hotel/logo/1773925012.jpg ...... ~ 502.37ms
+  2026-03-24 12:54:07 /assets/img/logo_v2.png .................... ~ 503.03ms
+  2026-03-24 12:54:07 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 12:54:08 .............................................. ~ 0.22ms
+  2026-03-24 12:54:08 /assets/img/6775123ebcb9e.png ................ ~ 3.25ms
+  2026-03-24 12:54:11 ............................................ ~ 501.38ms
+  2026-03-24 12:54:11 /assets/img/logo_v2.png ...................... ~ 0.07ms
+  2026-03-24 12:54:11 /manifest.json ............................... ~ 0.07ms
+  2026-03-24 12:54:12 .............................................. ~ 0.30ms
+  2026-03-24 12:54:12 /assets/img/6775123ebcb9e.png ................ ~ 0.09ms
+  2026-03-24 12:54:23 ............................................ ~ 506.19ms
+  2026-03-24 12:54:24 .............................................. ~ 0.08ms
+  2026-03-24 12:54:26 .............................................. ~ 0.23ms
+  2026-03-24 13:00:48 .............................................. ~ 0.36ms
+  2026-03-24 13:00:48 /assets/img/logo_v2.png .................... ~ 505.75ms
+  2026-03-24 13:00:48 /manifest.json ............................... ~ 0.08ms
+  2026-03-24 13:00:49 .............................................. ~ 0.21ms
+  2026-03-24 13:00:49 /assets/img/6775123ebcb9e.png ................ ~ 0.18ms
+  2026-03-24 13:01:52 .............................................. ~ 0.18ms
+  2026-03-24 13:01:52 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 13:01:52 /assets/img/logo_v2.png ...................... ~ 3.40ms
+  2026-03-24 13:01:53 .............................................. ~ 0.17ms
+  2026-03-24 13:01:53 ............................................ ~ 504.25ms
+  2026-03-24 13:01:53 /assets/img/6775123ebcb9e.png ................ ~ 0.06ms
+  2026-03-24 13:01:58 ............................................ ~ 502.89ms
+  2026-03-24 13:01:58 /assets/img/logo_v2.png ...................... ~ 0.07ms
+  2026-03-24 13:01:58 /manifest.json ............................... ~ 0.10ms
+  2026-03-24 13:02:02 ............................................ ~ 505.09ms
+  2026-03-24 13:02:03 /assets/img/blogs/speedboat.png .............. ~ 0.07ms
+  2026-03-24 13:02:03 /assets/img/blogs/luxury_yacht.png ........... ~ 0.06ms
+  2026-03-24 13:02:03 /assets/img/logo_v2.png ...................... ~ 1.00ms
+  2026-03-24 13:02:03 /manifest.json ............................... ~ 0.20ms
+  2026-03-24 13:02:03 .............................................. ~ 0.09ms
+  2026-03-24 13:02:03 /assets/img/6775123ebcb9e.png ................ ~ 2.48ms
+  2026-03-24 13:02:08 .............................................. ~ 0.20ms
+  2026-03-24 13:02:08 /assets/img/logo_v2.png .................... ~ 505.11ms
+  2026-03-24 13:02:08 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 13:02:08 .............................................. ~ 0.06ms
+  2026-03-24 13:02:08 ............................................ ~ 501.98ms
+  2026-03-24 13:02:09 /assets/img/6775123ebcb9e.png ................ ~ 0.09ms
+  2026-03-24 13:02:09 ............................................ ~ 501.42ms
+  2026-03-24 13:02:10 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.07ms
+  2026-03-24 13:02:10 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.09ms
+  2026-03-24 13:02:10 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.44ms
+  2026-03-24 13:02:10 /assets/img/logo_v2.png ...................... ~ 1.28ms
+  2026-03-24 13:02:10 /manifest.json ............................... ~ 0.07ms
+  2026-03-24 13:02:10 .............................................. ~ 0.12ms
+  2026-03-24 13:02:10 /assets/img/6775123ebcb9e.png ................ ~ 0.06ms
+  2026-03-24 13:04:46 ............................................ ~ 504.28ms
+  2026-03-24 13:04:47 /assets/img/blogs/speedboat.png .............. ~ 0.07ms
+  2026-03-24 13:04:47 /assets/img/blogs/luxury_yacht.png ........... ~ 0.06ms
+  2026-03-24 13:04:47 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 13:04:47 /assets/img/logo_v2.png ...................... ~ 2.08ms
+  2026-03-24 13:04:47 .............................................. ~ 0.31ms
+  2026-03-24 13:04:47 /assets/img/6775123ebcb9e.png ................ ~ 3.52ms
+  2026-03-24 13:05:33 ............................................ ~ 501.65ms
+  2026-03-24 13:05:53 .............................................. ~ 0.21ms
+  2026-03-24 13:05:54 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.08ms
+  2026-03-24 13:05:54 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.08ms
+  2026-03-24 13:05:54 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.07ms
+  2026-03-24 13:05:54 /manifest.json ............................... ~ 0.07ms
+  2026-03-24 13:05:54 /assets/img/logo_v2.png ...................... ~ 2.81ms
+  2026-03-24 13:05:55 .............................................. ~ 0.18ms
+  2026-03-24 13:05:55 /assets/img/6775123ebcb9e.png ................ ~ 2.51ms
+  2026-03-24 13:06:09 ................................................. ~ 8dt
+  2026-03-24 13:06:17 .............................................. ~ 0.07ms
+  2026-03-24 13:06:17 /assets/img/logo_v2.png .................... ~ 504.07ms
+  2026-03-24 13:06:17 /manifest.json ............................... ~ 0.07ms
+  2026-03-24 13:06:17 .............................................. ~ 0.11ms
+  2026-03-24 13:06:17 ............................................ ~ 505.37ms
+  2026-03-24 13:06:18 /assets/img/6775123ebcb9e.png ................ ~ 0.09ms
+  2026-03-24 13:06:22 .............................................. ~ 0.21ms
+  2026-03-24 13:06:22 /assets/img/6775123ebcb9e.png ................ ~ 0.09ms
+  2026-03-24 13:10:52 .............................................. ~ 0.86ms
+  2026-03-24 13:10:53 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.07ms
+  2026-03-24 13:10:53 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.06ms
+  2026-03-24 13:10:53 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.06ms
+  2026-03-24 13:10:53 /manifest.json ............................... ~ 0.05ms
+  2026-03-24 13:10:52 /assets/img/logo_v2.png ...................... ~ 2.17ms
+  2026-03-24 13:10:53 ............................................ ~ 500.64ms
+  2026-03-24 13:10:53 /assets/img/6775123ebcb9e.png .............. ~ 504.66ms
+  2026-03-24 13:14:38 ............................................ ~ 502.44ms
+  2026-03-24 13:14:38 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.05ms
+  2026-03-24 13:14:38 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.05ms
+  2026-03-24 13:14:38 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.05ms
+  2026-03-24 13:14:38 /manifest.json ............................... ~ 0.05ms
+  2026-03-24 13:14:38 /assets/img/logo_v2.png ...................... ~ 1.69ms
+  2026-03-24 13:14:39 ............................................ ~ 503.93ms
+  2026-03-24 13:14:39 /assets/img/6775123ebcb9e.png .............. ~ 506.31ms
+  2026-03-24 13:15:20 ............................................ ~ 501.44ms
+  2026-03-24 13:15:20 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.06ms
+  2026-03-24 13:15:20 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.06ms
+  2026-03-24 13:15:20 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.06ms
+  2026-03-24 13:15:20 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 13:15:20 /assets/img/logo_v2.png .................... ~ 505.24ms
+  2026-03-24 13:15:21 .............................................. ~ 0.23ms
+  2026-03-24 13:15:21 /assets/img/6775123ebcb9e.png ................ ~ 9.70ms
+  2026-03-24 13:15:25 ................................................. ~ 8dt
+  2026-03-24 13:15:33 ................................................ ~ 10dt
+  2026-03-24 13:15:33 ................................................ ~ 24dt
+  2026-03-24 13:15:43 ................................................ ~ 19dt
+  2026-03-24 13:15:57 ................................................. ~ 8dt
+  2026-03-24 13:16:02 ................................................. ~ 3dt
+  2026-03-24 13:16:05 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 13:16:05 /assets/img/logo_v2.png ...................... ~ 1.17ms
+  2026-03-24 13:16:06 .............................................. ~ 0.15ms
+  2026-03-24 13:16:06 /assets/img/6775123ebcb9e.png ................ ~ 0.07ms
+  2026-03-24 13:16:18 .............................................. ~ 0.30ms
+  2026-03-24 13:16:18 /assets/img/6775123ebcb9e.png ................ ~ 3.53ms
+  2026-03-24 13:17:47 .............................................. ~ 0.27ms
+  2026-03-24 13:17:48 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.12ms
+  2026-03-24 13:17:48 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.07ms
+  2026-03-24 13:17:48 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.06ms
+  2026-03-24 13:17:48 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 13:17:48 /assets/img/logo_v2.png ...................... ~ 2.54ms
+  2026-03-24 13:17:48 .............................................. ~ 0.15ms
+  2026-03-24 13:17:48 /assets/img/6775123ebcb9e.png ................ ~ 0.08ms
+  2026-03-24 13:18:05 ................................................. ~ 5dt
+  2026-03-24 13:18:10 .............................................. ~ 0.07ms
+  2026-03-24 13:18:10 /assets/img/logo_v2.png ...................... ~ 0.07ms
+  2026-03-24 13:18:10 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 13:18:11 .............................................. ~ 0.99ms
+  2026-03-24 13:18:11 .............................................. ~ 0.10ms
+  2026-03-24 13:18:11 /assets/img/6775123ebcb9e.png ................ ~ 2.83ms
+  2026-03-24 13:18:14 .............................................. ~ 0.11ms
+  2026-03-24 13:18:14 /assets/img/6775123ebcb9e.png ................ ~ 0.05ms
+  2026-03-24 13:18:19 ................................................. ~ 4dt
+  2026-03-24 13:18:19 ................................................. ~ 4dt
+  2026-03-24 13:18:24 /assets/img/logo_v2.png ...................... ~ 0.09ms
+  2026-03-24 13:18:24 /manifest.json ............................... ~ 0.07ms
+  2026-03-24 13:18:24 .............................................. ~ 0.70ms
+  2026-03-24 13:18:24 .............................................. ~ 0.08ms
+  2026-03-24 13:18:24 /assets/img/6775123ebcb9e.png ................ ~ 0.07ms
+  2026-03-24 13:18:28 .............................................. ~ 0.21ms
+  2026-03-24 13:18:28 /assets/img/6775123ebcb9e.png ................ ~ 0.08ms
+  2026-03-24 13:25:04 .............................................. ~ 0.49ms
+  2026-03-24 13:25:04 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.07ms
+  2026-03-24 13:25:04 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.10ms
+  2026-03-24 13:25:04 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.06ms
+  2026-03-24 13:25:04 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 13:25:04 /assets/img/logo_v2.png ...................... ~ 5.43ms
+  2026-03-24 13:25:05 .............................................. ~ 0.31ms
+  2026-03-24 13:25:05 /assets/img/6775123ebcb9e.png ................ ~ 2.86ms
+  2026-03-24 13:25:07 ............................................ ~ 502.05ms
+  2026-03-24 13:25:07 /assets/img/logo_v2.png ...................... ~ 0.09ms
+  2026-03-24 13:25:07 /manifest.json ............................... ~ 0.08ms
+  2026-03-24 13:25:07 .............................................. ~ 0.07ms
+  2026-03-24 13:25:07 /assets/img/6775123ebcb9e.png ................ ~ 2.29ms
+  2026-03-24 13:25:11 .............................................. ~ 0.24ms
+  2026-03-24 13:25:11 /assets/img/blogs/luxury_yacht.png ........... ~ 0.07ms
+  2026-03-24 13:25:11 /assets/img/blogs/speedboat.png .............. ~ 0.06ms
+  2026-03-24 13:25:11 /assets/img/logo_v2.png ...................... ~ 1.08ms
+  2026-03-24 13:25:11 /manifest.json ............................... ~ 0.17ms
+  2026-03-24 13:25:11 .............................................. ~ 0.12ms
+  2026-03-24 13:25:11 /assets/img/6775123ebcb9e.png ................ ~ 0.05ms
+  2026-03-24 13:25:28 .............................................. ~ 0.15ms
+  2026-03-24 13:25:28 .............................................. ~ 1.94ms
+  2026-03-24 13:25:29 /assets/img/blogs/speedboat.png .............. ~ 0.06ms
+  2026-03-24 13:25:29 /assets/img/blogs/luxury_yacht.png ........... ~ 0.06ms
+  2026-03-24 13:25:29 /assets/img/logo_v2.png ...................... ~ 0.88ms
+  2026-03-24 13:25:29 /manifest.json ............................... ~ 0.29ms
+  2026-03-24 13:25:29 .............................................. ~ 0.10ms
+  2026-03-24 13:25:29 /assets/img/6775123ebcb9e.png ................ ~ 0.07ms
+  2026-03-24 13:25:58 .............................................. ~ 0.18ms
+  2026-03-24 13:25:58 ............................................ ~ 504.49ms
+  2026-03-24 13:25:58 /assets/img/blogs/speedboat.png .............. ~ 0.06ms
+  2026-03-24 13:25:58 /assets/img/blogs/luxury_yacht.png ........... ~ 0.06ms
+  2026-03-24 13:25:58 /assets/img/logo_v2.png ...................... ~ 0.97ms
+  2026-03-24 13:25:59 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 13:25:59 ............................................ ~ 504.64ms
+  2026-03-24 13:25:59 /assets/img/6775123ebcb9e.png ................ ~ 0.08ms
+  2026-03-24 13:26:07 ............................................ ~ 500.62ms
+  2026-03-24 13:26:07 /assets/admin/css/all.min.css ................ ~ 0.06ms
+  2026-03-24 13:26:08 /assets/admin/css/fontawesome-iconpicker.min.css  ~ 0.20ms
+  2026-03-24 13:26:08 /assets/admin/css/fonts.min.css .............. ~ 0.36ms
+  2026-03-24 13:26:08 /assets/admin/css/bootstrap.min.css .......... ~ 0.81ms
+  2026-03-24 13:26:08 /assets/admin/css/bootstrap-tagsinput.css .... ~ 1.10ms
+  2026-03-24 13:26:08 /assets/admin/css/jquery-ui.min.css .......... ~ 1.27ms
+  2026-03-24 13:26:08 /assets/admin/css/jquery.timepicker.min.css .. ~ 1.40ms
+  2026-03-24 13:26:08 /assets/admin/css/bootstrap-datepicker.min.css  ~ 1.11ms
+  2026-03-24 13:26:08 /assets/admin/css/dropzone.min.css ........... ~ 0.72ms
+  2026-03-24 13:26:08 /assets/admin/css/atlantis.css ............... ~ 0.74ms
+  2026-03-24 13:26:08 /assets/admin/css/select2.min.css ............ ~ 1.03ms
+  2026-03-24 13:26:08 /assets/front/css/vendors/daterangepicker.css  ~ 1.26ms
+  2026-03-24 13:26:08 /assets/admin/css/admin-main.css ............. ~ 1.37ms
+  2026-03-24 13:26:08 /assets/img/loader.gif ....................... ~ 0.99ms
+  2026-03-24 13:26:08 .............................................. ~ 0.06ms
+  2026-03-24 13:26:08 /assets/admin/js/jquery.min.js ............... ~ 0.10ms
+  2026-03-24 13:26:08 /assets/admin/js/popper.min.js ............... ~ 0.58ms
+  2026-03-24 13:26:08 /assets/admin/js/bootstrap.min.js ............ ~ 1.07ms
+  2026-03-24 13:26:08 /assets/admin/fonts/simple-line-icons/Simple-Line-Icons.woff2?v=2.4.0  ~ 1.57ms
+  2026-03-24 13:26:08 /assets/admin/js/jquery-ui.min.js ............ ~ 1.74ms
+  2026-03-24 13:26:08 /assets/admin/fonts/fontawesome/fa-solid-900.woff2  ~ 1.14ms
+  2026-03-24 13:26:08 /assets/admin/fonts/fontawesome/fa-regular-400.woff2  ~ 0.79ms
+  2026-03-24 13:26:08 /assets/admin/fonts/flaticon/Flaticon.woff ... ~ 0.74ms
+  2026-03-24 13:26:08 /assets/admin/fonts/fontawesome/fa-light-300.woff2  ~ 1.08ms
+  2026-03-24 13:26:08 /assets/admin/js/jquery.ui.touch-punch.min.js  ~ 0.64ms
+  2026-03-24 13:26:08 /assets/admin/js/jquery.timepicker.min.js .... ~ 0.61ms
+  2026-03-24 13:26:08 /assets/admin/js/jquery.scrollbar.min.js ..... ~ 0.06ms
+  2026-03-24 13:26:08 /assets/admin/js/bootstrap-notify.min.js ..... ~ 0.31ms
+  2026-03-24 13:26:08 /assets/admin/js/sweet-alert.min.js .......... ~ 0.29ms
+  2026-03-24 13:26:08 /assets/admin/js/bootstrap-tagsinput.min.js .. ~ 0.61ms
+  2026-03-24 13:26:08 /assets/admin/js/bootstrap-datepicker.min.js . ~ 0.76ms
+  2026-03-24 13:26:08 /assets/admin/js/jscolor.min.js .............. ~ 0.08ms
+  2026-03-24 13:26:08 /assets/admin/js/fontawesome-iconpicker.min.js  ~ 0.52ms
+  2026-03-24 13:26:08 /assets/admin/js/tinymce/js/tinymce/tinymce.min.js  ~ 0.69ms
+  2026-03-24 13:26:08 /assets/admin/js/datatables-1.10.23.min.js ... ~ 0.82ms
+  2026-03-24 13:26:08 /assets/admin/js/datatables.bootstrap4.min.js  ~ 1.00ms
+  2026-03-24 13:26:08 /assets/admin/js/dropzone.min.js ............. ~ 0.70ms
+  2026-03-24 13:26:08 /assets/admin/js/atlantis.js ................. ~ 1.17ms
+  2026-03-24 13:26:08 /assets/front/js/vendors/moment.min.js ....... ~ 1.36ms
+  2026-03-24 13:26:08 /assets/front/js/vendors/daterangepicker.js .. ~ 1.58ms
+  2026-03-24 13:26:08 /assets/admin/js/webfont.min.js .............. ~ 1.15ms
+  2026-03-24 13:26:08 /assets/admin/js/select2.min.js .............. ~ 1.04ms
+  2026-03-24 13:26:08 /assets/admin/js/admin-main.js ............... ~ 1.12ms
+  2026-03-24 13:26:08 /assets/admin/js/admin-partial.js ............ ~ 1.38ms
+  2026-03-24 13:26:08 /assets/img/logo_v2.png ..................... ~ 11.46ms
+  2026-03-24 13:26:08 /assets/admin/js/chart-init.js ............... ~ 1.49ms
+  2026-03-24 13:26:08 /assets/admin/js/chart.min.js ................ ~ 2.49ms
+  127.0.0.1:51855 [404]: GET /assets/img - Invalid argument
+  2026-03-24 13:26:08 .............................................. ~ 0.39ms
+  2026-03-24 13:26:08 /assets/admin/fonts/fontawesome/fa-brands-400.woff2  ~ 3.23ms
+  2026-03-24 13:26:39 ............................................ ~ 501.14ms
+  2026-03-24 13:26:40 /assets/admin/css/all.min.css ................ ~ 0.06ms
+  2026-03-24 13:26:40 /assets/admin/css/fontawesome-iconpicker.min.css  ~ 0.08ms
+  2026-03-24 13:26:40 /assets/admin/css/fonts.min.css .............. ~ 0.23ms
+  2026-03-24 13:26:40 /assets/admin/css/bootstrap.min.css .......... ~ 0.77ms
+  2026-03-24 13:26:40 /assets/admin/css/bootstrap-tagsinput.css .... ~ 1.10ms
+  2026-03-24 13:26:40 /assets/admin/css/jquery-ui.min.css .......... ~ 1.14ms
+  2026-03-24 13:26:40 /assets/admin/css/jquery.timepicker.min.css .. ~ 0.10ms
+  2026-03-24 13:26:40 /assets/admin/css/bootstrap-datepicker.min.css  ~ 0.26ms
+  2026-03-24 13:26:40 /assets/admin/css/dropzone.min.css ........... ~ 0.38ms
+  2026-03-24 13:26:40 /assets/admin/css/select2.min.css ............ ~ 0.73ms
+  2026-03-24 13:26:40 /assets/admin/css/atlantis.css ............... ~ 1.11ms
+  2026-03-24 13:26:40 /assets/front/css/vendors/daterangepicker.css  ~ 1.53ms
+  2026-03-24 13:26:40 /assets/admin/css/admin-main.css ............. ~ 0.62ms
+  2026-03-24 13:26:40 /assets/img/loader.gif ....................... ~ 0.06ms
+  2026-03-24 13:26:40 .............................................. ~ 0.06ms
+  2026-03-24 13:26:40 /assets/admin/js/jquery.min.js ............... ~ 1.89ms
+  2026-03-24 13:26:40 /assets/admin/js/popper.min.js ............... ~ 0.56ms
+  2026-03-24 13:26:40 /assets/admin/js/bootstrap.min.js ............ ~ 1.02ms
+  2026-03-24 13:26:40 /assets/admin/fonts/simple-line-icons/Simple-Line-Icons.woff2?v=2.4.0  ~ 1.38ms
+  2026-03-24 13:26:40 /assets/admin/js/jquery-ui.min.js ............ ~ 1.52ms
+  2026-03-24 13:26:40 /assets/admin/fonts/fontawesome/fa-solid-900.woff2  ~ 0.95ms
+  2026-03-24 13:26:40 /assets/admin/fonts/fontawesome/fa-regular-400.woff2  ~ 0.70ms
+  2026-03-24 13:26:40 /assets/admin/fonts/fontawesome/fa-light-300.woff2  ~ 0.19ms
+  2026-03-24 13:26:40 /assets/admin/fonts/flaticon/Flaticon.woff ... ~ 0.21ms
+  2026-03-24 13:26:40 /assets/admin/js/jquery.ui.touch-punch.min.js  ~ 0.07ms
+  2026-03-24 13:26:40 /assets/admin/js/jquery.timepicker.min.js .... ~ 0.19ms
+  2026-03-24 13:26:40 /assets/admin/js/jquery.scrollbar.min.js ..... ~ 0.06ms
+  2026-03-24 13:26:40 /assets/admin/js/bootstrap-notify.min.js ..... ~ 0.30ms
+  2026-03-24 13:26:40 /assets/admin/js/sweet-alert.min.js .......... ~ 0.28ms
+  2026-03-24 13:26:40 /assets/admin/js/bootstrap-tagsinput.min.js .. ~ 0.60ms
+  2026-03-24 13:26:40 /assets/admin/js/bootstrap-datepicker.min.js . ~ 0.09ms
+  2026-03-24 13:26:40 /assets/admin/js/jscolor.min.js .............. ~ 0.24ms
+  2026-03-24 13:26:40 /assets/admin/js/fontawesome-iconpicker.min.js  ~ 0.65ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/tinymce.min.js  ~ 0.82ms
+  2026-03-24 13:26:40 /assets/admin/js/datatables-1.10.23.min.js ... ~ 0.91ms
+  2026-03-24 13:26:40 /assets/admin/js/datatables.bootstrap4.min.js  ~ 0.99ms
+  2026-03-24 13:26:40 /assets/admin/js/dropzone.min.js ............. ~ 1.18ms
+  2026-03-24 13:26:40 /assets/admin/js/atlantis.js ................. ~ 1.05ms
+  2026-03-24 13:26:40 /assets/front/js/vendors/moment.min.js ....... ~ 1.31ms
+  2026-03-24 13:26:40 /assets/front/js/vendors/daterangepicker.js .. ~ 1.41ms
+  2026-03-24 13:26:40 /assets/admin/js/webfont.min.js .............. ~ 1.11ms
+  2026-03-24 13:26:40 /assets/admin/js/select2.min.js .............. ~ 1.52ms
+  2026-03-24 13:26:40 /assets/admin/js/admin-main.js ............... ~ 1.05ms
+  2026-03-24 13:26:40 /assets/admin/js/admin-partial.js ............ ~ 0.49ms
+  2026-03-24 13:26:40 .............................................. ~ 0.05ms
+  2026-03-24 13:26:40 /assets/img/logo_v2.png ..................... ~ 12.90ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/themes/silver/theme.min.js  ~ 0.08ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/models/dom/model.min.js  ~ 0.17ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/icons/default/icons.min.js  ~ 0.29ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/plugins/autolink/plugin.min.js  ~ 0.17ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/plugins/charmap/plugin.min.js  ~ 0.17ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/plugins/emoticons/plugin.min.js  ~ 0.29ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/plugins/image/plugin.min.js  ~ 0.28ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/plugins/link/plugin.min.js  ~ 0.26ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/plugins/lists/plugin.min.js  ~ 0.37ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/plugins/media/plugin.min.js  ~ 0.06ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/plugins/searchreplace/plugin.min.js  ~ 0.16ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/plugins/table/plugin.min.js  ~ 0.28ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/plugins/visualblocks/plugin.min.js  ~ 0.27ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/plugins/wordcount/plugin.min.js  ~ 0.25ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/plugins/directionality/plugin.min.js  ~ 0.34ms
+  2026-03-24 13:26:40 /assets/admin/fonts/fontawesome/fa-brands-400.woff2  ~ 0.13ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/skins/ui/oxide/skin.min.css  ~ 0.05ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/skins/ui/oxide/content.min.css  ~ 0.07ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/skins/content/default/content.min.css  ~ 0.17ms
+  2026-03-24 13:26:40 /assets/admin/js/tinymce/js/tinymce/plugins/emoticons/js/emojis.min.js  ~ 0.06ms
+  2026-03-24 13:27:10 .............................................. ~ 0.16ms
+  2026-03-24 13:27:10 /assets/img/blogs/speedboat.png .............. ~ 0.06ms
+  2026-03-24 13:27:10 /assets/img/blogs/luxury_yacht.png ........... ~ 0.05ms
+  2026-03-24 13:27:10 /manifest.json ............................... ~ 0.05ms
+  2026-03-24 13:27:10 /assets/img/logo_v2.png ...................... ~ 1.92ms
+  2026-03-24 13:27:11 ............................................ ~ 503.31ms
+  2026-03-24 13:27:11 /assets/img/6775123ebcb9e.png ................ ~ 0.09ms
+  2026-03-24 13:38:48 .............................................. ~ 0.16ms
+  2026-03-24 13:38:49 /assets/img/blogs/speedboat.png .............. ~ 0.23ms
+  2026-03-24 13:38:49 /assets/img/blogs/luxury_yacht.png ........... ~ 0.08ms
+  2026-03-24 13:38:49 /manifest.json ............................... ~ 0.07ms
+  2026-03-24 13:38:48 /assets/img/logo_v2.png .................... ~ 503.43ms
+  2026-03-24 13:38:49 ............................................ ~ 505.03ms
+  2026-03-24 13:38:49 /assets/img/6775123ebcb9e.png ................ ~ 0.06ms
+  2026-03-24 13:38:50 ............................................ ~ 500.82ms
+  2026-03-24 13:38:51 /assets/img/logo_v2.png ...................... ~ 1.87ms
+  2026-03-24 13:38:51 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 13:38:51 /assets/img/6775123ebcb9e.png ................ ~ 0.19ms
+  2026-03-24 13:39:00 /assets/img/6775123ebcb9e.png ................ ~ 0.14ms
+  2026-03-24 13:39:02 .............................................. ~ 0.16ms
+  2026-03-24 13:39:02 /assets/img/logo_v2.png ...................... ~ 2.05ms
+  2026-03-24 13:39:02 /manifest.json ............................... ~ 0.05ms
+  2026-03-24 13:39:02 /assets/img/6775123ebcb9e.png ................ ~ 0.05ms
+  2026-03-24 13:39:04 /assets/img/6775123ebcb9e.png ................ ~ 0.15ms
+  2026-03-24 14:22:03 ............................................ ~ 500.64ms
+  2026-03-24 14:22:04 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.06ms
+  2026-03-24 14:22:04 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.06ms
+  2026-03-24 14:22:04 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.06ms
+  2026-03-24 14:22:04 /manifest.json ............................... ~ 0.05ms
+  2026-03-24 14:22:04 /assets/img/logo_v2.png ...................... ~ 2.12ms
+  2026-03-24 14:22:04 /assets/img/6775123ebcb9e.png ................ ~ 0.13ms
+  2026-03-24 14:22:07 ............................................ ~ 501.93ms
+  2026-03-24 14:22:07 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 14:22:07 /assets/img/logo_v2.png .................... ~ 504.61ms
+  2026-03-24 14:22:07 .............................................. ~ 0.13ms
+  2026-03-24 14:22:08 /assets/img/6775123ebcb9e.png ................ ~ 0.06ms
+  2026-03-24 14:22:10 ............................................ ~ 500.48ms
+  127.0.0.1:52776 [404]: GET /assets/img/admins - Invalid argument
+  2026-03-24 14:22:10 .............................................. ~ 0.27ms
+  2026-03-24 14:22:10 /assets/img/blank-user.jpg ................... ~ 0.13ms
+  2026-03-24 14:22:10 /assets/img/logo_v2.png ...................... ~ 5.50ms
+  2026-03-24 14:22:10 /manifest.json ............................... ~ 0.13ms
+  2026-03-24 14:22:10 /assets/img/6775123ebcb9e.png ................ ~ 0.14ms
+  2026-03-24 14:23:52 .............................................. ~ 0.16ms
+  127.0.0.1:52805 [404]: GET /assets/img/admins - Invalid argument
+  2026-03-24 14:23:52 .............................................. ~ 0.12ms
+  2026-03-24 14:23:52 /assets/img/blank-user.jpg ................... ~ 0.06ms
+  2026-03-24 14:23:52 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 14:23:52 /assets/img/logo_v2.png ...................... ~ 3.59ms
+  2026-03-24 14:23:53 /assets/img/6775123ebcb9e.png ................ ~ 0.30ms
+  2026-03-24 14:23:56 .............................................. ~ 0.17ms
+  2026-03-24 14:23:56 /assets/img/blogs/speedboat.png .............. ~ 0.14ms
+  2026-03-24 14:23:56 /assets/img/blogs/luxury_yacht.png ........... ~ 0.31ms
+  2026-03-24 14:23:56 /assets/img/logo_v2.png .................... ~ 504.09ms
+  2026-03-24 14:23:56 /manifest.json ............................... ~ 0.11ms
+  2026-03-24 14:23:56 /assets/img/6775123ebcb9e.png ................ ~ 0.09ms
+  2026-03-24 14:24:55 ............................................ ~ 504.42ms
+  2026-03-24 14:24:55 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.15ms
+  2026-03-24 14:24:55 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.07ms
+  2026-03-24 14:24:55 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.10ms
+  2026-03-24 14:24:56 /manifest.json ............................... ~ 0.25ms
+  2026-03-24 14:24:55 /assets/img/logo_v2.png .................... ~ 511.13ms
+  2026-03-24 14:24:56 /assets/img/6775123ebcb9e.png ................ ~ 0.14ms
+  2026-03-24 14:24:57 .............................................. ~ 0.15ms
+  2026-03-24 14:24:57 /manifest.json ............................... ~ 0.07ms
+  2026-03-24 14:24:57 /assets/img/logo_v2.png .................... ~ 502.81ms
+  2026-03-24 14:24:58 ............................................ ~ 501.96ms
+  2026-03-24 14:24:58 /assets/img/6775123ebcb9e.png ................ ~ 0.16ms
+  2026-03-24 14:24:59 .............................................. ~ 0.13ms
+  127.0.0.1:52875 [404]: GET /assets/img/admins - Invalid argument
+  2026-03-24 14:24:59 .............................................. ~ 0.11ms
+  2026-03-24 14:24:59 /assets/img/blank-user.jpg ................... ~ 0.06ms
+  2026-03-24 14:24:59 /assets/img/logo_v2.png .................... ~ 508.83ms
+  2026-03-24 14:24:59 /manifest.json ............................... ~ 0.08ms
+  2026-03-24 14:24:59 /assets/img/6775123ebcb9e.png ................ ~ 0.08ms
+  2026-03-24 14:25:01 ............................................ ~ 501.96ms
+  2026-03-24 14:25:01 /assets/img/logo_v2.png ...................... ~ 0.07ms
+  2026-03-24 14:25:01 /manifest.json ............................... ~ 0.05ms
+  2026-03-24 14:25:01 /assets/img/6775123ebcb9e.png ................ ~ 0.06ms
+  2026-03-24 14:25:04 .............................................. ~ 0.14ms
+  2026-03-24 14:25:04 /assets/img/blogs/speedboat.png .............. ~ 0.07ms
+  2026-03-24 14:25:04 /assets/img/blogs/luxury_yacht.png ........... ~ 0.24ms
+  2026-03-24 14:25:04 /assets/img/logo_v2.png .................... ~ 513.96ms
+  2026-03-24 14:25:04 /manifest.json ............................... ~ 0.10ms
+  2026-03-24 14:25:05 /assets/img/6775123ebcb9e.png ................ ~ 0.09ms
+  2026-03-24 14:25:08 .............................................. ~ 0.14ms
+  2026-03-24 14:25:09 /assets/img/logo_v2.png ...................... ~ 0.06ms
+  2026-03-24 14:25:09 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 14:25:09 /assets/img/6775123ebcb9e.png ................ ~ 0.34ms
+  2026-03-24 14:25:11 /assets/img/6775123ebcb9e.png ................ ~ 0.13ms
+  2026-03-24 14:27:24 ............................................ ~ 501.90ms
+  2026-03-24 14:27:24 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.06ms
+  2026-03-24 14:27:25 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.12ms
+  2026-03-24 14:27:25 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.07ms
+  2026-03-24 14:27:25 /manifest.json ............................... ~ 0.05ms
+  2026-03-24 14:27:24 /assets/img/logo_v2.png ...................... ~ 1.98ms
+  2026-03-24 14:27:25 .............................................. ~ 0.20ms
+  2026-03-24 14:27:25 /assets/img/6775123ebcb9e.png ................ ~ 0.10ms
+  2026-03-24 14:28:53 .............................................. ~ 0.38ms
+  2026-03-24 14:28:54 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.06ms
+  2026-03-24 14:28:54 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.06ms
+  2026-03-24 14:28:54 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.06ms
+  2026-03-24 14:28:54 /manifest.json ............................... ~ 0.06ms
+  2026-03-24 14:28:54 /assets/img/logo_v2.png ...................... ~ 2.17ms
+  2026-03-24 14:28:54 /assets/img/6775123ebcb9e.png ................ ~ 0.25ms
+  2026-03-24 14:30:31 ............................................ ~ 501.57ms
+  2026-03-24 14:30:32 /assets/img/hotel/logo/1773929336.webp ....... ~ 0.07ms
+  2026-03-24 14:30:32 /assets/img/hotel/logo/1773941143.jpg ........ ~ 0.06ms
+  2026-03-24 14:30:32 /assets/img/hotel/logo/1773925012.jpg ........ ~ 0.06ms
+  2026-03-24 14:30:32 /manifest.json ............................... ~ 0.63ms
+  2026-03-24 14:30:32 /assets/img/logo_v2.png .................... ~ 509.79ms
+  2026-03-24 14:30:33 .............................................. ~ 0.14ms
+  2026-03-24 14:30:33 /assets/img/6775123ebcb9e.png ................ ~ 1.97ms

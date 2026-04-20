@@ -1,54 +1,96 @@
-# GoFishi - Boat & Rental Booking Platform
+<p align="center">
+  <img src="https://gofishi.com/assets/img/logo_v2.png" alt="GoFishi Logo" width="200">
+</p>
 
-GoFishi adalah platform modern untuk penyewaan kapal dan lokasi memancing, yang dirancang untuk memberikan pengalaman terbaik bagi vendor maupun pelanggan.
+# 🛥️ GoFishi - Boat Rental & Fishing Marketplace
 
-## Fitur Utama
+**GoFishi** adalah platform marketplace modern (Airbnb Clone) yang dirancang khusus untuk komunitas *saltwater angling*. Platform ini menghubungkan pemilik kapal (Vendor/Host) dengan para pemancing (Users) untuk mempermudah proses penyewaan kapal charter dan pencarian lokasi memancing terbaik di Indonesia.
 
-- **Dashboard Vendor Premium**: Modern, responsif, dan mudah digunakan (Airbnb-inspired).
-- **Manajemen Listing**: Kelola kapal, lokasi, dan ketersediaan dengan mudah.
-- **Sistem Pemesanan**: Alur pemesanan yang lancar bagi pelanggan.
-- **Integrasi Peta**: Penentuan lokasi menggunakan Google Maps API.
-- **Notifikasi WhatsApp**: Notifikasi otomatis untuk pesanan baru.
+---
 
-## Tech Stack
+## 🌐 Live Website
+Kunjungi platform kami secara langsung: [**gofishi.com**](https://gofishi.com)
 
-- **Backend**: Laravel (PHP)
-- **Frontend**: Blade, Tailwind CSS, Vite
-- **Database**: MySQL
-- **Integrasi**: Google Maps API, WhatsApp API
+---
 
-## Cara Instalasi
+## 🏗️ Arsitektur & Framework
 
-1. Clone repository ini:
-   ```bash
-   git clone https://github.com/username/gofishi-project.git
-   ```
-2. Install dependensi PHP:
-   ```bash
-   composer install
-   ```
-3. Install dependensi JavaScript:
-   ```bash
-   npm install && npm run build
-   ```
-4. Salin file `.env.example` menjadi `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-5. Generate application key:
-   ```bash
-   php artisan key:generate
-   ```
-6. Konfigurasi database di file `.env`.
-7. Jalankan migrasi:
-   ```bash
-   php artisan migrate
-   ```
-8. Jalankan server lokal:
-   ```bash
-   php artisan serve
-   ```
+Platform ini dibangun dengan standar pengembangan modern untuk memastikan skalabilitas dan performa tinggi:
 
-## Lisensi
+- **Arsitektur:** **MVC (Model-View-Controller)** — Memisahkan logika bisnis, data, dan antarmuka pengguna untuk pemeliharaan kode yang lebih mudah.
+- **Backend Framework:** **Laravel** — Framework PHP paling populer yang menawarkan keamanan dan ekosistem library yang luas.
+- **Frontend Engine:** **Blade Templating & Tailwind CSS** — Memberikan tampilan yang modern, *clean*, dan sepenuhnya responsif (Airbnb-inspired UI).
+- **Asset Bundler:** **Vite** — Mempercepat proses development dan optimasi performa saat *production*.
+- **Database:** **MySQL** — Penyimpanan data yang relasional dan handal.
 
-[Tentukan Lisensi - Contoh: MIT]
+---
+
+## 🚀 Fitur Utama
+
+- **Premium Vendor Dashboard**: Pengelolaan armada, harga dinamis, dan kalender ketersediaan dengan antarmuka yang intuitif.
+- **Smart Booking System**: Alur pemesanan *end-to-end* mulai dari pencarian hingga konfirmasi otomatis.
+- **Payment Gateway Integration**: Terintegrasi dengan **Midtrans** (QRIS, VA, Bank Transfer) untuk keamanan transaksi.
+- **Interactive Maps**: Integrasi presisi titik lokasi dermaga menggunakan **Google Maps API**.
+- **Real-time Notifications**: Notifikasi status pesanan dikirimkan secara otomatis via **WhatsApp & Email API**.
+
+---
+
+## 🛠️ Tech Stack & Integrasi
+
+| Category | Technology |
+| --- | --- |
+| **Framework** | Laravel |
+| **Language** | PHP, JavaScript |
+| **Styling** | Tailwind CSS / CSS3 |
+| **Build Tool** | Vite |
+| **Database** | MySQL |
+| **Integrations** | Midtrans, Google Maps, WhatsApp API |
+
+---
+
+## 🔧 Panduan Instalasi (Development)
+
+**Clone Repository:**
+Pilih salah satu metode berikut:
+- **HTTPS:** `https://github.com/Doddy70/gofishi.git`
+- **SSH:** `git@github.com:Doddy70/gofishi.git`
+- **GitHub CLI:** `gh repo clone Doddy70/gofishi`
+
+```bash
+# Contoh menggunakan HTTPS
+git clone https://github.com/Doddy70/gofishi.git
+cd basecode
+```
+2.  **Install PHP Dependencies:**
+    ```bash
+    composer install
+    ```
+3.  **Install JS Dependencies & Build:**
+    ```bash
+    npm install && npm run build
+    ```
+4.  **Setup Environment:**
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
+5.  **Database Migration:**
+    ```bash
+    php artisan migrate
+    ```
+6.  **Run Development Server:**
+    ```bash
+    php artisan serve
+    ```
+
+---
+
+## ⚓ Boat Attributes Managed
+Setiap armada kapal mengelola data mendalam seperti:
+- Nama KM (Kapal Motor) & Nama Kapten.
+- Spesifikasi Mesin & Kapasitas Penumpang.
+- Fasilitas (AC, Bedroom, Toilet, Wifi, Alat Pancing, dll).
+- Alur Sewa Harian & Jam Operasional Dermaga.
+
+---
+*Developed with ❤️ for the Angling Community in Indonesia.*

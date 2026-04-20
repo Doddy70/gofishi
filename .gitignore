@@ -1,10 +1,22 @@
 /node_modules
+<<<<<<< HEAD
 /public/storage
 /storage/*.key
+=======
+/public/hot
+/public/storage
+/storage/*.key
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*.php
+/storage/framework/testing/*
+/storage/logs/*.log
+>>>>>>> main
 /vendor
 .env
 .env.backup
 .env.production
+<<<<<<< HEAD
 .php_cs.cache
 .phpunit.result.cache
 Homestead.json
@@ -34,3 +46,41 @@ vite.log
 _ide_helper.php
 _ide_helper_models.php
 .phpstorm.meta.php
+=======
+.phpunit.result.cache
+docker-compose.override.yml
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/.idea
+/.vscode
+/.agent
+/.agent-mem
+/.agents
+/.brainsync
+/.claude
+/.gemini
+/.history-memo
+AGENT.md
+CLAUDE.md
+.windsurfrules
+.cline/
+.clineRules
+.cursorrules
+*.zip
+*.log
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
+.DS_Store
+all_routes.txt
+exclude_list.txt
+vite.log
+*.txt
+HANDOFF_*.md
+Buku_Panduan_Vendor_GoFishi.md
+Knowledge_Base_Host_GoFishi.md
+kebijakan_*.html
+temp_guide.html
+>>>>>>> main

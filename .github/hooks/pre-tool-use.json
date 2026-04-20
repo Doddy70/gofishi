@@ -1,0 +1,20 @@
+{
+  "description": "Block destructive terminal commands and inject working context reminders before tool execution.",
+  "trigger": "PreToolUse",
+  "actions": [
+    {
+      "type": "block",
+      "conditions": {
+        "commandContains": ["git clean -fd", "git reset --hard", "rm -rf", "sudo rm -rf"]
+      },
+      "message": "Perintah ini dapat menghapus perubahan lokal. Silakan konfirmasi sebelum melanjutkan atau gunakan perintah yang lebih aman."
+    },
+    {
+      "type": "inject",
+      "conditions": {
+        "tool": ["run_in_terminal", "run_task"]
+      },
+      "context": "Workspace: /Users/doddykapisha/Downloads/gofishi-project/basecode. Jangan jalankan perintah destruktif tanpa konfirmasi, dan pertahankan file yang belum disimpan."
+    }
+  ]
+}

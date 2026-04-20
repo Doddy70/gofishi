@@ -1,0 +1,43 @@
+@layer components {
+    /* Airbnb Standard Button */
+    .btn-airbnb {
+        @apply bg-[#FF385C] text-white font-semibold rounded-lg px-6 py-3 transition-all duration-200 active:scale-95 hover:bg-[#E31C5F] shadow-sm;
+    }
+
+    .btn-airbnb-outline {
+        @apply bg-white text-airbnb-dark border border-airbnb-dark font-semibold rounded-lg px-6 py-3 transition-all duration-200 hover:bg-airbnb-light-gray active:scale-95;
+    }
+
+    /* Airbnb Standard Card */
+    .card-airbnb {
+        @apply bg-white rounded-xl overflow-hidden transition-all duration-300;
+    }
+
+    /* Airbnb Input Standard */
+    .input-airbnb {
+        @apply w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-airbnb-red focus:border-transparent outline-none transition-all;
+    }
+
+    /* Layout Containers */
+    .container-airbnb {
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+
+    /* Typography */
+    .heading-airbnb {
+        @apply text-3xl font-semibold text-airbnb-dark tracking-tight;
+    }
+
+    .subheading-airbnb {
+        @apply text-lg text-airbnb-gray font-light;
+    }
+}
+
+/* Base resets based on template */
+body {
+    @apply antialiased text-airbnb-dark bg-white;
+    font-family: 'Circular', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }

@@ -1,0 +1,709 @@
+/*
+ * Modern Vendor Dashboard Theme for GoFishi
+ * Inspired by Airbnb and Modern SaaS Designs
+ */
+
+:root {
+    --primary-ocean: #1e293b;
+    --accent-red: #ef4444;
+    --bg-light: #f8fafc;
+    --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+    --sidebar-width: 260px;
+}
+
+/* Sidebar Overrides */
+.sidebar {
+    background: var(--primary-ocean) !important;
+    border-right: none !important;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.05) !important;
+}
+
+.sidebar .nav > .nav-item > a p, 
+.sidebar .nav > .nav-item > a i,
+.sidebar .info span,
+.sidebar .user .info .caret {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.sidebar .nav > .nav-item.active > a,
+.sidebar .nav > .nav-item > a:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.sidebar .nav > .nav-item.active > a p, 
+.sidebar .nav > .nav-item.active > a i {
+    color: #fff !important;
+    font-weight: 600 !important;
+}
+
+.sidebar .sidebar-content {
+    padding-top: 20px !important;
+}
+
+.sidebar .user {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding-bottom: 20px !important;
+    margin-bottom: 20px !important;
+}
+
+/* Content Area */
+.main-panel {
+    background: var(--bg-light) !important;
+}
+
+.page-inner {
+    padding: 2rem !important;
+}
+
+/* Modern Welcome Banner */
+.welcome-banner {
+    background: linear-gradient(90deg, #eff6ff 0%, #ffffff 100%);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.welcome-text h2 {
+    color: var(--primary-ocean);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.welcome-text p {
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+.welcome-boat {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 250px;
+    opacity: 0.9;
+    z-index: 1;
+}
+
+/* Stat Cards */
+.modern-stat-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid #f1f5f9;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease;
+    height: 100%;
+}
+
+.modern-stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-icon-box {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.stat-val {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-ocean);
+    display: block;
+}
+
+.stat-label {
+    color: #64748b;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    font-weight: 600;
+}
+
+.stat-trend {
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.trend-up { color: #10b981; }
+.trend-down { color: #ef4444; }
+
+/* Modern Tables */
+.card {
+    border-radius: 20px !important;
+    border: 1px solid #f1f5f9 !important;
+    box-shadow: var(--card-shadow) !important;
+}
+
+.card-header {
+    background: transparent !important;
+    padding: 1.5rem !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.table thead th {
+    background: #f8fafc;
+    border-top: none !important;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 1rem !important;
+}
+
+.table td {
+    padding: 1.25rem 1rem !important;
+    vertical-align: middle !important;
+    color: #334155;
+    border-top: 1px solid #f1f5f9 !important;
+}
+
+.badge {
+    padding: 0.5em 1em !important;
+    border-radius: 6px !important;
+    font-weight: 600 !important;
+}
+
+.badge-success { background: #dcfce7 !important; color: #166534 !important; }
+.badge-warning { background: #fef9c3 !important; color: #854d0e !important; }
+
+/* Top Navbar Search focus */
+.navbar-header .form-control {
+    border-radius: 10px !important;
+    background: #f1f5f9 !important;
+    border: 1px solid transparent !important;
+}
+
+/* Absolute Light Override for Main Panel Backgrounds */
+body[data-background-color="dark"],
+body[data-background-color="dark"] .wrapper,
+body[data-background-color="dark"] .main-panel,
+body[data-background-color="dark"] .content {
+    background: #f8fafc !important;
+}
+
+/* Forced Light Mode for Main Panel */
+.main-panel {
+    background: #f8fafc !important;
+    color: #334155 !important;
+}
+
+.main-panel .card {
+    background: #ffffff !important;
+    color: #334155 !important;
+}
+
+.main-panel h1, .main-panel h2, .main-panel h3, .main-panel h4, .main-panel h5, .main-panel p {
+    color: #1e293b !important;
+}
+
+.main-panel .table {
+    background: #ffffff !important;
+}
+
+.main-panel .table td, .main-panel .table th {
+    color: #334155 !important;
+    border-color: #f1f5f9 !important;
+}
+
+.main-panel .welcome-banner {
+    background: linear-gradient(90deg, #eff6ff 0%, #ffffff 100%) !important;
+}
+
+/* Forced Light Mode for Forms and Inputs */
+.main-panel .form-control, 
+.main-panel input, 
+.main-panel textarea, 
+.main-panel select {
+    background-color: #ffffff !important;
+    color: #1e293b !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.main-panel label {
+    color: #475569 !important;
+    font-weight: 600 !important;
+}
+
+.main-panel .card-header, 
+.main-panel .card-title {
+    color: #1e293b !important;
+}
+
+.main-panel .btn-light {
+    background-color: #f1f5f9 !important;
+    color: #1e293b !important;
+    border-color: #e2e8f0 !important;
+}
+
+/* TinyMCE Editor Override */
+.tox-tinymce {
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+}
+
+.tox .tox-menubar, 
+.tox .tox-toolbar, 
+.tox .tox-toolbar__primary, 
+.tox .tox-toolbar__overflow {
+    background-color: #f8fafc !important;
+    background-image: none !important;
+}
+
+.tox .tox-edit-area__iframe {
+    background: #ffffff !important;
+}
+
+/* Select2 Force Light Mode */
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #1e293b !important;
+}
+
+.select2-dropdown {
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #1e293b !important;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    background-color: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #1e293b !important;
+}
+
+/* Datepicker & Timepicker */
+.datepicker, .ui-timepicker-wrapper {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: var(--card-shadow) !important;
+}
+
+.datepicker table tr td.day:hover, 
+.datepicker table tr td.day.focused {
+    background: #eff6ff !important;
+}
+
+/* Dropzone Force Light */
+.dropzone {
+    background: #f8fafc !important;
+    border: 2px dashed #e2e8f0 !important;
+    border-radius: 15px !important;
+}
+
+.dropzone .dz-message .note {
+    color: #64748b !important;
+}
+
+/* Select2 Global Results (fixed at body level) */
+.select2-container--open .select2-dropdown {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1) !important;
+}
+
+.select2-results__option {
+    color: #1e293b !important;
+}
+
+.select2-results__option--highlighted[aria-selected] {
+    background-color: #eff6ff !important;
+    color: #1e293b !important;
+}
+
+/* Form Group Polishing */
+.main-panel .form-group {
+    background: transparent !important;
+}
+
+/* TinyMCE Skin Polish */
+.tox .tox-statusbar {
+    background-color: #f8fafc !important;
+    border-top: 1px solid #e2e8f0 !important;
+}
+
+/* Location Input Premium Styling */
+.input-group-text {
+    border-color: #e2e8f0 !important;
+    color: #64748b !important;
+}
+
+#search-address:focus {
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1) !important;
+    border-color: #3b82f6 !important;
+}
+
+.btn-danger {
+    background-color: #ef4444 !important;
+    border: none !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.2) !important;
+}
+
+/* Ensure navbar and footer stay light */
+.navbar-header, .footer {
+    background: #ffffff !important;
+    border-top: 1px solid #f1f5f9 !important;
+}
+
+.footer p {
+    color: #64748b !important;
+}
+
+.navbar-header .nav-link, .navbar-header .u-text h4 {
+    color: #1e293b !important;
+}
+
+.u-text p.text-muted {
+    color: #64748b !important;
+}
+
+/* Modals and Dropdowns */
+.modal-content, .dropdown-menu {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.dropdown-item {
+    color: #334155 !important;
+}
+
+.dropdown-item:hover {
+    background: #f1f5f9 !important;
+}
+
+/* Polished Text */
+.sidebar .nav > .nav-item > a p {
+    font-size: 14px !important;
+    letter-spacing: 0.3px !important;
+}
+
+.sidebar .user .info a > span {
+    font-weight: 600 !important;
+    font-size: 15px !important;
+}
+
+.avatar-img {
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+    transition: all 0.3s ease !important;
+}
+
+.avatar-sm:hover .avatar-img {
+    border-color: #3b82f6 !important;
+    transform: scale(1.1);
+}
+/* Airbnb-style Wizard Interface */
+.wizard-steps {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 50px 0;
+    position: relative;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wizard-steps li {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.wizard-steps li .step-num {
+    display: none;
+}
+
+.wizard-steps li .step-text {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #717171;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.wizard-steps li.active .step-text {
+    color: #222222;
+    font-weight: 700;
+}
+
+.wizard-steps li::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 5%;
+    width: 90%;
+    height: 3px;
+    background: #ebebeb;
+    border-radius: 4px;
+}
+
+.wizard-steps li.active::after,
+.wizard-steps li.completed::after {
+    background: #222222;
+}
+
+.wizard-step { 
+    display: none; 
+    padding-bottom: 120px; /* Space for sticky footer */
+}
+
+.wizard-step.active { 
+    display: block; 
+    animation: fadeInSlideUp 0.5s cubic-bezier(0.2, 0, 0, 1); 
+}
+
+@keyframes fadeInSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Dropzone & File Input Modern Styling */
+.dropzone.create {
+    border: 2px dashed #cbd5e1 !important;
+    background: #f8fafc !important;
+    border-radius: 12px !important;
+    min-height: 180px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+    color: #64748b !important;
+}
+
+.dropzone.create:hover {
+    border-color: #3b82f6 !important;
+    background: #eff6ff !important;
+    color: #3b82f6 !important;
+}
+
+.dropzone.create .dz-message {
+    font-weight: 600 !important;
+    margin: 2em 0 !important;
+}
+
+.upload-btn {
+    position: relative !important;
+    overflow: hidden !important;
+    cursor: pointer !important;
+    border-radius: 8px !important;
+    display: inline-block !important;
+    transition: all 0.2s ease !important;
+}
+
+.upload-btn:hover {
+    filter: brightness(0.9);
+    transform: translateY(-1px);
+}
+
+.img-input {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0 !important;
+    cursor: pointer !important;
+}
+
+/* Airbnb-inspired Interactive Components */
+.amenity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.amenity-card {
+    border: 1px solid #dddddd;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.amenity-card i {
+    font-size: 32px;
+    color: #222222;
+}
+
+.amenity-card span {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222222;
+}
+
+.amenity-card:hover {
+    border-color: #222222;
+    box-shadow: 0 0 0 1px #222222;
+}
+
+.amenity-card.selected {
+    border-color: #222222;
+    background: #f7f7f7;
+    box-shadow: 0 0 0 1px #222222;
+}
+
+.photo-upload-placeholder {
+    width: 100%;
+    min-height: 350px;
+    background: #f7f7f7;
+    border: 1px dashed #b0b0b0;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 40px;
+}
+
+.photo-upload-placeholder:hover {
+    background: #ffffff;
+    border-color: #222222;
+}
+
+.photo-upload-placeholder i {
+    font-size: 64px;
+    color: #222222;
+    margin-bottom: 16px;
+}
+
+/* Sticky Navigation Footer (Refined Pattern) */
+.wizard-step .card-footer {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 250px !important;
+    right: 0 !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-top: 1px solid #ebebeb !important;
+    padding: 1rem 2.5rem !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    z-index: 1000 !important;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.05) !important;
+}
+
+@media (max-width: 991px) {
+    .wizard-step .card-footer {
+        left: 0 !important;
+        padding: 12px 20px !important;
+    }
+}
+
+.btn-primary.rounded-pill {
+    background-color: #222222 !important;
+    border: none !important;
+    padding: 12px 32px !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: white !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-primary.rounded-pill:hover {
+    background-color: #000000 !important;
+    transform: translateY(-1px) !important;
+}
+
+.btn-outline-secondary.rounded-pill {
+    border: none !important;
+    background: transparent !important;
+    text-decoration: underline !important;
+    color: #222222 !important;
+    font-weight: 600 !important;
+}
+
+.card-title {
+    font-size: 1.875rem !important; /* text-3xl */
+    line-height: 2.25rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.025em !important;
+    color: #222222 !important;
+    margin-bottom: 1.5rem !important; /* mb-6 */
+}
+
+/* Airbnb-style Toast Notification (Popout) */
+.airbnb-toast-container {
+    position: fixed;
+    bottom: 100px; /* Moved up to clear sticky footer */
+    left: 50%;
+    transform: translateX(-50%) translateY(120px);
+    z-index: 10000;
+    transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1), opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+    width: auto;
+    min-width: 320px;
+    max-width: 90%;
+}
+
+.airbnb-toast-container.active {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.airbnb-toast {
+    background: #222222;
+    color: white;
+    padding: 14px 24px;
+    border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.28);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.airbnb-toast i {
+    color: #ff5a5f;
+    font-size: 1.2rem;
+}
+
+.form-control.is-invalid {
+    border-color: #ff5a5f !important;
+    background-image: none !important;
+    box-shadow: 0 0 0 1px #ff5a5f !important;
+}
+
+.invalid-feedback {
+    display: none !important; /* Hide standard text, use toast instead */
+}

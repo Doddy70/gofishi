@@ -1,0 +1,36 @@
+
+> dev
+> vite
+
+Re-optimizing dependencies because lockfile has changed
+
+  VITE v5.4.21  ready in 544 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+
+  LARAVEL v11.48.0  plugin v1.3.0
+
+  ➜  APP_URL: http://localhost:8000
+12:03:10 PM [vite] .env changed, restarting server...
+12:03:10 PM [vite] server restarted.
+
+  LARAVEL v11.48.0  plugin v1.3.0
+
+  ➜  APP_URL: http://localhost:8000
+12:26:11 PM [vite] .env changed, restarting server...
+12:26:11 PM [vite] server restarted.
+
+  LARAVEL v11.48.0  plugin v1.3.0
+
+  ➜  APP_URL: http://localhost:8000
+1:01:00 PM [vite] full reload resources/views/frontend/perahu/room-gird.blade.php
+1:01:15 PM [vite] full reload resources/views/frontend/perahu/room-gird.blade.php
+1:05:05 PM [vite] full reload resources/views/frontend/lokasi/hotel-details.blade.php
+1:08:22 PM [vite] full reload resources/views/frontend/lokasi/hotel-details.blade.php
+1:14:40 PM [vite] full reload resources/views/frontend/lokasi/hotel-details.blade.php
+1:17:07 PM [vite] full reload resources/views/frontend/lokasi/hotel-details.blade.php
+1:32:07 PM [vite] full reload routes/web.php
+1:36:40 PM [vite] full reload resources/views/frontend/partials/footer.blade.php
+1:37:29 PM [vite] full reload resources/views/frontend/partials/footer.blade.php
+1:37:46 PM [vite] full reload resources/views/frontend/partials/footer.blade.php

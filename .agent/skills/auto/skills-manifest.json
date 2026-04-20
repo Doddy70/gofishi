@@ -1,0 +1,27 @@
+{
+  "project": {
+    "enabled": true,
+    "lastGenerated": "2026-04-17T23:13:06.973Z",
+    "observationCount": 86,
+    "skillCount": 0,
+    "domain": "project",
+    "triggerGlobs": [
+      "**/*"
+    ],
+    "description": "Project for basecode. 32 gotchas, 48 conventions."
+  },
+  "config": {
+    "enabled": true,
+    "lastGenerated": "2026-04-17T23:13:06.974Z",
+    "observationCount": 11,
+    "skillCount": 0,
+    "domain": "config",
+    "triggerGlobs": [
+      "**/*.yaml",
+      "**/*.yml",
+      "**/*.json",
+      "**/*.toml"
+    ],
+    "description": "Config for basecode. 2 conventions."
+  }
+}
